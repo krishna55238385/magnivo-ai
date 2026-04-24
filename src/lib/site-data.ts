@@ -1,6 +1,6 @@
 import {
-  Search, Send, Compass, Orbit, Share2, Bot,
-  Workflow, Cpu, Sparkles, Hammer,
+  Search, Send, Compass, Orbit, Share2, Bot, BrainCircuit,
+  Workflow, Cpu, Sparkles, Hammer, GitBranch,
   type LucideIcon,
 } from "lucide-react";
 
@@ -86,6 +86,18 @@ export const products: Product[] = [
       "Observability and guardrails",
     ],
   },
+  {
+    slug: "intelligence",
+    name: "Intelligence",
+    tagline: "Revenue intelligence",
+    description: "Conversation, deal, and pipeline intelligence — call analysis, risk scoring, and forecast accuracy in one signal layer.",
+    icon: BrainCircuit,
+    features: [
+      "Call & meeting analysis with deal-level summaries",
+      "Pipeline risk scoring and forecast accuracy",
+      "Coaching insights and rep-level scorecards",
+    ],
+  },
 ];
 
 export type Service = {
@@ -129,6 +141,14 @@ export const services: Service[] = [
     outcome: "Validated, production-ready products in weeks, not quarters.",
     model: "Done-for-you",
     icon: Hammer,
+  },
+  {
+    name: "RevOps",
+    description: "AI-augmented RevOps — auto-hygiene, auto-forecasting, and auto-routing powered by Magnivo agents on top of your stack.",
+    included: ["CRM hygiene & data model", "Pipeline architecture & routing", "AI forecasting & dashboards", "Attribution & revenue analytics"],
+    outcome: "A self-cleaning, self-forecasting revenue engine your team can trust.",
+    model: "Retainer + project",
+    icon: GitBranch,
   },
 ];
 
