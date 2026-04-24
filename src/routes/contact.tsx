@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Loader2 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -18,6 +19,9 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [form, setForm] = useState({ name: "", email: "", company: "", intent: "Demo", message: "" });
 
   const reasons = [
     { t: "Demo", d: "See the platform and products in action." },
@@ -26,19 +30,40 @@ function ContactPage() {
     { t: "General", d: "Anything else — say hi." },
   ];
 
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true); setErr(null);
+    const type = form.intent === "Demo" ? "demo" : "contact";
+    const { error } = await supabase.from("submissions").insert({
+      type,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      company: form.company.trim() || null,
+      intent: form.intent,
+      message: form.message.trim() || null,
+      source: "contact_page",
+    });
+    setBusy(false);
+    if (error) {
+      setErr(error.message);
+      return;
+    }
+    setSent(true);
+  }
+
   return (
     <SiteLayout>
-      <section className="container-x py-24 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="container-x py-16 md:py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
         <FadeIn>
           <div className="label-eyebrow">Contact</div>
-          <h1 className="mt-5 text-5xl md:text-6xl font-bold tracking-tight">Let's Talk</h1>
-          <p className="mt-5 text-muted-foreground text-lg max-w-md">
+          <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">Let's Talk</h1>
+          <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-md">
             Tell us what you're trying to build. We'll route you to the right person within one business day.
           </p>
-          <div className="mt-10 space-y-3">
+          <div className="mt-8 space-y-3">
             {reasons.map((r) => (
-              <div key={r.t} className="surface-card p-5 flex items-start gap-4">
-                <div className="h-8 w-8 rounded-md border border-border bg-card flex items-center justify-center text-[var(--accent-blue)] text-xs font-semibold">{r.t[0]}</div>
+              <div key={r.t} className="surface-card p-4 md:p-5 flex items-start gap-4">
+                <div className="h-8 w-8 rounded-md border border-border bg-card flex items-center justify-center text-[var(--accent-blue)] text-xs font-semibold shrink-0">{r.t[0]}</div>
                 <div>
                   <div className="font-semibold">{r.t}</div>
                   <div className="text-sm text-muted-foreground">{r.d}</div>
@@ -51,31 +76,31 @@ function ContactPage() {
 
         <FadeIn delay={0.1}>
           <form
-            className="surface-card p-7 md:p-8"
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSent(true);
-            }}
+            className="surface-card p-6 md:p-8"
+            onSubmit={submit}
           >
             {sent ? (
               <div className="py-12 text-center">
                 <div className="mx-auto h-12 w-12 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)] text-2xl">✓</div>
                 <h3 className="mt-5 text-2xl font-bold">Message sent</h3>
-                <p className="mt-2 text-muted-foreground">We'll be in touch shortly.</p>
+                <p className="mt-2 text-muted-foreground">We saved your details and will be in touch shortly.</p>
+                <button onClick={() => { setSent(false); setForm({ name: "", email: "", company: "", intent: "Demo", message: "" }); }} className="btn-ghost mt-6">Send another</button>
               </div>
             ) : (
               <div className="space-y-4">
-                <Field label="Name"><input required className="input" placeholder="Jane Doe" /></Field>
-                <Field label="Email"><input required type="email" className="input" placeholder="jane@company.com" /></Field>
-                <Field label="Company"><input className="input" placeholder="Acme Inc." /></Field>
+                <Field label="Name"><input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="cinput" placeholder="Jane Doe" /></Field>
+                <Field label="Email"><input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="cinput" placeholder="jane@company.com" /></Field>
+                <Field label="Company"><input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="cinput" placeholder="Acme Inc." /></Field>
                 <Field label="Intent">
-                  <select className="input" defaultValue="">
-                    <option value="" disabled>Select reason</option>
+                  <select value={form.intent} onChange={(e) => setForm({ ...form, intent: e.target.value })} className="cinput">
                     <option>Demo</option><option>Partnership</option><option>Investment</option><option>General</option>
                   </select>
                 </Field>
-                <Field label="Message"><textarea rows={5} className="input" placeholder="Tell us a bit about your goals..." /></Field>
-                <button type="submit" className="btn-primary w-full justify-center">Send Message <ArrowRight size={14} /></button>
+                <Field label="Message"><textarea rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="cinput" placeholder="Tell us a bit about your goals..." /></Field>
+                {err && <div className="text-sm text-[oklch(0.7_0.2_25)]">{err}</div>}
+                <button type="submit" disabled={busy} className="btn-primary w-full justify-center">
+                  {busy ? <><Loader2 size={14} className="animate-spin" /> Sending…</> : <>Send Message <ArrowRight size={14} /></>}
+                </button>
               </div>
             )}
           </form>
@@ -83,8 +108,8 @@ function ContactPage() {
       </section>
 
       <style>{`
-        .input { width:100%; padding:10px 14px; border-radius:8px; background: var(--background); border:1px solid var(--surface-border); color: var(--foreground); font-size:14px; outline:none; transition:border-color .2s; }
-        .input:focus { border-color: var(--accent-blue); }
+        .cinput { width:100%; padding:10px 14px; border-radius:8px; background: var(--background); border:1px solid var(--surface-border); color: var(--foreground); font-size:14px; outline:none; transition:border-color .2s; }
+        .cinput:focus { border-color: var(--accent-blue); }
       `}</style>
     </SiteLayout>
   );

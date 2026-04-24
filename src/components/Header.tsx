@@ -17,15 +17,21 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // lock body when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-md bg-background/70 border-b border-border" : "bg-transparent"
+        scrolled || mobileOpen ? "backdrop-blur-md bg-background/80 border-b border-border" : "bg-transparent"
       }`}
       onMouseLeave={() => setOpen(null)}
     >
       <div className="container-x flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-2 font-bold text-foreground">
+        <Link to="/" className="flex items-center gap-2 font-bold text-foreground" onClick={() => setMobileOpen(false)}>
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card">
             <span className="text-[13px] font-bold tracking-tight bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">M</span>
           </span>
@@ -41,16 +47,16 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link to="/investors" className="btn-ghost">Investors</Link>
           <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
         </div>
 
         <button
-          className="lg:hidden text-foreground p-2"
+          className="lg:hidden text-foreground p-2 -mr-2"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -67,24 +73,58 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-background">
-          <div className="container-x py-4 flex flex-col gap-2 text-sm">
+        <div className="lg:hidden border-t border-border bg-background overflow-y-auto" style={{ maxHeight: "calc(100vh - 64px)" }}>
+          <div className="container-x py-4 flex flex-col gap-1 text-sm pb-8">
             <MobileAccordion title="Products">
-              {products.map((p) => (
-                <Link key={p.slug} to="/products/$slug" params={{ slug: p.slug }} onClick={() => setMobileOpen(false)} className="block py-1.5 text-muted-foreground hover:text-foreground">
-                  {p.name} — <span className="text-xs">{p.tagline}</span>
-                </Link>
-              ))}
+              <div className="grid grid-cols-1 gap-1 pt-2">
+                {products.map((p) => {
+                  const Icon = p.icon;
+                  return (
+                    <Link
+                      key={p.slug}
+                      to="/products/$slug"
+                      params={{ slug: p.slug }}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
+                    >
+                      <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0">
+                        <Icon size={15} />
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className="block text-foreground font-medium">{p.name}</span>
+                        <span className="block text-xs text-muted-foreground truncate">{p.tagline}</span>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             </MobileAccordion>
             <MobileAccordion title="Services">
-              {services.map((s) => (
-                <Link key={s.name} to="/services" onClick={() => setMobileOpen(false)} className="block py-1.5 text-muted-foreground hover:text-foreground">{s.name}</Link>
-              ))}
+              <div className="grid grid-cols-1 gap-1 pt-2">
+                {services.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <Link
+                      key={s.name}
+                      to="/services"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
+                    >
+                      <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-green)] shrink-0">
+                        <Icon size={15} />
+                      </span>
+                      <span className="flex-1 min-w-0">
+                        <span className="block text-foreground font-medium">{s.name}</span>
+                        <span className="block text-xs text-muted-foreground truncate">{s.description}</span>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             </MobileAccordion>
-            <Link to="/platform" onClick={() => setMobileOpen(false)} className="py-2 text-foreground">Platform</Link>
-            <Link to="/about" onClick={() => setMobileOpen(false)} className="py-2 text-foreground">About</Link>
-            <Link to="/investors" onClick={() => setMobileOpen(false)} className="py-2 text-foreground">Investors</Link>
-            <Link to="/contact" onClick={() => setMobileOpen(false)} className="btn-primary justify-center mt-2">Book a Demo <ArrowRight size={14} /></Link>
+            <Link to="/platform" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">Platform</Link>
+            <Link to="/about" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">About</Link>
+            <Link to="/contact" onClick={() => setMobileOpen(false)} className="btn-primary justify-center mt-4">Book a Demo <ArrowRight size={14} /></Link>
           </div>
         </div>
       )}
@@ -120,7 +160,7 @@ function NavLink({ to, children, onEnter }: { to: string; children: React.ReactN
 function ProductsMega() {
   return (
     <div>
-      <div className="label-eyebrow mb-4">SaaS Products — 6 AI Products</div>
+      <div className="label-eyebrow mb-4">SaaS Products — 7 AI Products</div>
       <div className="grid grid-cols-3 gap-3">
         {products.map((p) => {
           const Icon = p.icon;
@@ -222,10 +262,14 @@ function MobileAccordion({ title, children }: { title: string; children: React.R
   const [o, setO] = useState(false);
   return (
     <div className="border-b border-border">
-      <button onClick={() => setO((v) => !v)} className="w-full flex items-center justify-between py-3 text-foreground">
+      <button onClick={() => setO((v) => !v)} className="w-full flex items-center justify-between py-3 px-2 text-foreground font-medium">
         {title} <ChevronDown size={16} className={`transition-transform ${o ? "rotate-180" : ""}`} />
       </button>
-      {o && <div className="pb-3 pl-2">{children}</div>}
+      <div className="grid transition-all duration-300" style={{ gridTemplateRows: o ? "1fr" : "0fr" }}>
+        <div className="overflow-hidden">
+          <div className="pb-3">{children}</div>
+        </div>
+      </div>
     </div>
   );
 }
