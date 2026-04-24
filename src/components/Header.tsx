@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 import { products, services } from "@/lib/site-data";
+import { DemoModal } from "./DemoModal";
 
 type MenuKey = "products" | "services" | "resources" | null;
 
@@ -9,6 +10,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -47,7 +49,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
+          <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Demo <ArrowRight size={14} /></button>
         </div>
 
         <button
@@ -124,10 +126,11 @@ export function Header() {
             </MobileAccordion>
             <Link to="/platform" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">Platform</Link>
             <Link to="/about" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">About</Link>
-            <Link to="/contact" onClick={() => setMobileOpen(false)} className="btn-primary justify-center mt-4">Book a Demo <ArrowRight size={14} /></Link>
+            <button onClick={() => { setMobileOpen(false); setDemoOpen(true); }} className="btn-primary justify-center mt-4">Book a Demo <ArrowRight size={14} /></button>
           </div>
         </div>
       )}
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
     </header>
   );
 }
