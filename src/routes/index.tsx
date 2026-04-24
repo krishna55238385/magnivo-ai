@@ -157,53 +157,58 @@ function HomePage() {
       </section>
 
       {/* PRODUCTS */}
-      <section className="container-x py-20">
+      <section className="container-x py-16 md:py-20">
         <FadeIn>
           <div className="label-eyebrow">Products — SaaS</div>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
             7 AI Products Built for Revenue Teams
           </h2>
         </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {products.map((p, i) => {
             const Icon = p.icon;
             return (
-              <FadeIn key={p.slug} delay={i * 0.04}>
-                <Link to="/products/$slug" params={{ slug: p.slug }} className="surface-card hover-blue p-6 group block h-full relative overflow-hidden">
-                  <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-blue)]/0 group-hover:bg-[var(--accent-blue)]/10 blur-2xl transition-colors" />
+              <AnimatedCard key={p.slug} delay={i * 0.05} glow="blue">
+                <Link
+                  to="/products/$slug"
+                  params={{ slug: p.slug }}
+                  className="surface-card hover-blue p-5 md:p-6 group block h-full relative overflow-hidden"
+                >
                   <div className="flex items-center justify-between relative">
-                    <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:scale-110 transition-transform">
+                    <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <Icon size={20} />
                     </div>
                     <ArrowRight size={16} className="text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </div>
                   <div className="mt-5 font-semibold text-lg relative">{p.name}</div>
                   <div className="mt-1 text-sm text-muted-foreground relative">{p.description}</div>
+                  {/* Bottom gradient bar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/0 to-transparent group-hover:via-[var(--accent-blue)]/60 transition-colors duration-500" />
                 </Link>
-              </FadeIn>
+              </AnimatedCard>
             );
           })}
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-2"><span className="pill-blue">Self-serve SaaS</span><span className="pill-blue">Recurring revenue</span></div>
+          <div className="flex flex-wrap gap-2"><span className="pill-blue">Self-serve SaaS</span><span className="pill-blue">Recurring revenue</span></div>
           <Link to="/products" className="btn-ghost">View All Products <ArrowRight size={14} /></Link>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="container-x py-20">
+      <section className="container-x py-16 md:py-20">
         <FadeIn>
           <div className="label-eyebrow">Services — Enterprise</div>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
             5 Service Lines for Deep AI Transformation
           </h2>
         </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {services.map((s, i) => {
             const Icon = s.icon;
             return (
-              <FadeIn key={s.name} delay={i * 0.04}>
-                <div className="surface-card hover-green p-7 h-full">
+              <AnimatedCard key={s.name} delay={i * 0.05} glow="green">
+                <div className="surface-card hover-green p-6 md:p-7 h-full">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-green)]">
@@ -211,11 +216,11 @@ function HomePage() {
                       </div>
                       <div className="font-semibold text-lg">{s.name}</div>
                     </div>
-                    <span className="pill-green">{s.model}</span>
+                    <span className="pill-green shrink-0">{s.model}</span>
                   </div>
                   <p className="mt-4 text-sm text-muted-foreground">{s.description}</p>
                 </div>
-              </FadeIn>
+              </AnimatedCard>
             );
           })}
         </div>
