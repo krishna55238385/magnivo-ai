@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { PageHero } from "@/components/PageHero";
+
 import { FadeIn } from "@/components/FadeIn";
 import { products } from "@/lib/site-data";
 
@@ -73,7 +73,7 @@ function ProductDetail() {
           <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">What {product.name} does</h2>
         </FadeIn>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-          {product.features.map((f, i) => (
+          {product.features.map((f: string, i: number) => (
             <FadeIn key={f} delay={i * 0.05}>
               <div className="surface-card hover-blue p-6 h-full">
                 <div className="label-eyebrow text-[var(--accent-blue)]">Feature 0{i + 1}</div>

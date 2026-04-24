@@ -5,7 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
 import { products } from "@/lib/site-data";
 
-export const Route = createFileRoute("/products")({
+export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
       { title: "Products — Magnivo AI" },
