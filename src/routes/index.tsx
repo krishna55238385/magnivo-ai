@@ -337,7 +337,7 @@ function HomePage() {
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Ready to Transform Your Revenue Motion?</h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">Join the teams using Magnivo to run AI-native GTM.</p>
             <div className="mt-8 flex justify-center">
-              <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
+              <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Demo <ArrowRight size={14} /></button>
             </div>
           </FadeIn>
         </div>
