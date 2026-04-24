@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Plus, Minus } from "lucide-react";
+import { ArrowRight, Plus, Minus, Sparkles, PlayCircle } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { HeroVisual } from "@/components/HeroVisual";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { AnimatedCard } from "@/components/AnimatedCard";
+import { DemoModal } from "@/components/DemoModal";
 import { products, services, personas, platformLayers } from "@/lib/site-data";
 
 export const Route = createFileRoute("/")({
@@ -20,34 +22,69 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [demoOpen, setDemoOpen] = useState(false);
   return (
     <SiteLayout>
-      {/* HERO */}
+      {/* HERO — DRAMATIC */}
       <section className="relative overflow-hidden">
+        {/* Layered backgrounds */}
         <div className="aurora" aria-hidden />
         <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="noise" aria-hidden />
-        <div className="container-x relative pt-24 pb-24 md:pt-36 md:pb-32">
+
+        {/* Top spotlight beam */}
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] pointer-events-none"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(ellipse at center top, color-mix(in oklab, var(--accent-blue) 35%, transparent), transparent 60%)",
+            filter: "blur(20px)",
+          }}
+        />
+        {/* Animated grid lines */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/40 to-transparent" />
+
+        {/* Floating orbs */}
+        <div className="hidden md:block absolute top-32 left-10 h-2 w-2 rounded-full bg-[var(--accent-blue)] shadow-[0_0_24px_4px_var(--accent-blue)] float-y" />
+        <div className="hidden md:block absolute top-60 right-16 h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] shadow-[0_0_20px_4px_var(--accent-green)] float-y-delay" />
+        <div className="hidden md:block absolute bottom-40 left-1/4 h-1 w-1 rounded-full bg-foreground/60 shadow-[0_0_12px_2px_color-mix(in_oklab,var(--foreground)_40%,transparent)] float-y" />
+
+        <div className="container-x relative pt-20 pb-20 sm:pt-28 md:pt-36 md:pb-32">
           <FadeIn>
             <div className="flex justify-center">
               <div className="ring-conic">
-                <div className="rounded-[11px] bg-card/80 backdrop-blur-md px-3 py-1.5 text-[11px] tracking-widest uppercase text-muted-foreground flex items-center gap-2">
+                <div className="rounded-[11px] bg-card/80 backdrop-blur-md px-3 py-1.5 text-[10px] sm:text-[11px] tracking-widest uppercase text-muted-foreground flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] animate-pulse" />
-                  Enterprise AI · GTM · Marketing · Build
+                  <span className="hidden sm:inline">Enterprise AI · GTM · Marketing · Build</span>
+                  <span className="sm:hidden">Enterprise AI · GTM</span>
                 </div>
               </div>
             </div>
-            <h1 className="mt-7 text-center text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] mx-auto max-w-4xl">
-              The AI Brain Behind <br />
-              <span className="text-gradient">Your Entire GTM</span>
+
+            <h1 className="mt-7 text-center text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mx-auto max-w-5xl">
+              <span className="block">The AI Brain Behind</span>
+              <span className="text-gradient block mt-1 md:mt-2">Your Entire GTM</span>
             </h1>
-            <p className="mt-6 text-center text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+
+            <p className="mt-5 sm:mt-6 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
               Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty.
             </p>
-            <div className="mt-9 flex justify-center flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
-              <Link to="/platform" className="btn-ghost">Explore Platform</Link>
+
+            <div className="mt-8 sm:mt-9 flex justify-center flex-wrap gap-3 px-2">
+              <button onClick={() => setDemoOpen(true)} className="btn-primary w-full sm:w-auto justify-center">
+                Book a Demo <ArrowRight size={14} />
+              </button>
+              <Link to="/platform" className="btn-ghost w-full sm:w-auto justify-center">
+                <PlayCircle size={14} /> Explore Platform
+              </Link>
+            </div>
+
+            <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <Sparkles size={12} className="text-[var(--accent-blue)]" />
+              No credit card. Live in &lt;30 minutes.
             </div>
           </FadeIn>
 
@@ -56,6 +93,7 @@ function HomePage() {
           </FadeIn>
         </div>
       </section>
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
 
       {/* MARQUEE LOGOS */}
       <section className="border-y border-border bg-card/30 py-8 overflow-hidden">
