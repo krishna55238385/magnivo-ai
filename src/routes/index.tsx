@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Plus, Minus } from "lucide-react";
+import { ArrowRight, Plus, Minus, Sparkles, PlayCircle } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { HeroVisual } from "@/components/HeroVisual";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { AnimatedCard } from "@/components/AnimatedCard";
+import { DemoModal } from "@/components/DemoModal";
 import { products, services, personas, platformLayers } from "@/lib/site-data";
 
 export const Route = createFileRoute("/")({
@@ -20,34 +22,69 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [demoOpen, setDemoOpen] = useState(false);
   return (
     <SiteLayout>
-      {/* HERO */}
+      {/* HERO — DRAMATIC */}
       <section className="relative overflow-hidden">
+        {/* Layered backgrounds */}
         <div className="aurora" aria-hidden />
         <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="noise" aria-hidden />
-        <div className="container-x relative pt-24 pb-24 md:pt-36 md:pb-32">
+
+        {/* Top spotlight beam */}
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] pointer-events-none"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(ellipse at center top, color-mix(in oklab, var(--accent-blue) 35%, transparent), transparent 60%)",
+            filter: "blur(20px)",
+          }}
+        />
+        {/* Animated grid lines */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/40 to-transparent" />
+
+        {/* Floating orbs */}
+        <div className="hidden md:block absolute top-32 left-10 h-2 w-2 rounded-full bg-[var(--accent-blue)] shadow-[0_0_24px_4px_var(--accent-blue)] float-y" />
+        <div className="hidden md:block absolute top-60 right-16 h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] shadow-[0_0_20px_4px_var(--accent-green)] float-y-delay" />
+        <div className="hidden md:block absolute bottom-40 left-1/4 h-1 w-1 rounded-full bg-foreground/60 shadow-[0_0_12px_2px_color-mix(in_oklab,var(--foreground)_40%,transparent)] float-y" />
+
+        <div className="container-x relative pt-20 pb-20 sm:pt-28 md:pt-36 md:pb-32">
           <FadeIn>
             <div className="flex justify-center">
               <div className="ring-conic">
-                <div className="rounded-[11px] bg-card/80 backdrop-blur-md px-3 py-1.5 text-[11px] tracking-widest uppercase text-muted-foreground flex items-center gap-2">
+                <div className="rounded-[11px] bg-card/80 backdrop-blur-md px-3 py-1.5 text-[10px] sm:text-[11px] tracking-widest uppercase text-muted-foreground flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] animate-pulse" />
-                  Enterprise AI · GTM · Marketing · Build
+                  <span className="hidden sm:inline">Enterprise AI · GTM · Marketing · Build</span>
+                  <span className="sm:hidden">Enterprise AI · GTM</span>
                 </div>
               </div>
             </div>
-            <h1 className="mt-7 text-center text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] mx-auto max-w-4xl">
-              The AI Brain Behind <br />
-              <span className="text-gradient">Your Entire GTM</span>
+
+            <h1 className="mt-7 text-center text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mx-auto max-w-5xl">
+              <span className="block">The AI Brain Behind</span>
+              <span className="text-gradient block mt-1 md:mt-2">Your Entire GTM</span>
             </h1>
-            <p className="mt-6 text-center text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+
+            <p className="mt-5 sm:mt-6 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
               Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty.
             </p>
-            <div className="mt-9 flex justify-center flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
-              <Link to="/platform" className="btn-ghost">Explore Platform</Link>
+
+            <div className="mt-8 sm:mt-9 flex justify-center flex-wrap gap-3 px-2">
+              <button onClick={() => setDemoOpen(true)} className="btn-primary w-full sm:w-auto justify-center">
+                Book a Demo <ArrowRight size={14} />
+              </button>
+              <Link to="/platform" className="btn-ghost w-full sm:w-auto justify-center">
+                <PlayCircle size={14} /> Explore Platform
+              </Link>
+            </div>
+
+            <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <Sparkles size={12} className="text-[var(--accent-blue)]" />
+              No credit card. Live in &lt;30 minutes.
             </div>
           </FadeIn>
 
@@ -56,6 +93,7 @@ function HomePage() {
           </FadeIn>
         </div>
       </section>
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
 
       {/* MARQUEE LOGOS */}
       <section className="border-y border-border bg-card/30 py-8 overflow-hidden">
@@ -119,53 +157,58 @@ function HomePage() {
       </section>
 
       {/* PRODUCTS */}
-      <section className="container-x py-20">
+      <section className="container-x py-16 md:py-20">
         <FadeIn>
           <div className="label-eyebrow">Products — SaaS</div>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
             7 AI Products Built for Revenue Teams
           </h2>
         </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           {products.map((p, i) => {
             const Icon = p.icon;
             return (
-              <FadeIn key={p.slug} delay={i * 0.04}>
-                <Link to="/products/$slug" params={{ slug: p.slug }} className="surface-card hover-blue p-6 group block h-full relative overflow-hidden">
-                  <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[var(--accent-blue)]/0 group-hover:bg-[var(--accent-blue)]/10 blur-2xl transition-colors" />
+              <AnimatedCard key={p.slug} delay={i * 0.05} glow="blue">
+                <Link
+                  to="/products/$slug"
+                  params={{ slug: p.slug }}
+                  className="surface-card hover-blue p-5 md:p-6 group block h-full relative overflow-hidden"
+                >
                   <div className="flex items-center justify-between relative">
-                    <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:scale-110 transition-transform">
+                    <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                       <Icon size={20} />
                     </div>
                     <ArrowRight size={16} className="text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </div>
                   <div className="mt-5 font-semibold text-lg relative">{p.name}</div>
                   <div className="mt-1 text-sm text-muted-foreground relative">{p.description}</div>
+                  {/* Bottom gradient bar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/0 to-transparent group-hover:via-[var(--accent-blue)]/60 transition-colors duration-500" />
                 </Link>
-              </FadeIn>
+              </AnimatedCard>
             );
           })}
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-2"><span className="pill-blue">Self-serve SaaS</span><span className="pill-blue">Recurring revenue</span></div>
+          <div className="flex flex-wrap gap-2"><span className="pill-blue">Self-serve SaaS</span><span className="pill-blue">Recurring revenue</span></div>
           <Link to="/products" className="btn-ghost">View All Products <ArrowRight size={14} /></Link>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="container-x py-20">
+      <section className="container-x py-16 md:py-20">
         <FadeIn>
           <div className="label-eyebrow">Services — Enterprise</div>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
             5 Service Lines for Deep AI Transformation
           </h2>
         </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {services.map((s, i) => {
             const Icon = s.icon;
             return (
-              <FadeIn key={s.name} delay={i * 0.04}>
-                <div className="surface-card hover-green p-7 h-full">
+              <AnimatedCard key={s.name} delay={i * 0.05} glow="green">
+                <div className="surface-card hover-green p-6 md:p-7 h-full">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-green)]">
@@ -173,11 +216,11 @@ function HomePage() {
                       </div>
                       <div className="font-semibold text-lg">{s.name}</div>
                     </div>
-                    <span className="pill-green">{s.model}</span>
+                    <span className="pill-green shrink-0">{s.model}</span>
                   </div>
                   <p className="mt-4 text-sm text-muted-foreground">{s.description}</p>
                 </div>
-              </FadeIn>
+              </AnimatedCard>
             );
           })}
         </div>
@@ -294,7 +337,7 @@ function HomePage() {
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Ready to Transform Your Revenue Motion?</h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">Join the teams using Magnivo to run AI-native GTM.</p>
             <div className="mt-8 flex justify-center">
-              <Link to="/contact" className="btn-primary">Book a Demo <ArrowRight size={14} /></Link>
+              <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Demo <ArrowRight size={14} /></button>
             </div>
           </FadeIn>
         </div>
