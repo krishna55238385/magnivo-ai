@@ -34,6 +34,12 @@ export const Route = createRootRoute({
       { name: "author", content: "Magnivo AI" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Magnivo AI — The AI Brain Behind Your Entire GTM" },
+      { name: "twitter:title", content: "Magnivo AI — The AI Brain Behind Your Entire GTM" },
+      { property: "og:description", content: "Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty." },
+      { name: "twitter:description", content: "Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3efb5f85-8d05-4a60-8d3e-17e801211f2f" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3efb5f85-8d05-4a60-8d3e-17e801211f2f" },
     ],
     links: [
       {
