@@ -1,39 +1,8 @@
-import { Activity, BrainCircuit, Bot, TrendingUp, Zap } from "lucide-react";
+import { BrainCircuit, Bot, TrendingUp } from "lucide-react";
 
 export function HeroVisual() {
   return (
     <div className="relative mx-auto mt-16 max-w-5xl">
-      {/* Floating chips */}
-      <div className="hidden md:flex absolute -top-6 -left-2 z-10 float-y">
-        <div className="ring-conic">
-          <div className="flex items-center gap-2 rounded-[11px] bg-card/90 backdrop-blur-md px-3 py-2 text-xs">
-            <Activity size={14} className="text-[var(--accent-green)]" />
-            <span className="text-foreground">Pipeline +38%</span>
-            <span className="text-muted-foreground">this week</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden md:flex absolute -top-2 right-0 z-10 float-y-delay">
-        <div className="ring-conic">
-          <div className="flex items-center gap-2 rounded-[11px] bg-card/90 backdrop-blur-md px-3 py-2 text-xs">
-            <Bot size={14} className="text-[var(--accent-blue)]" />
-            <span className="text-foreground">Agent shipped</span>
-            <span className="text-muted-foreground">2m ago</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden md:flex absolute -bottom-4 left-10 z-10 float-y-delay">
-        <div className="ring-conic">
-          <div className="flex items-center gap-2 rounded-[11px] bg-card/90 backdrop-blur-md px-3 py-2 text-xs">
-            <Zap size={14} className="text-[var(--accent-blue)]" />
-            <span className="text-foreground">12,480</span>
-            <span className="text-muted-foreground">workflows / day</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main "dashboard" surface */}
       <div className="surface-card p-2 relative overflow-hidden">
         <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
