@@ -86,12 +86,12 @@ function HomePage() {
               </div>
             </div>
 
-            <h1 className="mt-7 text-center text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mx-auto max-w-5xl">
+            <h1 className="font-display mt-7 text-center text-[2.6rem] leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.75rem] tracking-tight mx-auto max-w-5xl">
               <span className="block">The AI Brain Behind</span>
-              <span className="text-gradient block mt-1 md:mt-2">Your Entire GTM</span>
+              <span className="text-gradient block mt-1 md:mt-2 italic" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}>Your Entire GTM</span>
             </h1>
 
-            <p className="mt-5 sm:mt-6 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
+            <p className="mt-6 sm:mt-7 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
               Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty.
             </p>
 
