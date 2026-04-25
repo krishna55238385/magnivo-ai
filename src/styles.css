@@ -4,6 +4,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap");
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -33,7 +35,9 @@
   --color-surface-border: var(--surface-border);
   --color-accent-blue: var(--accent-blue);
   --color-accent-green: var(--accent-green);
+  --color-accent-gold: var(--accent-gold);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Inter", ui-serif, Georgia, serif;
 }
 
 :root {
@@ -62,10 +66,14 @@
   --surface-border: oklch(0.22 0.02 270);
   --accent-blue: oklch(0.68 0.17 260);          /* #4f8ef7 */
   --accent-green: oklch(0.75 0.16 160);         /* #3ecf8e */
+  --accent-gold: oklch(0.84 0.13 88);           /* champagne gold */
 
   --shadow-glow-blue: 0 0 32px -4px oklch(0.68 0.17 260 / 0.45);
   --shadow-glow-green: 0 0 24px -4px oklch(0.75 0.16 160 / 0.35);
+  --shadow-glow-gold: 0 0 28px -4px oklch(0.84 0.13 88 / 0.35);
+  --shadow-elevated: 0 30px 80px -30px oklch(0 0 0 / 0.6), 0 8px 24px -8px oklch(0 0 0 / 0.4);
   --gradient-mesh: radial-gradient(ellipse 80% 50% at 50% 0%, oklch(0.68 0.17 260 / 0.18), transparent 70%);
+  --gradient-luxe: linear-gradient(135deg, var(--accent-blue), var(--accent-gold) 55%, var(--accent-green));
 }
 
 /* Force dark — no light variant */
@@ -86,7 +94,20 @@
   }
 
   h1, h2, h3, h4 {
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 144;
+    letter-spacing: -0.035em;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent-blue) 35%, transparent);
+    color: var(--foreground);
   }
 }
 
@@ -163,38 +184,54 @@
   }
 
   .btn-primary {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 11px 20px;
+    border-radius: 10px;
     font-weight: 500;
     font-size: 14px;
-    background: var(--accent-blue);
     color: white;
-    transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    background: linear-gradient(135deg, var(--accent-blue), color-mix(in oklab, var(--accent-blue) 70%, var(--accent-gold)));
+    box-shadow: 0 1px 0 0 color-mix(in oklab, white 20%, transparent) inset, 0 8px 24px -10px color-mix(in oklab, var(--accent-blue) 70%, transparent);
+    transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(115deg, transparent 30%, color-mix(in oklab, white 35%, transparent) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform .9s cubic-bezier(.22,1,.36,1);
+    pointer-events: none;
   }
   .btn-primary:hover {
-    box-shadow: var(--shadow-glow-blue);
-    background: color-mix(in oklab, var(--accent-blue) 90%, white);
+    box-shadow: 0 1px 0 0 color-mix(in oklab, white 25%, transparent) inset, var(--shadow-glow-blue), 0 12px 32px -10px color-mix(in oklab, var(--accent-blue) 70%, transparent);
+    transform: translateY(-1px);
+    filter: saturate(1.1);
   }
+  .btn-primary:hover::before { transform: translateX(120%); }
 
   .btn-ghost {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 11px 20px;
+    border-radius: 10px;
     font-weight: 500;
     font-size: 14px;
-    background: transparent;
+    background: color-mix(in oklab, var(--card) 50%, transparent);
     color: var(--foreground);
     border: 1px solid var(--surface-border);
-    transition: border-color 0.2s ease, background 0.2s ease;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
   }
   .btn-ghost:hover {
-    border-color: color-mix(in oklab, var(--accent-blue) 60%, var(--surface-border));
-    background: color-mix(in oklab, white 3%, transparent);
+    border-color: color-mix(in oklab, var(--accent-gold) 50%, var(--surface-border));
+    background: color-mix(in oklab, white 4%, transparent);
+    transform: translateY(-1px);
   }
 
   .container-x {
@@ -273,10 +310,45 @@
 
   /* Gradient text helper */
   .text-gradient {
-    background: linear-gradient(135deg, var(--accent-blue), var(--foreground) 60%, var(--accent-green));
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--foreground) 45%, var(--accent-gold) 75%, var(--accent-green));
+    background-size: 200% auto;
     -webkit-background-clip: text;
             background-clip: text;
     color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  /* Gold pill */
+  .pill-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: color-mix(in oklab, var(--accent-gold) 14%, transparent);
+    color: var(--accent-gold);
+    border: 1px solid color-mix(in oklab, var(--accent-gold) 35%, transparent);
+  }
+
+  /* Luxe divider with gold accent */
+  .divider-luxe {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted-foreground);
+  }
+  .divider-luxe::before, .divider-luxe::after {
+    content: "";
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent-gold) 50%, transparent), transparent);
   }
 
   /* Noise overlay */
@@ -288,10 +360,14 @@
   /* Premium gradient-border card */
   .premium-card {
     position: relative;
-    background: linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), color-mix(in oklab, var(--background) 96%, transparent));
+    background:
+      radial-gradient(120% 80% at 0% 0%, color-mix(in oklab, var(--accent-blue) 6%, transparent), transparent 50%),
+      radial-gradient(120% 80% at 100% 100%, color-mix(in oklab, var(--accent-gold) 5%, transparent), transparent 55%),
+      linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), color-mix(in oklab, var(--background) 96%, transparent));
     border-radius: var(--radius-xl);
     overflow: hidden;
     isolation: isolate;
+    transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
   }
   .premium-card::before {
     content: "";
@@ -299,23 +375,36 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(140deg, color-mix(in oklab, var(--accent-blue) 35%, transparent), color-mix(in oklab, var(--surface-border) 80%, transparent) 35%, color-mix(in oklab, var(--surface-border) 80%, transparent) 70%, color-mix(in oklab, var(--accent-green) 30%, transparent));
+    background: linear-gradient(140deg,
+      color-mix(in oklab, var(--accent-blue) 40%, transparent) 0%,
+      color-mix(in oklab, var(--accent-gold) 25%, transparent) 25%,
+      color-mix(in oklab, var(--surface-border) 80%, transparent) 45%,
+      color-mix(in oklab, var(--surface-border) 80%, transparent) 65%,
+      color-mix(in oklab, var(--accent-gold) 25%, transparent) 80%,
+      color-mix(in oklab, var(--accent-green) 35%, transparent));
     -webkit-mask: linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
     -webkit-mask-composite: xor;
             mask-composite: exclude;
     pointer-events: none;
     z-index: 0;
+    transition: opacity .35s ease;
   }
   .premium-card::after {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(120% 80% at 50% -20%, color-mix(in oklab, var(--accent-blue) 14%, transparent), transparent 60%);
+    background:
+      radial-gradient(120% 80% at 50% -20%, color-mix(in oklab, var(--accent-blue) 16%, transparent), transparent 60%),
+      linear-gradient(115deg, transparent 35%, color-mix(in oklab, white 6%, transparent) 50%, transparent 65%);
     opacity: 0;
-    transition: opacity .4s ease;
+    transition: opacity .45s ease;
     pointer-events: none;
     z-index: 0;
+  }
+  .premium-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated), 0 0 0 1px color-mix(in oklab, var(--accent-gold) 12%, transparent);
   }
   .premium-card:hover::after { opacity: 1; }
   .premium-card > * { position: relative; z-index: 1; }
