@@ -46,8 +46,8 @@ export function Pillars() {
       <FadeIn>
         <div className="text-center max-w-3xl mx-auto">
           <div className="label-eyebrow">Four Pillars</div>
-          <h2 className="font-display mt-4 text-3xl sm:text-4xl md:text-5xl tracking-tight">
-            Four Pillars of <span className="text-gradient italic">GTM Excellence</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+            Four Pillars of <span className="text-gradient">GTM Excellence</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-base md:text-lg">
             A complete operating system covering every stage of your go-to-market motion.

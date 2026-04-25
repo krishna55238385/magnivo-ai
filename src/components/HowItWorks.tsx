@@ -28,8 +28,8 @@ export function HowItWorks() {
       <FadeIn>
         <div className="text-center max-w-3xl mx-auto">
           <div className="label-eyebrow">How It Works</div>
-          <h2 className="font-display mt-4 text-3xl sm:text-4xl md:text-5xl tracking-tight">
-            Live in <span className="text-gradient italic">three simple steps</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+            Live in <span className="text-gradient">three simple steps</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-base md:text-lg">
             From connection to compounding revenue — orchestrated by AI agents that work while you sleep.

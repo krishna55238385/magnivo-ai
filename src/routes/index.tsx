@@ -86,12 +86,12 @@ function HomePage() {
               </div>
             </div>
 
-            <h1 className="font-display mt-7 text-center text-[2.6rem] leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.75rem] tracking-tight mx-auto max-w-5xl">
+            <h1 className="mt-7 text-center text-[2.4rem] leading-[1.05] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mx-auto max-w-5xl">
               <span className="block">The AI Brain Behind</span>
-              <span className="text-gradient block mt-1 md:mt-2 italic" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}>Your Entire GTM</span>
+              <span className="text-gradient block mt-1 md:mt-2">Your Entire GTM</span>
             </h1>
 
-            <p className="mt-6 sm:mt-7 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
+            <p className="mt-5 sm:mt-6 text-center text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed px-2">
               Magnivo AI unifies intelligence, automation, and orchestration across every revenue motion — from lead to close to loyalty.
             </p>
 
@@ -145,7 +145,7 @@ function HomePage() {
           ].map((s, i) => (
             <FadeIn key={s.label} delay={i * 0.05}>
               <div className="premium-card p-5 md:p-6">
-                <div className="font-display text-3xl md:text-5xl tracking-tight text-gradient">
+                <div className="text-3xl md:text-5xl font-bold tracking-tight text-gradient">
                   <AnimatedCounter to={s.v} suffix={s.suffix} />
                 </div>
                 <div className="mt-2 text-xs md:text-sm text-muted-foreground">{s.label}</div>
@@ -248,7 +248,7 @@ function HomePage() {
         <FadeIn>
           <div className="text-center max-w-3xl mx-auto">
             <div className="label-eyebrow">Who It's For</div>
-            <h2 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
               Built for the teams <span className="text-gradient">driving growth</span>
             </h2>
           </div>
@@ -271,7 +271,7 @@ function HomePage() {
         <FadeIn>
           <div className="text-center max-w-3xl mx-auto">
             <div className="label-eyebrow">Customer Stories</div>
-            <h2 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
               Trusted by <span className="text-gradient">forward-thinking teams</span>
             </h2>
           </div>
@@ -301,7 +301,7 @@ function HomePage() {
         <FadeIn>
           <div className="text-center max-w-3xl mx-auto">
             <div className="label-eyebrow">FAQ</div>
-            <h2 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl tracking-tight">
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
               Common questions, <span className="text-gradient">answered</span>
             </h2>
           </div>
@@ -318,7 +318,7 @@ function HomePage() {
           <FadeIn>
             <div className="max-w-3xl">
               <div className="label-eyebrow text-[var(--accent-blue)]">For Investors & Partners</div>
-              <h2 className="mt-4 font-display text-3xl md:text-5xl tracking-tight">
+              <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight">
                 Building the AI Operating System <span className="text-gradient">for Modern GTM</span>
               </h2>
               <p className="mt-5 text-muted-foreground max-w-2xl">
@@ -339,7 +339,7 @@ function HomePage() {
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="container-x relative py-24 md:py-28 text-center">
           <FadeIn>
-            <h2 className="font-display text-3xl md:text-5xl tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
               Ready to transform your <span className="text-gradient">revenue motion?</span>
             </h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">Join the teams using Magnivo to run AI-native GTM.</p>
