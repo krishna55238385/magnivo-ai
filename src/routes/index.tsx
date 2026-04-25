@@ -1,13 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Plus, Minus, Sparkles, PlayCircle } from "lucide-react";
+import { ArrowRight, Plus, Minus, Sparkles, PlayCircle, CircleDot } from "lucide-react";
 import { useState } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { HeroVisual } from "@/components/HeroVisual";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
-import { AnimatedCard } from "@/components/AnimatedCard";
 import { DemoModal } from "@/components/DemoModal";
-import { products, services, personas, platformLayers } from "@/lib/site-data";
+import { Pillars } from "@/components/Pillars";
+import { HowItWorks } from "@/components/HowItWorks";
+import { products, services, personas } from "@/lib/site-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,19 +22,30 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+const tickerEvents = [
+  "agent.dispatch(\"forecast\")",
+  "+12 leads enriched",
+  "deal-risk: low",
+  "compass.sync ✓ HubSpot",
+  "intelligence.score 92.3%",
+  "reachout.sequence shipped",
+  "orbit.account intent ↑",
+  "agentdesk.deploy ok",
+];
+
 function HomePage() {
   const [demoOpen, setDemoOpen] = useState(false);
+
   return (
     <SiteLayout>
-      {/* HERO — DRAMATIC */}
+      {/* HERO */}
       <section className="relative overflow-hidden">
-        {/* Layered backgrounds */}
         <div className="aurora" aria-hidden />
         <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="noise" aria-hidden />
 
-        {/* Top spotlight beam */}
+        {/* Top spotlight */}
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] pointer-events-none"
           aria-hidden
@@ -43,16 +55,26 @@ function HomePage() {
             filter: "blur(20px)",
           }}
         />
-        {/* Animated grid lines */}
+        {/* Bottom-left green spotlight (added) */}
+        <div
+          className="absolute -bottom-40 -left-32 w-[700px] h-[500px] pointer-events-none"
+          aria-hidden
+          style={{
+            background:
+              "radial-gradient(ellipse at left bottom, color-mix(in oklab, var(--accent-green) 25%, transparent), transparent 65%)",
+            filter: "blur(28px)",
+          }}
+        />
+
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/60 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/40 to-transparent" />
 
-        {/* Floating orbs */}
+        {/* Floating dots */}
         <div className="hidden md:block absolute top-32 left-10 h-2 w-2 rounded-full bg-[var(--accent-blue)] shadow-[0_0_24px_4px_var(--accent-blue)] float-y" />
         <div className="hidden md:block absolute top-60 right-16 h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] shadow-[0_0_20px_4px_var(--accent-green)] float-y-delay" />
         <div className="hidden md:block absolute bottom-40 left-1/4 h-1 w-1 rounded-full bg-foreground/60 shadow-[0_0_12px_2px_color-mix(in_oklab,var(--foreground)_40%,transparent)] float-y" />
 
-        <div className="container-x relative pt-20 pb-20 sm:pt-28 md:pt-36 md:pb-32">
+        <div className="container-x relative pt-20 pb-20 sm:pt-28 md:pt-36 md:pb-28">
           <FadeIn>
             <div className="flex justify-center">
               <div className="ring-conic">
@@ -86,6 +108,22 @@ function HomePage() {
               <Sparkles size={12} className="text-[var(--accent-blue)]" />
               No credit card. Live in &lt;30 minutes.
             </div>
+
+            {/* Live ticker */}
+            <div className="mt-8 max-w-3xl mx-auto">
+              <div className="relative h-9 overflow-hidden rounded-full border border-border bg-card/60 backdrop-blur-md">
+                <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                <div className="ticker h-full items-center px-6">
+                  {[...tickerEvents, ...tickerEvents].map((t, i) => (
+                    <span key={i} className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground whitespace-nowrap">
+                      <CircleDot size={10} className="text-[var(--accent-green)]" />
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </FadeIn>
 
           <FadeIn delay={0.2}>
@@ -93,33 +131,12 @@ function HomePage() {
           </FadeIn>
         </div>
       </section>
+
       <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
 
-      {/* MARQUEE LOGOS */}
-      <section className="border-y border-border bg-card/30 py-8 overflow-hidden">
-        <div className="container-x mb-5">
-          <div className="label-eyebrow text-center">Trusted by revenue teams across SaaS, fintech, and enterprise</div>
-        </div>
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-          <div className="marquee">
-            {[...Array(2)].map((_, k) => (
-              <div key={k} className="flex items-center gap-12 px-6">
-                {["Northwind", "Lumen Labs", "Vector Health", "Helio", "Quanta", "Stratus", "Forge AI", "Parallax", "Kepler", "Atlas Bio"].map((n) => (
-                  <div key={n + k} className="text-muted-foreground/70 text-lg font-semibold tracking-tight whitespace-nowrap">
-                    {n}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* STATS */}
-      <section className="container-x py-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <section className="container-x py-16 md:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {[
             { v: 2.4, suffix: "x", label: "Avg pipeline lift" },
             { v: 38, suffix: "%", label: "Faster ramp time" },
@@ -127,118 +144,119 @@ function HomePage() {
             { v: 92, suffix: "%", label: "Forecast accuracy" },
           ].map((s, i) => (
             <FadeIn key={s.label} delay={i * 0.05}>
-              <div className="surface-card hover-blue p-6">
-                <div className="text-4xl md:text-5xl font-bold tracking-tight text-gradient">
+              <div className="premium-card p-5 md:p-6">
+                <div className="text-3xl md:text-5xl font-bold tracking-tight text-gradient">
                   <AnimatedCounter to={s.v} suffix={s.suffix} />
                 </div>
-                <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
+                <div className="mt-2 text-xs md:text-sm text-muted-foreground">{s.label}</div>
               </div>
             </FadeIn>
           ))}
         </div>
       </section>
 
-      {/* PLATFORM STRIP */}
-      <section className="container-x py-10">
+      <div className="container-x"><div className="divider-glow" /></div>
+
+      {/* FOUR PILLARS */}
+      <Pillars />
+
+      <div className="container-x"><div className="divider-glow" /></div>
+
+      {/* HOW IT WORKS */}
+      <HowItWorks />
+
+      <div className="container-x"><div className="divider-glow" /></div>
+
+      {/* PLATFORM TEASER (compact) */}
+      <section className="container-x py-16 md:py-20">
         <FadeIn>
-          <div className="surface-card p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden"
-               style={{ borderColor: "color-mix(in oklab, var(--accent-blue) 40%, var(--surface-border))" }}>
+          <div className="premium-card p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[var(--accent-blue)]/10 blur-3xl pointer-events-none" />
             <div className="relative">
               <div className="label-eyebrow text-[var(--accent-blue)]">Magnivo AI Platform</div>
               <h2 className="mt-3 text-2xl md:text-3xl font-bold tracking-tight">The unified intelligence layer.</h2>
-              <p className="mt-3 text-muted-foreground max-w-2xl">
-                Powering all products and client deployments — data, agents, automation, and orchestration in one.
+              <p className="mt-3 text-muted-foreground max-w-2xl text-sm md:text-base">
+                Data, agents, automation, and orchestration in one — the foundation powering every product and engagement.
               </p>
             </div>
-            <Link to="/platform" className="btn-ghost shrink-0 relative">Learn More <ArrowRight size={14} /></Link>
+            <Link to="/platform" className="btn-ghost shrink-0 relative">See the Platform <ArrowRight size={14} /></Link>
           </div>
         </FadeIn>
       </section>
 
-      {/* PRODUCTS */}
+      {/* PRODUCTS + SERVICES TEASER (compact, no full grids) */}
       <section className="container-x py-16 md:py-20">
-        <FadeIn>
-          <div className="label-eyebrow">Products — SaaS</div>
-          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
-            7 AI Products Built for Revenue Teams
-          </h2>
-        </FadeIn>
-        <div className="mt-10 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-          {products.map((p, i) => {
-            const Icon = p.icon;
-            return (
-              <AnimatedCard key={p.slug} delay={i * 0.05} glow="blue">
-                <Link
-                  to="/products/$slug"
-                  params={{ slug: p.slug }}
-                  className="surface-card hover-blue p-5 md:p-6 group block h-full relative overflow-hidden"
-                >
-                  <div className="flex items-center justify-between relative">
-                    <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                      <Icon size={20} />
-                    </div>
-                    <ArrowRight size={16} className="text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                  </div>
-                  <div className="mt-5 font-semibold text-lg relative">{p.name}</div>
-                  <div className="mt-1 text-sm text-muted-foreground relative">{p.description}</div>
-                  {/* Bottom gradient bar */}
-                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/0 to-transparent group-hover:via-[var(--accent-blue)]/60 transition-colors duration-500" />
-                </Link>
-              </AnimatedCard>
-            );
-          })}
-        </div>
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-2"><span className="pill-blue">Self-serve SaaS</span><span className="pill-blue">Recurring revenue</span></div>
-          <Link to="/products" className="btn-ghost">View All Products <ArrowRight size={14} /></Link>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+          {/* Products teaser */}
+          <FadeIn>
+            <div className="premium-card p-7 md:p-9 h-full flex flex-col">
+              <div className="flex items-center justify-between gap-3">
+                <span className="pill-blue">SaaS</span>
+                <span className="text-xs text-muted-foreground">{products.length} products</span>
+              </div>
+              <h3 className="mt-5 text-2xl md:text-3xl font-bold tracking-tight">
+                Built for revenue teams
+              </h3>
+              <p className="mt-3 text-muted-foreground text-sm md:text-base">
+                Self-serve, AI-native products spanning the full funnel — from lead intelligence to AI-orchestrated CRM.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {products.map((p) => (
+                  <span key={p.slug} className="text-xs px-2.5 py-1.5 rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-[color-mix(in_oklab,var(--accent-blue)_50%,var(--surface-border))] transition cursor-default">
+                    {p.name}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-auto pt-7">
+                <Link to="/products" className="btn-ghost">View Products <ArrowRight size={14} /></Link>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Services teaser */}
+          <FadeIn delay={0.08}>
+            <div className="premium-card p-7 md:p-9 h-full flex flex-col">
+              <div className="flex items-center justify-between gap-3">
+                <span className="pill-green">Enterprise</span>
+                <span className="text-xs text-muted-foreground">{services.length} service lines</span>
+              </div>
+              <h3 className="mt-5 text-2xl md:text-3xl font-bold tracking-tight">
+                Done with you, end to end
+              </h3>
+              <p className="mt-3 text-muted-foreground text-sm md:text-base">
+                Deep AI transformation engagements — from blueprint to production agents to ongoing optimization.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {services.map((s) => (
+                  <span key={s.name} className="text-xs px-2.5 py-1.5 rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-[color-mix(in_oklab,var(--accent-green)_50%,var(--surface-border))] transition cursor-default">
+                    {s.name}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-auto pt-7">
+                <Link to="/services" className="btn-ghost">Explore Services <ArrowRight size={14} /></Link>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="container-x py-16 md:py-20">
-        <FadeIn>
-          <div className="label-eyebrow">Services — Enterprise</div>
-          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight max-w-3xl">
-            5 Service Lines for Deep AI Transformation
-          </h2>
-        </FadeIn>
-        <div className="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-          {services.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <AnimatedCard key={s.name} delay={i * 0.05} glow="green">
-                <div className="surface-card hover-green p-6 md:p-7 h-full">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-green)]">
-                        <Icon size={20} />
-                      </div>
-                      <div className="font-semibold text-lg">{s.name}</div>
-                    </div>
-                    <span className="pill-green shrink-0">{s.model}</span>
-                  </div>
-                  <p className="mt-4 text-sm text-muted-foreground">{s.description}</p>
-                </div>
-              </AnimatedCard>
-            );
-          })}
-        </div>
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex gap-2"><span className="pill-green">Done-for-you</span><span className="pill-green">Retainer + project</span></div>
-          <Link to="/services" className="btn-ghost">Explore Services <ArrowRight size={14} /></Link>
-        </div>
-      </section>
+      <div className="container-x"><div className="divider-glow" /></div>
 
       {/* WHO IT'S FOR */}
-      <section className="container-x py-20">
+      <section className="container-x py-20 md:py-24">
         <FadeIn>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">Built for the Teams Driving Growth</h2>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="label-eyebrow">Who It's For</div>
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Built for the teams <span className="text-gradient">driving growth</span>
+            </h2>
+          </div>
         </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {personas.map((p, i) => (
             <FadeIn key={p.title} delay={i * 0.05}>
-              <div className="surface-card hover-blue p-6 h-full">
+              <div className="premium-card p-6 h-full">
                 <div className="h-8 w-8 rounded-md border border-border bg-gradient-to-br from-[var(--accent-blue)]/30 to-transparent" />
                 <div className="mt-5 font-semibold">{p.title}</div>
                 <p className="mt-2 text-sm text-muted-foreground">{p.hook}</p>
@@ -248,48 +266,27 @@ function HomePage() {
         </div>
       </section>
 
-      {/* PLATFORM DEEP DIVE */}
-      <section className="container-x py-20">
+      {/* TESTIMONIALS */}
+      <section className="container-x py-20 md:py-24">
         <FadeIn>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">One Platform. Every Revenue Motion.</h2>
-          <p className="mt-5 text-muted-foreground max-w-2xl">
-            A layered architecture designed to connect every product and service — your data, your agents, your workflows, and your team in one orchestration plane.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.15}>
-          <div className="mt-12 surface-card p-8 md:p-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              {platformLayers.map((l, i) => (
-                <div key={l.name} className="relative">
-                  <div className="surface-card p-5 h-full"
-                       style={{ borderColor: i % 2 === 0 ? "color-mix(in oklab, var(--accent-blue) 35%, var(--surface-border))" : "color-mix(in oklab, var(--accent-green) 35%, var(--surface-border))" }}>
-                    <div className="label-eyebrow" style={{ color: i % 2 === 0 ? "var(--accent-blue)" : "var(--accent-green)" }}>0{i + 1}</div>
-                    <div className="mt-2 font-semibold">{l.name}</div>
-                    <p className="mt-2 text-xs text-muted-foreground">{l.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="label-eyebrow">Customer Stories</div>
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Trusted by <span className="text-gradient">forward-thinking teams</span>
+            </h2>
           </div>
         </FadeIn>
-      </section>
-
-      {/* SOCIAL PROOF */}
-      <section className="container-x py-20">
-        <FadeIn>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Trusted by Forward-Thinking Teams</h2>
-        </FadeIn>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { q: "Magnivo replaced three tools and a half-built data pipeline. Our reps finally trust the CRM.", n: "Sarah Chen", t: "VP Sales", c: "Northwind SaaS" },
             { q: "We shipped an AI-native ABM motion in six weeks. Pipeline is up 2.4x quarter over quarter.", n: "Marco Rivera", t: "Head of Growth", c: "Lumen Labs" },
             { q: "The Agent Studio team built workflows we couldn't have scoped, let alone built, on our own.", n: "Priya Anand", t: "CRO", c: "Vector Health" },
           ].map((t) => (
             <FadeIn key={t.n}>
-              <div className="surface-card hover-blue p-6 h-full">
-                <p className="text-foreground/90 leading-relaxed">"{t.q}"</p>
-                <div className="mt-5 text-sm">
+              <div className="premium-card p-6 md:p-7 h-full">
+                <div className="text-[var(--accent-blue)] text-3xl leading-none">"</div>
+                <p className="mt-2 text-foreground/90 leading-relaxed">{t.q}</p>
+                <div className="mt-6 pt-5 border-t border-border text-sm">
                   <div className="font-medium">{t.n}</div>
                   <div className="text-muted-foreground">{t.t}, {t.c}</div>
                 </div>
@@ -300,29 +297,37 @@ function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="container-x py-20">
+      <section className="container-x py-20 md:py-24">
         <FadeIn>
-          <div className="label-eyebrow">FAQ</div>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">Common questions, answered.</h2>
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="label-eyebrow">FAQ</div>
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Common questions, <span className="text-gradient">answered</span>
+            </h2>
+          </div>
         </FadeIn>
-        <div className="mt-10 max-w-3xl">
+        <div className="mt-12 max-w-3xl mx-auto">
           <FAQ items={faqs} />
         </div>
       </section>
 
       {/* INVESTOR / PARTNER */}
-      <section className="border-y border-border bg-card/40">
-        <div className="container-x py-20">
+      <section className="border-y border-border bg-card/40 relative overflow-hidden">
+        <div className="absolute inset-0 dot-grid opacity-30" aria-hidden />
+        <div className="container-x py-20 relative">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight max-w-3xl">
-              Building the AI Operating System for Modern GTM
-            </h2>
-            <p className="mt-5 text-muted-foreground max-w-2xl">
-              GTM is the largest software category being rewritten by AI. Magnivo unifies the categories enterprises stitch together today — with traction across SaaS, mid-market, and enterprise.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/investors" className="btn-primary">View Investor Deck <ArrowRight size={14} /></Link>
-              <Link to="/contact" className="btn-ghost">Partner With Us</Link>
+            <div className="max-w-3xl">
+              <div className="label-eyebrow text-[var(--accent-blue)]">For Investors & Partners</div>
+              <h2 className="mt-4 text-3xl md:text-5xl font-bold tracking-tight">
+                Building the AI Operating System <span className="text-gradient">for Modern GTM</span>
+              </h2>
+              <p className="mt-5 text-muted-foreground max-w-2xl">
+                GTM is the largest software category being rewritten by AI. Magnivo unifies what enterprises stitch together today — with traction across SaaS, mid-market, and enterprise.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/investors" className="btn-primary">View Investor Deck <ArrowRight size={14} /></Link>
+                <Link to="/contact" className="btn-ghost">Partner With Us</Link>
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -332,9 +337,11 @@ function HomePage() {
       <section className="relative overflow-hidden">
         <div className="aurora" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
-        <div className="container-x relative py-24 text-center">
+        <div className="container-x relative py-24 md:py-28 text-center">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Ready to Transform Your Revenue Motion?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+              Ready to transform your <span className="text-gradient">revenue motion?</span>
+            </h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">Join the teams using Magnivo to run AI-native GTM.</p>
             <div className="mt-8 flex justify-center">
               <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Demo <ArrowRight size={14} /></button>
@@ -372,7 +379,7 @@ function FAQ({ items }: { items: { q: string; a: string }[] }) {
       {items.map((it, i) => {
         const isOpen = open === i;
         return (
-          <div key={it.q} className="surface-card overflow-hidden">
+          <div key={it.q} className="premium-card overflow-hidden">
             <button
               onClick={() => setOpen(isOpen ? null : i)}
               className="w-full flex items-center justify-between gap-6 p-5 text-left"
