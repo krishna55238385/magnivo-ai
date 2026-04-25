@@ -285,6 +285,98 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
 
+  /* Premium gradient-border card */
+  .premium-card {
+    position: relative;
+    background: linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), color-mix(in oklab, var(--background) 96%, transparent));
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .premium-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, color-mix(in oklab, var(--accent-blue) 35%, transparent), color-mix(in oklab, var(--surface-border) 80%, transparent) 35%, color-mix(in oklab, var(--surface-border) 80%, transparent) 70%, color-mix(in oklab, var(--accent-green) 30%, transparent));
+    -webkit-mask: linear-gradient(#000,#000) content-box, linear-gradient(#000,#000);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .premium-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 80% at 50% -20%, color-mix(in oklab, var(--accent-blue) 14%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .premium-card:hover::after { opacity: 1; }
+  .premium-card > * { position: relative; z-index: 1; }
+
+  /* Section divider with soft glow */
+  .divider-glow {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent-blue) 35%, transparent), color-mix(in oklab, var(--accent-green) 25%, transparent), transparent);
+    opacity: 0.6;
+  }
+
+  /* Heading underline accent */
+  .heading-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .heading-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -10px;
+    width: 56px; height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+    border-radius: 999px;
+  }
+
+  /* Step connector line for "How It Works" */
+  .step-line {
+    height: 1px;
+    background: linear-gradient(90deg, color-mix(in oklab, var(--accent-blue) 0%, transparent), color-mix(in oklab, var(--accent-blue) 60%, transparent), color-mix(in oklab, var(--accent-green) 60%, transparent), color-mix(in oklab, var(--accent-green) 0%, transparent));
+    background-size: 200% 100%;
+    animation: step-shimmer 4s linear infinite;
+  }
+  @keyframes step-shimmer {
+    from { background-position: 0% 0%; }
+    to { background-position: 200% 0%; }
+  }
+
+  /* Pulse for numbered badges */
+  .pulse-soft {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent-blue) 60%, transparent);
+    animation: pulse-soft 2.6s ease-out infinite;
+  }
+  @keyframes pulse-soft {
+    0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent-blue) 50%, transparent); }
+    70% { box-shadow: 0 0 0 14px color-mix(in oklab, var(--accent-blue) 0%, transparent); }
+    100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent-blue) 0%, transparent); }
+  }
+
+  /* Live ticker scroller */
+  .ticker {
+    display: flex;
+    gap: 2.5rem;
+    animation: ticker-scroll 22s linear infinite;
+    width: max-content;
+  }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
   /* Focus ring for a11y */
   :focus-visible {
     outline: 2px solid var(--accent-blue);
@@ -294,7 +386,7 @@
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .aurora::before, .aurora::after, .float-y, .float-y-delay, .marquee {
+    .aurora::before, .aurora::after, .float-y, .float-y-delay, .marquee, .ticker, .step-line, .pulse-soft {
       animation: none !important;
     }
   }
