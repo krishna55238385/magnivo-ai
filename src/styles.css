@@ -310,10 +310,45 @@
 
   /* Gradient text helper */
   .text-gradient {
-    background: linear-gradient(135deg, var(--accent-blue), var(--foreground) 60%, var(--accent-green));
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--foreground) 45%, var(--accent-gold) 75%, var(--accent-green));
+    background-size: 200% auto;
     -webkit-background-clip: text;
             background-clip: text;
     color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  /* Gold pill */
+  .pill-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: color-mix(in oklab, var(--accent-gold) 14%, transparent);
+    color: var(--accent-gold);
+    border: 1px solid color-mix(in oklab, var(--accent-gold) 35%, transparent);
+  }
+
+  /* Luxe divider with gold accent */
+  .divider-luxe {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted-foreground);
+  }
+  .divider-luxe::before, .divider-luxe::after {
+    content: "";
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent-gold) 50%, transparent), transparent);
   }
 
   /* Noise overlay */
