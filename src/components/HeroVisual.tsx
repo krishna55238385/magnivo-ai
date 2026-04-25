@@ -1,11 +1,46 @@
+import { useRef } from "react";
 import { BrainCircuit, Bot, TrendingUp } from "lucide-react";
 
 export function HeroVisual() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rx = (y - 0.5) * -4;
+    const ry = (x - 0.5) * 4;
+    el.style.setProperty("--rx", `${rx}deg`);
+    el.style.setProperty("--ry", `${ry}deg`);
+  }
+  function onLeave() {
+    const el = ref.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }
+
   return (
-    <div className="relative mx-auto mt-16 max-w-5xl">
-      {/* Main "dashboard" surface */}
-      <div className="surface-card p-2 relative overflow-hidden">
+    <div className="relative mx-auto mt-12 md:mt-16 max-w-5xl" style={{ perspective: 1400 }}>
+      <div
+        ref={ref}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        className="surface-card p-2 relative overflow-hidden"
+        style={{
+          transform: "rotateX(var(--rx,0)) rotateY(var(--ry,0))",
+          transformStyle: "preserve-3d",
+          transition: "transform 300ms cubic-bezier(0.22,1,0.36,1)",
+        }}
+      >
         <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
+        {/* soft top gradient */}
+        <div
+          className="absolute inset-x-0 top-0 h-24 pointer-events-none opacity-60"
+          style={{ background: "linear-gradient(180deg, color-mix(in oklab, var(--accent-blue) 18%, transparent), transparent)" }}
+        />
         <div className="rounded-md border border-border bg-background/70 backdrop-blur-sm p-5 md:p-6 relative">
           {/* Window dots */}
           <div className="flex items-center gap-1.5 mb-5">
@@ -48,7 +83,6 @@ export function HeroVisual() {
                   </div>
                   <span className="text-muted-foreground">last 7 days</span>
                 </div>
-                {/* Sparkline */}
                 <svg viewBox="0 0 300 70" className="mt-3 w-full h-16">
                   <defs>
                     <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
