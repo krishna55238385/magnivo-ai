@@ -9,21 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
+import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -56,19 +58,29 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesIndexRoute = ResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SolutionsRoute,
+} as any)
+const ResourcesSlugRoute = ResourcesSlugRouteImport.update({
+  id: '/resources/$slug',
+  path: '/resources/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
@@ -79,107 +91,120 @@ const ProductsSlugRoute = ProductsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/products/$slug': typeof ProductsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/products/': typeof ProductsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/products/$slug': typeof ProductsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/products': typeof ProductsIndexRoute
+  '/resources': typeof ResourcesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/products/$slug': typeof ProductsSlugRoute
+  '/resources/$slug': typeof ResourcesSlugRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/products/': typeof ProductsIndexRoute
+  '/resources/': typeof ResourcesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
     | '/admin'
     | '/auth'
     | '/contact'
     | '/investors'
     | '/platform'
     | '/pricing'
-    | '/services'
+    | '/solutions'
     | '/products/$slug'
+    | '/resources/$slug'
+    | '/solutions/$slug'
     | '/products/'
+    | '/resources/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/admin'
     | '/auth'
     | '/contact'
     | '/investors'
     | '/platform'
     | '/pricing'
-    | '/services'
+    | '/solutions'
     | '/products/$slug'
+    | '/resources/$slug'
+    | '/solutions/$slug'
     | '/products'
+    | '/resources'
   id:
     | '__root__'
     | '/'
-    | '/about'
     | '/admin'
     | '/auth'
     | '/contact'
     | '/investors'
     | '/platform'
     | '/pricing'
-    | '/services'
+    | '/solutions'
     | '/products/$slug'
+    | '/resources/$slug'
+    | '/solutions/$slug'
     | '/products/'
+    | '/resources/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   InvestorsRoute: typeof InvestorsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
-  ServicesRoute: typeof ServicesRoute
+  SolutionsRoute: typeof SolutionsRouteWithChildren
   ProductsSlugRoute: typeof ProductsSlugRoute
+  ResourcesSlugRoute: typeof ResourcesSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
+  ResourcesIndexRoute: typeof ResourcesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -224,13 +249,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -238,11 +256,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/': {
+      id: '/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof ResourcesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/': {
       id: '/products/'
       path: '/products'
       fullPath: '/products/'
       preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions/$slug': {
+      id: '/solutions/$slug'
+      path: '/$slug'
+      fullPath: '/solutions/$slug'
+      preLoaderRoute: typeof SolutionsSlugRouteImport
+      parentRoute: typeof SolutionsRoute
+    }
+    '/resources/$slug': {
+      id: '/resources/$slug'
+      path: '/resources/$slug'
+      fullPath: '/resources/$slug'
+      preLoaderRoute: typeof ResourcesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$slug': {
@@ -255,18 +294,31 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface SolutionsRouteChildren {
+  SolutionsSlugRoute: typeof SolutionsSlugRoute
+}
+
+const SolutionsRouteChildren: SolutionsRouteChildren = {
+  SolutionsSlugRoute: SolutionsSlugRoute,
+}
+
+const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
+  SolutionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   InvestorsRoute: InvestorsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
-  ServicesRoute: ServicesRoute,
+  SolutionsRoute: SolutionsRouteWithChildren,
   ProductsSlugRoute: ProductsSlugRoute,
+  ResourcesSlugRoute: ResourcesSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,
+  ResourcesIndexRoute: ResourcesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

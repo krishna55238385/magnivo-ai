@@ -1,26 +1,59 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { MessageCircle } from "lucide-react";
 import { CustomCursor } from "./CustomCursor";
+import { DemoModal } from "./DemoModal";
+import { useEffect, useState, useRef } from "react";
+import Lenis from "lenis";
+
+function SmoothScroll() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  return null;
+}
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
+  const [auditOpen, setAuditOpen] = useState(false);
+
+  useEffect(() => {
+    const openAudit = () => setAuditOpen(true);
+    window.addEventListener("open-demo-modal", openAudit);
+    return () => window.removeEventListener("open-demo-modal", openAudit);
+  }, []);
+
   return (
     <>
+      <SmoothScroll />
       <div className="relative overflow-x-clip">
         <CustomCursor />
         <Header />
-        <main className="pt-16">{children}</main>
+        <main className="pt-14 pb-20 sm:pt-16 sm:pb-0">{children}</main>
         <Footer />
       </div>
-      <a
-        href="https://wa.me/message/xyz"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex max-w-[calc(100vw-2rem)] items-center justify-center gap-2 bg-[#25D366] text-white p-3 sm:px-4 sm:py-3 rounded-full shadow-lg hover:bg-[#20bd5a] transition-all duration-300 hover:scale-105"
-      >
-        <MessageCircle size={20} />
-        <span className="text-sm font-medium hidden sm:block">Chat with us on WhatsApp</span>
-      </a>
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/88 px-4 py-3 backdrop-blur-md sm:hidden">
+        <button onClick={() => setAuditOpen(true)} className="btn-primary w-full justify-center">
+          Book Free GTM Audit
+        </button>
+      </div>
+      <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} />
     </>
   );
 }

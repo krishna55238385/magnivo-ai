@@ -28,11 +28,11 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
     e.preventDefault();
     setBusy(true); setErr(null);
     const { error } = await supabase.from("submissions").insert({
-      type: "demo",
+      type: "gtm_audit",
       name: form.name.trim(),
       email: form.email.trim(),
       company: form.company.trim() || null,
-      intent: "Demo",
+      intent: "Free GTM Audit",
       message: form.message.trim() || null,
       source: "demo_modal",
     });
@@ -54,26 +54,26 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
             <div className="mx-auto h-14 w-14 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)]">
               <CalendarCheck size={24} />
             </div>
-            <h3 className="mt-5 text-2xl font-bold tracking-tight">Demo requested</h3>
-            <p className="mt-2 text-muted-foreground text-sm">We'll reach out within one business day to confirm a time.</p>
+            <h3 className="mt-5 text-2xl font-bold tracking-tight">Audit requested</h3>
+            <p className="mt-2 text-muted-foreground text-sm">We'll reach out within one business day with the next step.</p>
             <button onClick={onClose} className="btn-ghost mt-6">Close</button>
           </div>
         ) : (
           <>
-            <div className="label-eyebrow text-[var(--accent-blue)]">Book a Demo</div>
-            <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">See Magnivo in action</h2>
-            <p className="mt-2 text-sm text-muted-foreground">30 minutes. Tailored to your stack and motion.</p>
+            <div className="label-eyebrow text-[var(--accent-blue)]">Free GTM Audit</div>
+            <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">Find the fastest path to pipeline</h2>
+            <p className="mt-2 text-sm text-muted-foreground">30 minutes. We review your motion and send a practical GTM gap map.</p>
 
             <form onSubmit={submit} className="mt-6 space-y-3">
               <input required placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="dinput" />
               <input required type="email" placeholder="Work email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="dinput" />
               <input placeholder="Company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="dinput" />
-              <textarea rows={3} placeholder="What are you trying to solve? (optional)" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="dinput" />
+              <textarea rows={3} placeholder="What are you trying to improve? Pipeline, outbound, inbound, CRM, retention..." value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="dinput" />
               {err && <div className="text-sm text-[oklch(0.7_0.2_25)]">{err}</div>}
               <button type="submit" disabled={busy} className="btn-primary w-full justify-center">
-                {busy ? <><Loader2 size={14} className="animate-spin" /> Submitting…</> : <>Request Demo <ArrowRight size={14} /></>}
+                {busy ? <><Loader2 size={14} className="animate-spin" /> Submitting...</> : <>Request Free Audit <ArrowRight size={14} /></>}
               </button>
-              <p className="text-[11px] text-muted-foreground text-center">By submitting you agree to be contacted by Magnivo AI.</p>
+              <p className="text-[11px] text-muted-foreground text-center">No pitch. No pressure. By submitting, you agree to be contacted by Magnivo.ai.</p>
             </form>
           </>
         )}

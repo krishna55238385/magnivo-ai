@@ -8,8 +8,8 @@ import { FadeIn } from "@/components/FadeIn";
 export const Route = createFileRoute("/investors")({
   head: () => ({
     meta: [
-      { title: "Investors — Magnivo AI" },
-      { name: "description", content: "Magnivo AI is building the AI operating system for modern GTM. Market opportunity, traction, and vision for partners and investors." },
+      { title: "Investors — Magnivo.ai" },
+      { name: "description", content: "Magnivo.ai is building the AI operating system for modern GTM. Market opportunity, traction, and vision for partners and investors." },
       { property: "og:title", content: "Building the AI Operating System for Modern GTM" },
       { property: "og:description", content: "Investor brief: market, platform, traction, and vision." },
     ],

@@ -29,15 +29,15 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Magnivo AI — Revenue Intelligence for Modern B2B" },
-      { name: "description", content: "Magnivo AI is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
-      { name: "author", content: "Magnivo AI" },
+      { title: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
+      { name: "description", content: "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
+      { name: "author", content: "Magnivo.ai" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Magnivo AI — Revenue Intelligence for Modern B2B" },
-      { name: "twitter:title", content: "Magnivo AI — Revenue Intelligence for Modern B2B" },
-      { property: "og:description", content: "Magnivo AI is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
-      { name: "twitter:description", content: "Magnivo AI is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
+      { property: "og:title", content: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
+      { name: "twitter:title", content: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
+      { property: "og:description", content: "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
+      { name: "twitter:description", content: "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams." },
     ],
     links: [
       {

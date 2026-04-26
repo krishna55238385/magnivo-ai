@@ -6,11 +6,11 @@ export function Footer() {
     <footer className="border-t border-border mt-16 sm:mt-24">
       <div className="container-x py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8">
         <div className="sm:col-span-2">
-          <div className="flex items-center gap-2 font-bold text-foreground">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card">
-              <span className="text-[13px] font-bold bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">M</span>
+          <div className="flex items-center gap-2.5 font-bold text-foreground">
+            <img src="/logo.png" alt="Magnivo.ai Logo" className="h-7 w-7 object-contain" />
+            <span className="text-base tracking-tight">
+              Magnivo<span className="text-[var(--accent-blue)]">.ai</span>
             </span>
-            <span>Magnivo AI</span>
           </div>
           <p className="text-sm text-muted-foreground mt-4 max-w-xs">
             The Revenue Brain for Modern B2B.
@@ -26,10 +26,10 @@ export function Footer() {
           <Link to="/products">All Products</Link>
         </FooterCol>
 
-        <FooterCol title="Services">
-          <Link to="/services">GTM Operations</Link>
-          <Link to="/services">Agent Studio</Link>
-          <Link to="/services">AI Growth</Link>
+        <FooterCol title="Solutions">
+          <Link to="/solutions">GTM Operations</Link>
+          <Link to="/solutions">Agent Studio</Link>
+          <Link to="/solutions">AI Growth</Link>
           <button onClick={() => window.dispatchEvent(new CustomEvent('open-demo-modal'))} className="text-left text-[var(--accent-blue)] hover:underline">Free GTM Audit</button>
         </FooterCol>
 
@@ -41,7 +41,6 @@ export function Footer() {
         </FooterCol>
 
         <FooterCol title="Company">
-          <Link to="/about">About</Link>
           <Link to="/platform">Platform</Link>
           <Link to="/pricing">Pricing</Link>
           <Link to="/investors">Investors</Link>
@@ -56,7 +55,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="container-x pt-6 pb-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div>© 2026 Magnivo AI. All rights reserved.</div>
+          <div>© 2026 Magnivo.ai. All rights reserved.</div>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-5">
             <a href="https://linkedin.com/in/founder-profile" target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
             <a href="https://wa.me/message/xyz" target="_blank" rel="noreferrer" className="hover:text-foreground">WhatsApp</a>

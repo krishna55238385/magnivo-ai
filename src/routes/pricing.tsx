@@ -8,7 +8,7 @@ import { Check, Plus, Minus, ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — Magnivo AI" },
+      { title: "Pricing — Magnivo.ai" },
       { name: "description", content: "A Growth Engine Built Around Your Goals." },
     ],
   }),

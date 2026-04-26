@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Admin — Magnivo AI" },
+      { title: "Admin — Magnivo.ai" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

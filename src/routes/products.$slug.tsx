@@ -14,12 +14,12 @@ export const Route = createFileRoute("/products/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.product.name} — Magnivo AI` },
+          { title: `${loaderData.product.name} — Magnivo.ai` },
           { name: "description", content: loaderData.product.description },
           { property: "og:title", content: `${loaderData.product.name} — ${loaderData.product.tagline}` },
           { property: "og:description", content: loaderData.product.description },
         ]
-      : [{ title: "Product — Magnivo AI" }],
+      : [{ title: "Product — Magnivo.ai" }],
   }),
   notFoundComponent: () => (
     <SiteLayout>

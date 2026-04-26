@@ -8,9 +8,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Magnivo AI" },
-      { name: "description", content: "Talk to Magnivo AI about a demo, partnership, investment, or general inquiry." },
-      { property: "og:title", content: "Let's Talk — Magnivo AI" },
+      { title: "Contact — Magnivo.ai" },
+      { name: "description", content: "Talk to Magnivo.ai about a demo, partnership, investment, or general inquiry." },
+      { property: "og:title", content: "Let's Talk — Magnivo.ai" },
       { property: "og:description", content: "Book a demo or reach the team." },
     ],
   }),

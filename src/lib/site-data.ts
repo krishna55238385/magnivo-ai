@@ -100,7 +100,8 @@ export const products: Product[] = [
   },
 ];
 
-export type Service = {
+export type Solution = {
+  slug: string;
   name: string;
   description: string;
   included: string[];
@@ -109,8 +110,9 @@ export type Service = {
   icon: LucideIcon;
 };
 
-export const services: Service[] = [
+export const solutions: Solution[] = [
   {
+    slug: "gtm-operations",
     name: "GTM Operations",
     description: "End-to-end AI GTM deployment across systems, teams, and motions.",
     included: ["RevOps audit & blueprint", "Stack implementation", "AI workflow rollout", "Enablement & training"],
@@ -119,6 +121,7 @@ export const services: Service[] = [
     icon: Workflow,
   },
   {
+    slug: "agent-studio",
     name: "Agent Studio",
     description: "Custom AI agents and workflows built around your data and processes.",
     included: ["Use-case discovery", "Agent design & build", "Integrations & evals", "Ongoing optimization"],
@@ -127,6 +130,7 @@ export const services: Service[] = [
     icon: Cpu,
   },
   {
+    slug: "ai-growth",
     name: "AI Growth",
     description: "AI-orchestrated marketing across content, demand, and lifecycle.",
     included: ["Growth model design", "Content & SEO engine", "Paid + lifecycle agents", "Reporting & attribution"],
@@ -135,6 +139,7 @@ export const services: Service[] = [
     icon: Sparkles,
   },
   {
+    slug: "magnivo-build",
     name: "Magnivo Build",
     description: "Idea to product in days — AI-native MVPs ready to ship.",
     included: ["Product scoping", "Design & build sprint", "Launch infrastructure", "Iterate & scale"],
@@ -143,12 +148,48 @@ export const services: Service[] = [
     icon: Hammer,
   },
   {
+    slug: "revops",
     name: "RevOps",
     description: "AI-augmented RevOps — auto-hygiene, auto-forecasting, and auto-routing powered by Magnivo agents on top of your stack.",
     included: ["CRM hygiene & data model", "Pipeline architecture & routing", "AI forecasting & dashboards", "Attribution & revenue analytics"],
     outcome: "A self-cleaning, self-forecasting revenue engine your team can trust.",
     model: "Retainer + project",
     icon: GitBranch,
+  },
+];
+
+export type Resource = {
+  slug: string;
+  type: "Blog" | "Playbook" | "Guide" | "Case Study" | "Benchmark" | "Glossary";
+  title: string;
+  description: string;
+  content?: string;
+};
+
+export const resources: Resource[] = [
+  {
+    slug: "ai-gtm-playbook-2025",
+    type: "Guide",
+    title: "The 2025 AI GTM Playbook",
+    description: "How to replace manual SDR functions with autonomous agents.",
+  },
+  {
+    slug: "series-b-saas-pipeline",
+    type: "Case Study",
+    title: "Doubling pipeline for a Series B SaaS",
+    description: "A deep dive into how Magnivo.ai automated outbound for a scaling team.",
+  },
+  {
+    slug: "future-of-revops",
+    type: "Blog",
+    title: "The Future of AI-Native RevOps",
+    description: "Why the traditional RevOps stack is being replaced by autonomous agents.",
+  },
+  {
+    slug: "agent-governance-guide",
+    type: "Playbook",
+    title: "The AI Agent Governance Framework",
+    description: "Ensuring safety, reliability, and performance in revenue agents.",
   },
 ];
 
@@ -166,3 +207,4 @@ export const platformLayers = [
   { name: "Automation Layer", description: "Workflows that execute across your stack — sales, marketing, ops." },
   { name: "Orchestration Layer", description: "Cross-team coordination with shared context, memory, and outcomes." },
 ];
+

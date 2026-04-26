@@ -8,7 +8,7 @@ import { products } from "@/lib/site-data";
 export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
-      { title: "Products — Magnivo AI" },
+      { title: "Products — Magnivo.ai" },
       { name: "description", content: "Six AI products built for modern revenue teams: Leadfinder, Reachout, Compass, Orbit, Socialiq, and Agentdesk." },
       { property: "og:title", content: "6 AI Products. One Revenue Ecosystem." },
       { property: "og:description", content: "AI-native tools across the full revenue stack." },
