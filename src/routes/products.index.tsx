@@ -25,14 +25,14 @@ function ProductsPage() {
         title="6 AI Products. One Revenue Ecosystem."
         subtitle="Every tool a modern revenue team needs — purpose-built, AI-native, and connected by the Magnivo platform."
       />
-      <section className="container-x py-20">
+      <section className="container-x py-16 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {products.map((p, i) => {
             const Icon = p.icon;
             return (
               <FadeIn key={p.slug} delay={i * 0.04}>
-                <div className="surface-card hover-blue p-8 h-full">
-                  <div className="flex items-start justify-between">
+                <div className="surface-card hover-blue p-5 sm:p-8 h-full">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
                     <div className="h-12 w-12 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)]">
                       <Icon size={22} />
                     </div>

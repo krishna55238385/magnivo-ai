@@ -3,9 +3,9 @@ import { products } from "@/lib/site-data";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
-      <div className="container-x py-16 grid grid-cols-2 md:grid-cols-5 gap-8">
-        <div className="col-span-2">
+    <footer className="border-t border-border mt-16 sm:mt-24">
+      <div className="container-x py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8">
+        <div className="sm:col-span-2">
           <div className="flex items-center gap-2 font-bold text-foreground">
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card">
               <span className="text-[13px] font-bold bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">M</span>
@@ -13,12 +13,14 @@ export function Footer() {
             <span>Magnivo AI</span>
           </div>
           <p className="text-sm text-muted-foreground mt-4 max-w-xs">
-            The AI operating system for modern GTM — intelligence, automation, and orchestration in one.
+            The Revenue Brain for Modern B2B.
           </p>
+          <div className="mt-6 flex flex-col gap-2 text-sm">
+          </div>
         </div>
 
         <FooterCol title="Products">
-          {products.map((p) => (
+          {products.slice(0, 5).map((p) => (
             <Link key={p.slug} to="/products/$slug" params={{ slug: p.slug }}>{p.name}</Link>
           ))}
           <Link to="/products">All Products</Link>
@@ -28,24 +30,37 @@ export function Footer() {
           <Link to="/services">GTM Operations</Link>
           <Link to="/services">Agent Studio</Link>
           <Link to="/services">AI Growth</Link>
-          <Link to="/services">Magnivo Build</Link>
+          <button onClick={() => window.dispatchEvent(new CustomEvent('open-demo-modal'))} className="text-left text-[var(--accent-blue)] hover:underline">Free GTM Audit</button>
+        </FooterCol>
+
+        <FooterCol title="Resources">
+          <a href="#">Case Studies</a>
+          <a href="#">GTM Playbook</a>
+          <a href="#">AI Benchmarks</a>
+          <a href="#">Blog</a>
         </FooterCol>
 
         <FooterCol title="Company">
           <Link to="/about">About</Link>
           <Link to="/platform">Platform</Link>
+          <Link to="/pricing">Pricing</Link>
           <Link to="/investors">Investors</Link>
           <Link to="/contact">Contact</Link>
         </FooterCol>
+
+        <FooterCol title="Legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Data Security</a>
+        </FooterCol>
       </div>
       <div className="border-t border-border">
-        <div className="container-x py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div>© {new Date().getFullYear()} Magnivo AI. All rights reserved.</div>
-          <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-foreground">Privacy</a>
-            <a href="#" className="hover:text-foreground">Terms</a>
-            <a href="#" className="hover:text-foreground">LinkedIn</a>
-            <a href="#" className="hover:text-foreground">Twitter</a>
+        <div className="container-x pt-6 pb-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+          <div>© 2026 Magnivo AI. All rights reserved.</div>
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-5">
+            <a href="https://linkedin.com/in/founder-profile" target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
+            <a href="https://wa.me/message/xyz" target="_blank" rel="noreferrer" className="hover:text-foreground">WhatsApp</a>
+            <a href="https://twitter.com/magnivoai" target="_blank" rel="noreferrer" className="hover:text-foreground">Twitter</a>
           </div>
         </div>
       </div>

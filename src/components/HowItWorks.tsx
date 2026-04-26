@@ -4,20 +4,20 @@ import { FadeIn } from "./FadeIn";
 const steps = [
   {
     n: 1,
-    title: "Connect Your Stack",
-    desc: "Integrate your CRM, email, and data sources in minutes — no engineering required.",
+    title: "Connect Your Stack & Define Your ICP",
+    desc: "We audit your current GTM, map your ideal customer, and identify the exact gaps costing you pipeline.",
     icon: Plug,
   },
   {
     n: 2,
-    title: "AI Agents Activate",
-    desc: "48 specialized agents analyze, strategize, and execute across your GTM motion.",
+    title: "52 AI Agents Activate",
+    desc: "Your full-stack growth engine goes live — outbound, content, SEO, AEO, PLG, retention — all orchestrated, all automated, all monitored.",
     icon: Cpu,
   },
   {
     n: 3,
-    title: "Revenue Grows",
-    desc: "Watch your pipeline fill and deals close faster than ever before.",
+    title: "Pipeline Grows. You Focus on Closing.",
+    desc: "You get weekly reports, a live dashboard, and a growth partner who treats your revenue like their own.",
     icon: BarChart3,
   },
 ];
@@ -73,6 +73,14 @@ export function HowItWorks() {
           })}
         </div>
       </div>
+      
+      <FadeIn delay={0.3}>
+        <div className="mt-12 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10 text-sm font-medium text-[var(--accent-blue)] shadow-[0_0_15px_color-mix(in_oklab,var(--accent-blue)_20%,transparent)]">
+            From onboarding to first results: 10 business days.
+          </div>
+        </div>
+      </FadeIn>
     </section>
   );
 }

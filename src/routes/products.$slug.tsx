@@ -49,16 +49,16 @@ function ProductDetail() {
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
-        <div className="container-x relative py-24 md:py-32">
+        <div className="container-x relative py-16 sm:py-20 md:py-32">
           <FadeIn>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="h-12 w-12 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] bg-card">
                 <Icon size={22} />
               </div>
               <span className="pill-blue">{product.tagline}</span>
             </div>
-            <h1 className="mt-6 text-5xl md:text-6xl font-bold tracking-tight">{product.name}</h1>
-            <p className="mt-5 text-lg text-muted-foreground max-w-2xl">{product.description}</p>
+            <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold">{product.name}</h1>
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl">{product.description}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/contact" className="btn-primary">Start Free <ArrowRight size={14} /></Link>
               <Link to="/contact" className="btn-ghost">Book Demo</Link>
@@ -67,10 +67,10 @@ function ProductDetail() {
         </div>
       </section>
 
-      <section className="container-x py-20">
+      <section className="container-x py-16 sm:py-20">
         <FadeIn>
           <div className="label-eyebrow">Capabilities</div>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">What {product.name} does</h2>
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold">What {product.name} does</h2>
         </FadeIn>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
           {product.features.map((f: string, i: number) => (
@@ -87,7 +87,7 @@ function ProductDetail() {
       <section className="container-x py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FadeIn>
-            <div className="surface-card p-7 h-full">
+            <div className="surface-card p-5 sm:p-7 h-full">
               <div className="label-eyebrow">Use Case</div>
               <h3 className="mt-3 text-xl font-semibold">Built for fast-moving revenue teams</h3>
               <p className="mt-3 text-muted-foreground">
@@ -96,7 +96,7 @@ function ProductDetail() {
             </div>
           </FadeIn>
           <FadeIn delay={0.05}>
-            <div className="surface-card p-7 h-full">
+            <div className="surface-card p-5 sm:p-7 h-full">
               <div className="label-eyebrow">Integrations</div>
               <h3 className="mt-3 text-xl font-semibold">Works with your stack</h3>
               <p className="mt-3 text-muted-foreground">
@@ -107,14 +107,14 @@ function ProductDetail() {
         </div>
       </section>
 
-      <section className="container-x py-20">
+      <section className="container-x py-16 sm:py-20">
         <FadeIn>
-          <div className="surface-card p-10 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">See {product.name} in action</h2>
+          <div className="surface-card p-6 sm:p-10 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold">See {product.name} in action</h2>
             <p className="mt-4 text-muted-foreground">A 20-minute personalized walkthrough.</p>
-            <div className="mt-7 flex justify-center gap-3">
-              <Link to="/contact" className="btn-primary">Book Demo <ArrowRight size={14} /></Link>
-              <Link to="/products" className="btn-ghost">All Products</Link>
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
+              <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">Book Demo <ArrowRight size={14} /></Link>
+              <Link to="/products" className="btn-ghost w-full sm:w-auto justify-center">All Products</Link>
             </div>
           </div>
         </FadeIn>

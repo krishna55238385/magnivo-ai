@@ -1,142 +1,278 @@
 import { useRef } from "react";
-import { BrainCircuit, Bot, TrendingUp } from "lucide-react";
+import { BrainCircuit, Bot, TrendingUp, Activity, Box, Zap } from "lucide-react";
 
 export function HeroVisual() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  function onMove(e: React.MouseEvent<HTMLDivElement>) {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    const rx = (y - 0.5) * -4;
-    const ry = (x - 0.5) * 4;
-    el.style.setProperty("--rx", `${rx}deg`);
-    el.style.setProperty("--ry", `${ry}deg`);
-  }
-  function onLeave() {
-    const el = ref.current;
-    if (!el) return;
-    el.style.setProperty("--rx", "0deg");
-    el.style.setProperty("--ry", "0deg");
-  }
-
   return (
-    <div className="relative mx-auto mt-12 md:mt-16 max-w-5xl" style={{ perspective: 1400 }}>
+    <div className="relative mx-auto mt-8 sm:mt-12 md:mt-16 max-w-5xl">
       <div
-        ref={ref}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        className="surface-card p-2 relative overflow-hidden"
-        style={{
-          transform: "rotateX(var(--rx,0)) rotateY(var(--ry,0))",
-          transformStyle: "preserve-3d",
-          transition: "transform 300ms cubic-bezier(0.22,1,0.36,1)",
-        }}
+        className="surface-card p-2 relative overflow-hidden group"
       >
-        <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
-        {/* soft top gradient */}
+        <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
+        {/* Soft top gradient */}
         <div
-          className="absolute inset-x-0 top-0 h-24 pointer-events-none opacity-60"
-          style={{ background: "linear-gradient(180deg, color-mix(in oklab, var(--accent-blue) 18%, transparent), transparent)" }}
+          className="absolute inset-x-0 top-0 h-40 pointer-events-none opacity-60 transition-opacity duration-500 group-hover:opacity-80"
+          style={{ background: "linear-gradient(180deg, color-mix(in oklab, var(--accent-blue) 15%, transparent), transparent)" }}
         />
-        <div className="rounded-md border border-border bg-background/70 backdrop-blur-sm p-5 md:p-6 relative">
+
+        {/* Glow effect that follows mouse - simulated by static radial gradient for now */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[var(--accent-blue)]/20 blur-[100px] rounded-full pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[var(--accent-green)]/10 blur-[100px] rounded-full pointer-events-none transition-transform duration-700 group-hover:scale-110" />
+
+        <div className="rounded-xl border border-border/60 bg-[#0a0f14]/80 backdrop-blur-xl p-3 sm:p-5 md:p-6 relative shadow-2xl overflow-hidden">
+          {/* subtle inner border highlight */}
+          <div className="absolute inset-0 border border-white/5 rounded-xl pointer-events-none" />
+
           {/* Window dots */}
-          <div className="flex items-center gap-1.5 mb-5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.55_0.2_25)]/60" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.78_0.16_85)]/60" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent-green)]/60" />
-            <div className="ml-3 text-[11px] text-muted-foreground tracking-wide">magnivo.ai / orchestration</div>
+          <div className="flex flex-wrap items-center gap-2 mb-4 sm:mb-6 px-1">
+            <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#ff5f56] shadow-[0_0_10px_rgba(255,95,86,0.5)]" />
+            <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#ffbd2e] shadow-[0_0_10px_rgba(255,189,46,0.5)]" />
+            <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_rgba(39,201,63,0.5)]" />
+            <div className="ml-1 sm:ml-4 min-w-0 flex-1 truncate text-[10px] sm:text-xs text-muted-foreground/80 font-medium font-mono">magnivo.ai / orchestration</div>
+            <div className="ml-auto hidden min-[420px]:flex items-center gap-2 text-[10px] font-mono text-muted-foreground/60">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] animate-pulse" />
+              SYSTEM_ONLINE
+            </div>
           </div>
 
-          <div className="grid grid-cols-12 gap-3">
+          <div className="grid grid-cols-12 gap-3 sm:gap-5">
             {/* Sidebar */}
-            <div className="col-span-3 hidden md:flex flex-col gap-2 text-xs">
-              {["Leadfinder", "Reachout", "Compass", "Orbit", "Intelligence", "Agentdesk"].map((n, i) => (
+            <div className="col-span-3 hidden md:flex flex-col gap-2">
+              {[
+                { name: "Leadfinder", active: false },
+                { name: "Reachout", active: false },
+                { name: "Compass", active: false },
+                { name: "Orbit", active: false },
+                { name: "Intelligence", active: true },
+                { name: "Agentdesk", active: false }
+              ].map((item, i) => (
                 <div
-                  key={n}
-                  className={`px-3 py-2 rounded-md border transition ${
-                    i === 4
-                      ? "border-[color-mix(in_oklab,var(--accent-blue)_50%,var(--surface-border))] bg-[color-mix(in_oklab,var(--accent-blue)_10%,transparent)] text-foreground"
-                      : "border-border text-muted-foreground"
+                  key={item.name}
+                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    item.active
+                      ? "border border-[var(--accent-blue)]/30 bg-gradient-to-r from-[var(--accent-blue)]/10 to-transparent text-foreground shadow-[inset_2px_0_0_var(--accent-blue)]"
+                      : "border border-transparent text-muted-foreground/70 hover:bg-white/5 hover:text-foreground"
                   }`}
                 >
-                  {n}
+                  {item.name}
                 </div>
               ))}
             </div>
 
             {/* Main content */}
-            <div className="col-span-12 md:col-span-9 space-y-3">
-              <div className="grid grid-cols-3 gap-3">
-                <Stat label="Pipeline" value="$4.82M" trend="+38%" tone="green" />
-                <Stat label="Win rate" value="34.6%" trend="+6.1pt" tone="blue" />
-                <Stat label="AI actions" value="12.4k" trend="today" tone="green" />
+            <div className="col-span-12 md:col-span-9 space-y-5">
+              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-3 sm:gap-4">
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 flex flex-col justify-center relative overflow-hidden group/metric">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-green)]/5 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity duration-500" />
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/70 mb-1 relative z-10">PIPELINE</div>
+                  <div className="flex items-baseline gap-2 mb-1 relative z-10">
+                    <span className="text-2xl sm:text-3xl font-bold text-foreground">$4.2M</span>
+                    <span className="text-xs font-medium text-[var(--accent-green)] flex items-center">
+                      <TrendingUp size={12} className="mr-0.5" /> +14%
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted-foreground/50 relative z-10 font-medium">vs last month</div>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 flex flex-col justify-center relative overflow-hidden group/metric">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-blue)]/5 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity duration-500" />
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/70 mb-1 relative z-10">WIN RATE</div>
+                  <div className="flex items-baseline gap-2 mb-1 relative z-10">
+                    <span className="text-2xl sm:text-3xl font-bold text-foreground">32.8%</span>
+                    <span className="text-xs font-medium text-[var(--accent-blue)] flex items-center">
+                      <TrendingUp size={12} className="mr-0.5" /> +5.2%
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted-foreground/50 relative z-10 font-medium">vs last month</div>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 flex flex-col justify-center relative overflow-hidden group/metric">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-green)]/5 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity duration-500" />
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/70 mb-1 relative z-10">AI ACTIONS</div>
+                  <div className="flex items-baseline gap-2 mb-1 relative z-10">
+                    <span className="text-2xl sm:text-3xl font-bold text-foreground">84,592</span>
+                    <span className="text-xs font-medium text-[var(--accent-green)] flex items-center">
+                      <Zap size={12} className="mr-0.5" /> Active
+                    </span>
+                  </div>
+                  <div className="text-xs text-muted-foreground/50 relative z-10 font-medium">this week</div>
+                </div>
               </div>
 
-              <div className="rounded-md border border-border p-4">
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <BrainCircuit size={14} className="text-[var(--accent-blue)]" />
+              {/* Line Chart Section */}
+              <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 relative overflow-hidden group/chart">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+                <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2 text-xs mb-6 relative z-10">
+                  <div className="flex items-center gap-2.5 text-foreground font-medium">
+                    <BrainCircuit size={15} className="text-[var(--accent-blue)]" />
                     Intelligence — deal risk
                   </div>
-                  <span className="text-muted-foreground">last 7 days</span>
+                  <span className="text-muted-foreground/70 font-medium">last 7 days</span>
                 </div>
-                <svg viewBox="0 0 300 70" className="mt-3 w-full h-16">
-                  <defs>
-                    <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="var(--accent-blue)" stopOpacity="0.45" />
-                      <stop offset="100%" stopColor="var(--accent-blue)" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M0,55 L25,48 L50,52 L75,40 L100,42 L125,30 L150,34 L175,22 L200,26 L225,18 L250,22 L275,12 L300,16 L300,70 L0,70 Z"
-                    fill="url(#sg)"
-                  />
-                  <path
-                    d="M0,55 L25,48 L50,52 L75,40 L100,42 L125,30 L150,34 L175,22 L200,26 L225,18 L250,22 L275,12 L300,16"
-                    fill="none"
-                    stroke="var(--accent-blue)"
-                    strokeWidth="1.5"
-                  />
-                </svg>
+
+                {/* Advanced SVG Chart */}
+                <div className="relative w-full h-24 md:h-32 mt-2">
+                  {/* Grid lines */}
+                  <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+                    <div className="border-t border-dashed border-border w-full"></div>
+                    <div className="border-t border-dashed border-border w-full"></div>
+                    <div className="border-t border-dashed border-border w-full"></div>
+                    <div className="border-t border-border w-full"></div>
+                  </div>
+
+                  <svg viewBox="0 0 400 100" className="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="var(--accent-blue)" stopOpacity="0.5" />
+                        <stop offset="50%" stopColor="var(--accent-blue)" stopOpacity="0.1" />
+                        <stop offset="100%" stopColor="var(--accent-blue)" stopOpacity="0" />
+                      </linearGradient>
+                      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
+
+                    {/* Area fill */}
+                    <path
+                      d="M0,80 L40,75 L80,85 L120,65 L160,70 L200,50 L240,55 L280,35 L320,40 L360,20 L400,25 L400,100 L0,100 Z"
+                      fill="url(#chartGradient)"
+                      className="transition-all duration-1000 ease-in-out"
+                    />
+
+                    {/* Line */}
+                    <path
+                      d="M0,80 L40,75 L80,85 L120,65 L160,70 L200,50 L240,55 L280,35 L320,40 L360,20 L400,25"
+                      fill="none"
+                      stroke="var(--accent-blue)"
+                      strokeWidth="2.5"
+                      filter="url(#glow)"
+                    />
+
+                    {/* Data Points */}
+                    {[
+                      {x: 120, y: 65, val: "42%"}, {x: 200, y: 50, val: "35%"}, {x: 280, y: 35, val: "28%"}, {x: 360, y: 20, val: "15%"}
+                    ].map((p, i) => (
+                      <g key={i} className="transition-transform duration-300 hover:scale-150 origin-center" style={{ transformOrigin: `${p.x}px ${p.y}px` }}>
+                        <circle cx={p.x} cy={p.y} r="6" fill="var(--accent-blue)" fillOpacity="0.2" />
+                        <circle cx={p.x} cy={p.y} r="3" fill="#ffffff" stroke="var(--accent-blue)" strokeWidth="1.5" />
+                        <text x={p.x} y={p.y - 12} fontSize="10" fill="currentColor" className="text-muted-foreground/80 font-mono" textAnchor="middle">{p.val}</text>
+                      </g>
+                    ))}
+                  </svg>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-md border border-border p-3 text-xs">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <TrendingUp size={13} className="text-[var(--accent-green)]" />
+              {/* Bottom Row */}
+              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-3 sm:gap-4">
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 relative overflow-hidden group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-green)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex items-center gap-2.5 text-xs font-medium text-foreground relative z-10">
+                    <TrendingUp size={15} className="text-[var(--accent-green)]" />
                     Forecast accuracy
+                    <span className="ml-auto text-sm font-bold text-[var(--accent-green)]">94.2%</span>
                   </div>
-                  <div className="mt-2 text-2xl font-semibold tracking-tight">92.3%</div>
-                  <div className="text-muted-foreground mt-1">+4.2 vs last quarter</div>
+
+                  <div className="mt-5 mb-2 w-full relative z-10">
+                    <div className="flex justify-between text-[10px] text-muted-foreground/70 mb-1.5 font-mono">
+                      <span>PREDICTED</span>
+                      <span>ACTUAL</span>
+                    </div>
+                    <div className="w-full bg-white/5 rounded-full h-2 mb-3">
+                      <div className="bg-gradient-to-r from-[var(--accent-green)]/40 to-[var(--accent-green)] h-2 rounded-full relative" style={{ width: '94%' }}>
+                        <div className="absolute right-0 top-0 bottom-0 w-2 bg-white/40 rounded-r-full shadow-[0_0_10px_var(--accent-green)]"></div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center text-[10px] text-muted-foreground/50 font-mono">
+                      <span>$2.4M</span>
+                      <span>$2.5M</span>
+                    </div>
+                  </div>
+
+                  {/* Subtle decorative graph */}
+                  <svg className="absolute bottom-0 right-0 w-32 h-16 opacity-30 pointer-events-none translate-y-4 translate-x-4">
+                    <path d="M0,60 C20,50 30,20 50,30 C70,40 80,10 100,5" fill="none" stroke="var(--accent-green)" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
                 </div>
-                <div className="rounded-md border border-border p-3 text-xs">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Bot size={13} className="text-[var(--accent-blue)]" />
+
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 relative overflow-hidden group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-blue)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex items-center gap-2.5 text-xs font-medium text-foreground relative z-10">
+                    <Bot size={15} className="text-[var(--accent-blue)]" />
                     Agents online
+                    <span className="ml-auto text-sm font-bold text-[var(--accent-blue)]">24 / 24</span>
                   </div>
-                  <div className="mt-2 text-2xl font-semibold tracking-tight">28</div>
-                  <div className="text-muted-foreground mt-1">across 6 workflows</div>
+
+                  <div className="mt-4 h-12 w-full flex items-end gap-1.5 relative z-10">
+                    {[3, 5, 2, 8, 4, 7, 5, 9, 6, 4, 7, 8].map((h, i) => (
+                      <div key={i} className="flex-1 rounded-sm bg-[var(--accent-blue)]/30 animate-pulse relative group/bar hover:bg-[var(--accent-blue)]/60 transition-colors" style={{ height: `${h * 10}%`, animationDelay: `${i * 100}ms` }}>
+                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-card border border-border/50 text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none text-foreground font-mono">
+                          {h * 12}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Subtle active indicators */}
+                  <div className="absolute top-5 right-5 flex gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-blue)] animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-blue)] animate-pulse" style={{ animationDelay: '150ms' }} />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-blue)] animate-pulse" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+
+                {/* Intent Signals Card */}
+                <div className="rounded-xl border border-border/50 bg-black/40 p-4 sm:p-5 relative overflow-hidden group/card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-green)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex items-center gap-2.5 text-xs font-medium text-foreground relative z-10">
+                    <Activity size={15} className="text-[var(--accent-green)]" />
+                    Intent signals
+                    <span className="ml-auto text-sm font-bold text-[var(--accent-green)]">High</span>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-2 relative z-10">
+                    {[
+                      { company: "Acme Corp", score: 98, time: "2m ago", color: "bg-[#ff5f56]" },
+                      { company: "GlobalTech", score: 85, time: "12m ago", color: "bg-[#ffbd2e]" },
+                      { company: "Nexus", score: 74, time: "1h ago", color: "bg-[#27c93f]" },
+                    ].map((signal, i) => (
+                      <div key={i} className="flex items-center justify-between text-[10px] font-mono bg-white/5 rounded px-2 py-1.5 border border-white/5 group-hover/card:border-white/10 transition-colors">
+                        <span className="text-foreground/80 truncate w-20">{signal.company}</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`h-1.5 w-1.5 rounded-full ${signal.color}`} />
+                          <span className="text-muted-foreground/60">{signal.time}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Live Execution Log */}
+              <div className="rounded-xl border border-border/50 bg-black/40 p-4 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+                <div className="flex items-center gap-2.5 text-[10px] font-bold tracking-widest uppercase text-muted-foreground/70 mb-3 relative z-10">
+                  <Box size={12} className="text-foreground/40" /> LIVE EXECUTION LOG
+                </div>
+                <div className="space-y-2 h-[88px] overflow-hidden relative z-10">
+                  <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0b1016] to-transparent z-10 pointer-events-none" />
+                  {[
+                    { agent: "Reachout-Alpha", action: "Drafted hyper-personalised email to VP Sales at Stripe", time: "Just now" },
+                    { agent: "Leadfinder-Omega", action: "Identified 43 new high-intent accounts in fintech", time: "1m ago" },
+                    { agent: "Orbit-Sync", action: "Updated CRM records for 12 closed-won opportunities", time: "3m ago" },
+                    { agent: "Reachout-Beta", action: "Followed up with 14 dormant leads, 2 meetings booked", time: "8m ago" }
+                  ].map((log, i) => (
+                    <div key={i} className="flex gap-2 sm:gap-3 text-[10px] font-mono items-start opacity-80 hover:opacity-100 transition-opacity">
+                      <span className="text-muted-foreground/40 whitespace-nowrap w-12">{log.time}</span>
+                      <span className="text-[var(--accent-blue)] hidden sm:inline whitespace-nowrap w-32">[{log.agent}]</span>
+                      <span className="text-muted-foreground/80 truncate">{log.action}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Stat({ label, value, trend, tone }: { label: string; value: string; trend: string; tone: "blue" | "green" }) {
-  const color = tone === "blue" ? "var(--accent-blue)" : "var(--accent-green)";
-  return (
-    <div className="rounded-md border border-border p-3">
-      <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{label}</div>
-      <div className="mt-2 text-xl md:text-2xl font-semibold tracking-tight">{value}</div>
-      <div className="text-[11px] mt-1" style={{ color }}>
-        {trend}
       </div>
     </div>
   );

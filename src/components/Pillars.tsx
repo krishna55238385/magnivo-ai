@@ -12,29 +12,53 @@ type Pillar = {
 const pillars: Pillar[] = [
   {
     name: "Acquire",
-    desc: "Market Intelligence, Outbound Campaigns & Content Engine.",
-    bullets: ["ICP Analysis & TAM Mapping", "Multi-channel Outbound", "AI Content Generation"],
+    desc: "Bring the right buyers in",
+    bullets: [
+      "ABM (Account-Based Marketing)",
+      "Outbound: Email, LinkedIn, Cold Calling (AI)",
+      "SEO — organic search authority",
+      "AEO — Answer Engine Optimization",
+      "GEO — Generative Engine Optimization",
+      "Performance Marketing (paid ads)",
+      "Demand Generation"
+    ],
     icon: Target,
     color: "var(--accent-blue)",
   },
   {
     name: "Engage",
-    desc: "Multi-channel Engagement & Personalized Outreach.",
-    bullets: ["Personalized Sequences", "Social Selling Automation", "Smart Follow-ups"],
+    desc: "Turn attention into conversations",
+    bullets: [
+      "Personalised Outreach Sequences",
+      "Omnichannel Orchestration",
+      "Social Listening & Intent Signals",
+      "Inbound Content & Thought Leadership"
+    ],
     icon: MessageSquare,
     color: "var(--accent-green)",
   },
   {
     name: "Convert",
-    desc: "Pipeline Management, Deal Qualification & Proposals.",
-    bullets: ["AI Deal Scoring", "Automated Proposals", "Contract Intelligence"],
+    desc: "Close deals predictably",
+    bullets: [
+      "PLG (Product-Led Growth) conversion flows",
+      "Meeting booking & deal qualification",
+      "Proposal generation & contract automation",
+      "Sales Intelligence & pipeline management"
+    ],
     icon: TrendingUp,
     color: "oklch(0.72 0.18 300)", // violet
   },
   {
     name: "Retain & Expand",
-    desc: "Customer Success, Nurture Queues & Expansion.",
-    bullets: ["Health Score Monitoring", "Expansion Opportunities", "Churn Prevention"],
+    desc: "Grow revenue from existing customers",
+    bullets: [
+      "Lifecycle & Onboarding Sequences",
+      "Retention Marketing & Health Scoring",
+      "Upsell + Expansion Campaigns",
+      "Referral & Viral Growth Loops",
+      "Champion Tracking"
+    ],
     icon: RefreshCw,
     color: "oklch(0.78 0.16 70)", // amber
   },
@@ -45,7 +69,7 @@ export function Pillars() {
     <section className="container-x py-20 md:py-28">
       <FadeIn>
         <div className="text-center max-w-3xl mx-auto">
-          <div className="label-eyebrow">Four Pillars</div>
+          <div className="label-eyebrow">THE FULL-STACK GROWTH ENGINE</div>
           <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
             Four Pillars of <span className="text-gradient">GTM Excellence</span>
           </h2>

@@ -32,7 +32,8 @@ export function Header() {
       }`}
       onMouseLeave={() => setOpen(null)}
     >
-      <div className="container-x flex items-center justify-between h-16">
+
+      <div className="container-x flex h-14 sm:h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold text-foreground" onClick={() => setMobileOpen(false)}>
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-card">
             <span className="text-[13px] font-bold tracking-tight bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">M</span>
@@ -41,15 +42,17 @@ export function Header() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1 text-sm text-muted-foreground">
-          <NavTrigger label="Products" active={open === "products"} onEnter={() => setOpen("products")} />
-          <NavTrigger label="Services" active={open === "services"} onEnter={() => setOpen("services")} />
           <NavLink to="/platform" onEnter={() => setOpen(null)}>Platform</NavLink>
+          <NavTrigger label="Services" active={open === "services"} onEnter={() => setOpen("services")} />
+          <NavLink to="/consulting" onEnter={() => setOpen(null)}>Consulting</NavLink>
+          <NavLink to="/pricing" onEnter={() => setOpen(null)}>Pricing</NavLink>
           <NavLink to="/about" onEnter={() => setOpen(null)}>About</NavLink>
           <NavTrigger label="Resources" active={open === "resources"} onEnter={() => setOpen("resources")} />
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Demo <ArrowRight size={14} /></button>
+          <Link to="/platform" className="btn-ghost text-sm py-2 px-4">Explore Platform</Link>
+          <button onClick={() => setDemoOpen(true)} className="btn-primary">Book a Strategy Call <ArrowRight size={14} /></button>
         </div>
 
         <button
@@ -75,7 +78,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-background overflow-y-auto" style={{ maxHeight: "calc(100vh - 64px)" }}>
+        <div className="lg:hidden border-t border-border bg-background overflow-y-auto" style={{ maxHeight: "calc(100svh - 56px)" }}>
           <div className="container-x py-4 flex flex-col gap-1 text-sm pb-8">
             <MobileAccordion title="Products">
               <div className="grid grid-cols-1 gap-1 pt-2">
@@ -124,9 +127,14 @@ export function Header() {
                 })}
               </div>
             </MobileAccordion>
-            <Link to="/platform" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">Platform</Link>
-            <Link to="/about" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border">About</Link>
-            <button onClick={() => { setMobileOpen(false); setDemoOpen(true); }} className="btn-primary justify-center mt-4">Book a Demo <ArrowRight size={14} /></button>
+            <Link to="/consulting" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border font-medium">Consulting</Link>
+            <Link to="/pricing" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border font-medium">Pricing</Link>
+            <Link to="/platform" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border font-medium">Platform</Link>
+            <Link to="/about" onClick={() => setMobileOpen(false)} className="py-3 px-2 text-foreground border-b border-border font-medium">About</Link>
+            <div className="flex flex-col gap-2 mt-4">
+              <Link to="/platform" onClick={() => setMobileOpen(false)} className="btn-ghost justify-center">Explore Platform</Link>
+              <button onClick={() => { setMobileOpen(false); setDemoOpen(true); }} className="btn-primary justify-center">Book a Strategy Call <ArrowRight size={14} /></button>
+            </div>
           </div>
         </div>
       )}

@@ -153,10 +153,11 @@ export const services: Service[] = [
 ];
 
 export const personas = [
-  { title: "B2B SaaS Founders", hook: "Compress your GTM motion into a single AI-run system." },
-  { title: "Growth-Stage Startups", hook: "Scale revenue without scaling headcount linearly." },
-  { title: "Enterprise Sales Teams", hook: "Equip every rep with an AI co-pilot that closes." },
-  { title: "D2C Brands Going B2B", hook: "Stand up a B2B motion in weeks with AI-native infrastructure." },
+  { title: "B2B SaaS Companies", hook: "(Series Seed–A) needing scalable pipeline" },
+  { title: "Professional Services & Agencies", hook: "seeking consistent inbound and outbound leads" },
+  { title: "B2B Marketplaces", hook: "scaling both supply and demand sides efficiently" },
+  { title: "RevOps & Sales-Led Teams", hook: "automating and augmenting their existing GTM motions" },
+  { title: "Funded Startups", hook: "pre-Sales hire looking to build automated GTM infrastructure" },
 ];
 
 export const platformLayers = [

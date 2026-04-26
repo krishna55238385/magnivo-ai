@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -23,6 +24,11 @@ import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products': typeof ProductsIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/investors'
     | '/platform'
+    | '/pricing'
     | '/services'
     | '/products/$slug'
     | '/products/'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/investors'
     | '/platform'
+    | '/pricing'
     | '/services'
     | '/products/$slug'
     | '/products'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/investors'
     | '/platform'
+    | '/pricing'
     | '/services'
     | '/products/$slug'
     | '/products/'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   InvestorsRoute: typeof InvestorsRoute
   PlatformRoute: typeof PlatformRoute
+  PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   InvestorsRoute: InvestorsRoute,
   PlatformRoute: PlatformRoute,
+  PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,
