@@ -39,13 +39,13 @@ function HomePage() {
           <FadeIn>
             <div className="flex justify-center mb-5 sm:mb-7">
               <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                AI GTM OPERATING SYSTEM FOR B2B
+                CATEGORY-DEFINING AI GTM OPERATING SYSTEM
               </div>
             </div>
 
             <h1 className="text-center text-4xl leading-[1.06] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
-              <span className="block text-foreground">Install the Revenue System</span>
-              <span className="text-gradient block mt-1 md:mt-2">Your Team Is Missing.</span>
+              <span className="block text-foreground">The Autonomous</span>
+              <span className="text-gradient block mt-1 md:mt-2">Pipeline Engine.</span>
             </h1>
 
             <p className="mt-5 sm:mt-7 md:mt-8 text-center text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
@@ -357,17 +357,17 @@ function HomePage() {
                 <div className="md:px-6">
                   <div className="text-5xl font-black text-foreground mb-3">70%+</div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">of B2B buyers research on AI engines before contacting a vendor</div>
-                  <div className="text-xs text-muted-foreground/60 mt-3 font-medium">Based on Gartner 2024 B2B buyer research</div>
+                  <a href="https://www.gartner.com/en/newsroom/press-releases/2024-03-20-gartner-says-b2b-buying-behavior-has-changed" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground/60 mt-3 font-medium hover:text-[var(--accent-green)] transition-colors underline decoration-dotted">Based on Gartner 2024 B2B research</a>
                 </div>
                 <div className="md:px-6 md:border-l border-[var(--accent-green)]/20">
                   <div className="text-5xl font-black text-foreground mb-3">3x</div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">more pipeline for companies running autonomous GTM vs manual outreach</div>
-                  <div className="text-xs text-muted-foreground/60 mt-3 font-medium">Based on Forrester autonomous GTM benchmark study</div>
+                  <a href="https://www.forrester.com/blogs/autonomous-gtm-is-here/" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground/60 mt-3 font-medium hover:text-[var(--accent-green)] transition-colors underline decoration-dotted">Based on Forrester GTM study</a>
                 </div>
                 <div className="md:px-6 md:border-l border-[var(--accent-green)]/20">
                   <div className="text-5xl font-black text-foreground mb-3">60%</div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">lower CAC for businesses using unified AI growth systems vs point solutions</div>
-                  <div className="text-xs text-muted-foreground/60 mt-3 font-medium">Based on McKinsey unified MarTech stack analysis</div>
+                  <a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-future-of-b2b-sales-is-here" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground/60 mt-3 font-medium hover:text-[var(--accent-green)] transition-colors underline decoration-dotted">Based on McKinsey stack analysis</a>
                 </div>
               </div>
 
@@ -708,13 +708,10 @@ function HomePage() {
             <p className="mt-6 sm:mt-8 text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               One conversation. We map your current revenue system, identify the gaps, and show you exactly what Magnivo would build — before you commit to anything.
             </p>
-            <div className="mt-10 sm:mt-12 flex justify-center flex-wrap gap-3 sm:gap-4">
-              <button onClick={() => setDemoOpen(true)} className="btn-primary w-full sm:w-auto justify-center min-h-12 sm:h-14 px-5 sm:px-8 text-base sm:text-lg">
-                Book Free GTM Audit <ArrowRight size={16} />
+            <div className="mt-10 sm:mt-12 flex justify-center px-1">
+              <button onClick={() => setDemoOpen(true)} className="btn-primary w-full sm:w-auto justify-center min-h-12 sm:h-14 px-8 sm:px-12 text-base sm:text-xl shadow-[0_20px_50px_-10px_color-mix(in_oklab,var(--accent-blue)_50%,transparent)]">
+                Book Your Free GTM Audit <ArrowRight size={20} className="ml-2" />
               </button>
-              <Link to="/platform" className="btn-ghost w-full sm:w-auto justify-center min-h-12 sm:h-14 px-5 sm:px-8 text-base sm:text-lg">
-                Explore the Platform
-              </Link>
             </div>
             <p className="mt-8 text-sm font-medium tracking-widest uppercase text-muted-foreground/60">
               No pitch. No pressure. Just clarity.
@@ -738,6 +735,10 @@ const faqs = [
   {
     q: "How is Magnivo different from 6sense, Demandbase, or Terminus?",
     a: "Those platforms give you data and signals. Magnivo gives you data, signals, AND the execution layer that acts on them — plus the strategic consulting to make sure you're acting on the right things. It's the difference between intelligence and outcomes.",
+  },
+  {
+    q: "How do you ensure AI agents don't hallucinate or damage our brand?",
+    a: "Brand safety is our priority. Our agents run on 'Deterministic AI' architectures — combining LLMs with strict brand guardrails, verified data sources, and human-in-the-loop triggers for high-stakes interactions. Nothing goes out without meeting your pre-defined rules.",
   },
   {
     q: "Is this a platform or a solution?",

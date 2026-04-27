@@ -30,7 +30,6 @@ export function Footer() {
           <Link to="/solutions">GTM Operations</Link>
           <Link to="/solutions">Agent Studio</Link>
           <Link to="/solutions">AI Growth</Link>
-          <button onClick={() => window.dispatchEvent(new CustomEvent('open-demo-modal'))} className="text-left text-[var(--accent-blue)] hover:underline">Free GTM Audit</button>
         </FooterCol>
 
         <FooterCol title="Resources">
@@ -52,13 +51,26 @@ export function Footer() {
           <a href="#">Terms of Service</a>
           <a href="#">Data Security</a>
         </FooterCol>
+
+        <div className="lg:col-span-2">
+          <div className="rounded-2xl border border-border bg-card/50 p-6 premium-card">
+            <div className="text-[10px] font-bold tracking-[0.2em] text-[var(--accent-blue)] uppercase mb-3">Priority Access</div>
+            <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">Book Your Free GTM Audit</h4>
+            <p className="text-xs text-muted-foreground mb-5 leading-relaxed">Get a 30-min diagnosis of your revenue engine and a 10-day implementation blueprint.</p>
+            <button 
+              onClick={() => window.dispatchEvent(new CustomEvent('open-demo-modal'))}
+              className="w-full py-2.5 rounded-lg bg-[var(--accent-blue)] text-white text-xs font-bold hover:brightness-110 transition-all shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--accent-blue)_50%,transparent)]"
+            >
+              Start My Audit
+            </button>
+          </div>
+        </div>
       </div>
       <div className="border-t border-border">
         <div className="container-x pt-6 pb-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© 2026 Magnivo.ai. All rights reserved.</div>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-5">
-            <a href="https://linkedin.com/in/founder-profile" target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
-            <a href="https://wa.me/message/xyz" target="_blank" rel="noreferrer" className="hover:text-foreground">WhatsApp</a>
+            <a href="https://linkedin.com/company/magnivo-ai" target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
             <a href="https://twitter.com/magnivoai" target="_blank" rel="noreferrer" className="hover:text-foreground">Twitter</a>
           </div>
         </div>
