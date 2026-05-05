@@ -95,41 +95,84 @@ function PricingPage() {
           <FadeIn delay={0.05}>
             <div className="premium-card p-6 md:p-8 h-full flex flex-col relative">
               <h3 className="text-xl font-bold text-foreground">Starter</h3>
-              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">For founders who need pipeline now</div>
+              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">
+                For founders who need pipeline now
+              </div>
               <p className="mt-4 text-sm font-medium text-foreground border-b border-border pb-4">
                 Your AI outbound machine, switched on.
               </p>
               <ul className="mt-6 space-y-3 mb-8 flex-1">
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> ICP definition + lead generation</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> AI-orchestrated outbound (email + LinkedIn)</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> SEO foundation setup</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> AEO/GEO initial optimisation</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Weekly performance reports</li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> ICP definition
+                  + lead generation
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> AI-orchestrated
+                  outbound (email + LinkedIn)
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> SEO foundation
+                  setup
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> AEO/GEO initial
+                  optimisation
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Weekly
+                  performance reports
+                </li>
               </ul>
-              <a href="#cal-link" className="btn-ghost w-full justify-center">Get Started <ArrowRight size={14} /></a>
+              <a href="#cal-link" className="btn-ghost w-full justify-center">
+                Get Started <ArrowRight size={14} />
+              </a>
             </div>
           </FadeIn>
 
           {/* Growth */}
           <FadeIn delay={0.1}>
-            <div className="premium-card p-6 md:p-8 h-full flex flex-col relative border-[var(--accent-green)]/30 shadow-[0_0_30px_-5px_color-mix(in_oklab,var(--accent-green)_20%,transparent)]">
-              <div className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 bg-[var(--accent-green)] text-[#0a0a0f] text-xs font-bold rounded-full">
+            <div className="premium-card p-6 md:p-8 h-full flex flex-col relative border-[var(--accent-green)]/30">
+              <div className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 bg-[var(--accent-green)] text-[var(--brand-charcoal)] text-xs font-bold rounded-full">
                 ⭐ Most Popular
               </div>
               <h3 className="text-xl font-bold text-foreground">Growth</h3>
-              <div className="mt-2 text-xs text-[var(--accent-green)] font-medium">For teams ready for full-stack GTM</div>
+              <div className="mt-2 text-xs text-[var(--accent-green)] font-medium">
+                For teams ready for full-stack GTM
+              </div>
               <p className="mt-4 text-sm font-medium text-foreground border-b border-border pb-4">
                 Outbound + inbound + conversion, unified.
               </p>
               <ul className="mt-6 space-y-3 mb-8 flex-1">
-                <li className="flex gap-2 text-sm text-foreground/80 font-medium">Everything in Starter</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-green)] shrink-0" /> Inbound marketing + content</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-green)] shrink-0" /> Performance marketing (paid)</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-green)] shrink-0" /> PLG conversion flows</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-green)] shrink-0" /> Meeting booking + deal qualification</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-green)] shrink-0" /> Live pipeline dashboard</li>
+                <li className="flex gap-2 text-sm text-foreground/80 font-medium">
+                  Everything in Starter
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-green)] shrink-0" /> Inbound
+                  marketing + content
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-green)] shrink-0" /> Performance
+                  marketing (paid)
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-green)] shrink-0" /> PLG conversion
+                  flows
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-green)] shrink-0" /> Meeting
+                  booking + deal qualification
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-green)] shrink-0" /> Live pipeline
+                  dashboard
+                </li>
               </ul>
-              <a href="#cal-link" className="btn-primary w-full justify-center bg-[var(--accent-green)] text-[#0a0a0f] hover:bg-[var(--accent-green)]/90">Book a Call <ArrowRight size={14} /></a>
+              <a
+                href="#cal-link"
+                className="btn-primary w-full justify-center bg-[var(--accent-green)] text-[var(--brand-charcoal)] hover:bg-[var(--accent-green)]/90"
+              >
+                Book a Call <ArrowRight size={14} />
+              </a>
             </div>
           </FadeIn>
 
@@ -137,19 +180,39 @@ function PricingPage() {
           <FadeIn delay={0.15}>
             <div className="premium-card p-6 md:p-8 h-full flex flex-col relative">
               <h3 className="text-xl font-bold text-foreground">Scale</h3>
-              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">For companies replacing their GTM team</div>
+              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">
+                For companies replacing their GTM team
+              </div>
               <p className="mt-4 text-sm font-medium text-foreground border-b border-border pb-4">
                 The complete AI growth engine.
               </p>
               <ul className="mt-6 space-y-3 mb-8 flex-1">
-                <li className="flex gap-2 text-sm text-foreground/80 font-medium">Everything in Growth</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Full lifecycle + retention marketing</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Referral + viral growth systems</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> ABM campaigns</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Dedicated ops manager</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Monthly business review</li>
+                <li className="flex gap-2 text-sm text-foreground/80 font-medium">
+                  Everything in Growth
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Full lifecycle
+                  + retention marketing
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Referral +
+                  viral growth systems
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> ABM campaigns
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Dedicated ops
+                  manager
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Monthly
+                  business review
+                </li>
               </ul>
-              <a href="#cal-link" className="btn-ghost w-full justify-center">Talk to Us <ArrowRight size={14} /></a>
+              <a href="#cal-link" className="btn-ghost w-full justify-center">
+                Talk to Us <ArrowRight size={14} />
+              </a>
             </div>
           </FadeIn>
 
@@ -157,18 +220,36 @@ function PricingPage() {
           <FadeIn delay={0.2}>
             <div className="premium-card p-6 md:p-8 h-full flex flex-col relative">
               <h3 className="text-xl font-bold text-foreground">Enterprise / Custom</h3>
-              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">For complex GTM motions</div>
+              <div className="mt-2 text-xs text-[var(--accent-blue)] font-medium">
+                For complex GTM motions
+              </div>
               <p className="mt-4 text-sm font-medium text-foreground border-b border-border pb-4">
                 Custom agent architecture. Built for you.
               </p>
               <ul className="mt-6 space-y-3 mb-8 flex-1">
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Custom agent build</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> White-label delivery</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Multi-market GTM</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Dedicated team</li>
-                <li className="flex gap-2 text-sm text-foreground/80"><Check size={16} className="text-[var(--accent-blue)] shrink-0" /> SLA-backed delivery</li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Custom agent
+                  build
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> White-label
+                  delivery
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Multi-market
+                  GTM
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> Dedicated team
+                </li>
+                <li className="flex gap-2 text-sm text-foreground/80">
+                  <Check size={16} className="text-[var(--accent-blue)] shrink-0" /> SLA-backed
+                  delivery
+                </li>
               </ul>
-              <a href="#cal-link" className="btn-ghost w-full justify-center">Contact Us <ArrowRight size={14} /></a>
+              <a href="#cal-link" className="btn-ghost w-full justify-center">
+                Contact Us <ArrowRight size={14} />
+              </a>
             </div>
           </FadeIn>
         </div>
@@ -176,9 +257,12 @@ function PricingPage() {
         <FadeIn delay={0.3}>
           <div className="mt-12 text-center text-muted-foreground bg-card/50 border border-border rounded-lg p-5 sm:p-6 max-w-3xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-5 sm:gap-6">
             <div className="flex-1 text-left sm:text-left">
-              Not sure which plan fits? Book a free 30-minute GTM audit. We'll scope it for you. No pitch. Just clarity.
+              Not sure which plan fits? Book a free 30-minute GTM audit. We'll scope it for you. No
+              pitch. Just clarity.
             </div>
-            <a href="#cal-link" className="btn-primary shrink-0 justify-center">Book Free GTM Audit <ArrowRight size={14} /></a>
+            <a href="#cal-link" className="btn-primary shrink-0 justify-center">
+              Book Free GTM Audit <ArrowRight size={14} />
+            </a>
           </div>
         </FadeIn>
       </section>
@@ -190,7 +274,8 @@ function PricingPage() {
           <FadeIn>
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl sm:text-4xl font-bold">
-                What every plan includes — <span className="text-gradient">no matter where you start</span>
+                What every plan includes —{" "}
+                <span className="text-gradient">no matter where you start</span>
               </h2>
             </div>
           </FadeIn>
@@ -203,7 +288,8 @@ function PricingPage() {
                 </div>
                 <h3 className="text-lg font-bold">Dedicated Ops Manager</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  A human expert overseeing your agents, reviewing output quality, and managing your engagement weekly.
+                  A human expert overseeing your agents, reviewing output quality, and managing your
+                  engagement weekly.
                 </p>
               </div>
             </FadeIn>
@@ -214,7 +300,8 @@ function PricingPage() {
                 </div>
                 <h3 className="text-lg font-bold">Live Pipeline Dashboard</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Real-time visibility into every lead, every agent action, and every stage of your pipeline.
+                  Real-time visibility into every lead, every agent action, and every stage of your
+                  pipeline.
                 </p>
               </div>
             </FadeIn>
@@ -225,7 +312,8 @@ function PricingPage() {
                 </div>
                 <h3 className="text-lg font-bold">Weekly Performance Reports</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Every Friday: leads added, outreach sent, replies received, meetings booked. Always know what's working.
+                  Every Friday: leads added, outreach sent, replies received, meetings booked.
+                  Always know what's working.
                 </p>
               </div>
             </FadeIn>
@@ -246,11 +334,17 @@ function PricingPage() {
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
                 <tr>
-                  <th className="p-4 border-b border-border font-bold text-foreground w-1/4">Feature</th>
+                  <th className="p-4 border-b border-border font-bold text-foreground w-1/4">
+                    Feature
+                  </th>
                   <th className="p-4 border-b border-border font-bold text-foreground">Starter</th>
-                  <th className="p-4 border-b border-border font-bold text-[var(--accent-green)]">Growth</th>
+                  <th className="p-4 border-b border-border font-bold text-[var(--accent-green)]">
+                    Growth
+                  </th>
                   <th className="p-4 border-b border-border font-bold text-foreground">Scale</th>
-                  <th className="p-4 border-b border-border font-bold text-foreground">Enterprise</th>
+                  <th className="p-4 border-b border-border font-bold text-foreground">
+                    Enterprise
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-border">
@@ -278,72 +372,132 @@ function PricingPage() {
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Paid Marketing</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-green)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-green)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                   <td className="p-4 text-muted-foreground">Custom</td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">PLG Flows</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-green)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-green)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                   <td className="p-4 text-muted-foreground">Custom</td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Retention & Lifecycle</td>
                   <td className="p-4 text-muted-foreground">—</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                   <td className="p-4 text-muted-foreground">Custom</td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">ABM Campaigns</td>
                   <td className="p-4 text-muted-foreground">—</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                   <td className="p-4 text-muted-foreground">Custom</td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Dedicated Ops Manager</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-green)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-green)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Live Dashboard</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-green)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-green)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Weekly Reports</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-green)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-green)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
                   <td className="p-4 text-foreground/80 font-medium">Monthly Business Review</td>
                   <td className="p-4 text-muted-foreground">—</td>
                   <td className="p-4 text-muted-foreground">—</td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
-                  <td className="p-4 text-muted-foreground"><Check size={16} className="text-[var(--accent-blue)]" /></td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
+                  <td className="p-4 text-muted-foreground">
+                    <Check size={16} className="text-[var(--accent-blue)]" />
+                  </td>
                 </tr>
                 <tr className="hover:bg-card/50 transition-colors">
-                  <td className="p-4 text-foreground/80 font-bold border-t border-border/50">Pricing</td>
-                  <td className="p-4 border-t border-border/50">
-                    <a href="#cal-link" className="text-[var(--accent-blue)] hover:underline text-sm font-medium">Talk to Us</a>
+                  <td className="p-4 text-foreground/80 font-bold border-t border-border/50">
+                    Pricing
                   </td>
                   <td className="p-4 border-t border-border/50">
-                    <a href="#cal-link" className="text-[var(--accent-green)] hover:underline text-sm font-medium">Talk to Us</a>
+                    <a
+                      href="#cal-link"
+                      className="text-[var(--accent-blue)] hover:underline text-sm font-medium"
+                    >
+                      Talk to Us
+                    </a>
                   </td>
                   <td className="p-4 border-t border-border/50">
-                    <a href="#cal-link" className="text-[var(--accent-blue)] hover:underline text-sm font-medium">Talk to Us</a>
+                    <a
+                      href="#cal-link"
+                      className="text-[var(--accent-green)] hover:underline text-sm font-medium"
+                    >
+                      Talk to Us
+                    </a>
                   </td>
                   <td className="p-4 border-t border-border/50">
-                    <a href="#cal-link" className="text-[var(--accent-blue)] hover:underline text-sm font-medium">Talk to Us</a>
+                    <a
+                      href="#cal-link"
+                      className="text-[var(--accent-blue)] hover:underline text-sm font-medium"
+                    >
+                      Talk to Us
+                    </a>
+                  </td>
+                  <td className="p-4 border-t border-border/50">
+                    <a
+                      href="#cal-link"
+                      className="text-[var(--accent-blue)] hover:underline text-sm font-medium"
+                    >
+                      Talk to Us
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -370,20 +524,17 @@ function PricingPage() {
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="container-x relative py-16 sm:py-20 md:py-28 text-center">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-bold">
-              Still on the fence?
-            </h2>
+            <h2 className="text-3xl md:text-5xl font-bold">Still on the fence?</h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">
-              30 minutes with our team will show you exactly what Magnivo would do for your business. No pitch. No pressure. Just a clear GTM plan.
+              30 minutes with our team will show you exactly what Magnivo would do for your
+              business. No pitch. No pressure. Just a clear GTM plan.
             </p>
             <div className="mt-8 flex justify-center">
               <a href="#cal-link" className="btn-primary justify-center">
                 Book Your Free GTM Audit <ArrowRight size={14} />
               </a>
             </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              No obligation. No credit card.
-            </p>
+            <p className="mt-4 text-xs text-muted-foreground">No obligation. No credit card.</p>
           </FadeIn>
         </div>
       </section>

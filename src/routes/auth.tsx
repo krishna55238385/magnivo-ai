@@ -6,10 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
-    meta: [
-      { title: "Sign in — Magnivo Admin" },
-      { name: "robots", content: "noindex,nofollow" },
-    ],
+    meta: [{ title: "Sign in — Magnivo Admin" }, { name: "robots", content: "noindex,nofollow" }],
   }),
   component: AuthPage,
 });
@@ -30,7 +27,9 @@ function AuthPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true); setErr(null); setInfo(null);
+    setBusy(true);
+    setErr(null);
+    setInfo(null);
     try {
       if (mode === "signup") {
         const redirectUrl = `${window.location.origin}/admin`;
@@ -40,7 +39,9 @@ function AuthPage() {
           options: { emailRedirectTo: redirectUrl },
         });
         if (error) throw error;
-        setInfo("Account created. If email confirmation is enabled, check your inbox. Ask an existing admin to grant you the admin role.");
+        setInfo(
+          "Account created. If email confirmation is enabled, check your inbox. Ask an existing admin to grant you the admin role.",
+        );
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -57,33 +58,59 @@ function AuthPage() {
       <div className="aurora" aria-hidden />
       <div className="absolute inset-0 dot-grid opacity-50" aria-hidden />
       <div className="relative w-full max-w-md surface-card p-7 md:p-9">
-        <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">← Back to site</Link>
+        <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">
+          ← Back to site
+        </Link>
         <div className="mt-5 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)]"><Lock size={18} /></div>
+          <div className="h-10 w-10 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)]">
+            <Lock size={18} />
+          </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Magnivo Admin</h1>
-            <p className="text-sm text-muted-foreground">{mode === "signin" ? "Sign in to access the admin panel" : "Create an admin account"}</p>
+            <p className="text-sm text-muted-foreground">
+              {mode === "signin" ? "Sign in to access the admin panel" : "Create an admin account"}
+            </p>
           </div>
         </div>
 
         <form onSubmit={submit} className="mt-7 space-y-4">
           <label className="block">
             <div className="label-eyebrow mb-2">Email</div>
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="auth-input" placeholder="you@magnivo.ai" />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="auth-input"
+              placeholder="you@magnivo.ai"
+            />
           </label>
           <label className="block">
             <div className="label-eyebrow mb-2">Password</div>
-            <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="auth-input" placeholder="••••••••" />
+            <input
+              type="password"
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="auth-input"
+              placeholder="••••••••"
+            />
           </label>
-          {err && <div className="text-sm text-[oklch(0.7_0.2_25)]">{err}</div>}
+          {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
           {info && <div className="text-sm text-[var(--accent-green)]">{info}</div>}
           <button disabled={busy} className="btn-primary w-full justify-center">
-            {busy ? "Please wait..." : mode === "signin" ? "Sign in" : "Sign up"} <ArrowRight size={14} />
+            {busy ? "Please wait..." : mode === "signin" ? "Sign in" : "Sign up"}{" "}
+            <ArrowRight size={14} />
           </button>
         </form>
 
         <button
-          onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setErr(null); setInfo(null); }}
+          onClick={() => {
+            setMode(mode === "signin" ? "signup" : "signin");
+            setErr(null);
+            setInfo(null);
+          }}
           className="mt-5 text-sm text-muted-foreground hover:text-foreground w-full text-center"
         >
           {mode === "signin" ? "Need an account? Sign up" : "Already have an account? Sign in"}
@@ -91,7 +118,9 @@ function AuthPage() {
 
         {user && !isAdmin && (
           <div className="mt-6 p-4 rounded-md border border-border bg-card text-sm text-muted-foreground">
-            You're signed in but don't have admin access yet. Ask an existing admin to grant you the <span className="text-foreground font-medium">admin</span> role for user id <span className="text-foreground font-mono text-xs">{user.id}</span>.
+            You're signed in but don't have admin access yet. Ask an existing admin to grant you the{" "}
+            <span className="text-foreground font-medium">admin</span> role for user id{" "}
+            <span className="text-foreground font-mono text-xs">{user.id}</span>.
           </div>
         )}
       </div>

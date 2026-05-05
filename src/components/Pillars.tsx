@@ -20,7 +20,7 @@ const pillars: Pillar[] = [
       "AEO — Answer Engine Optimization",
       "GEO — Generative Engine Optimization",
       "Performance Marketing (paid ads)",
-      "Demand Generation"
+      "Demand Generation",
     ],
     icon: Target,
     color: "var(--accent-blue)",
@@ -32,7 +32,7 @@ const pillars: Pillar[] = [
       "Personalised Outreach Sequences",
       "Omnichannel Orchestration",
       "Social Listening & Intent Signals",
-      "Inbound Content & Thought Leadership"
+      "Inbound Content & Thought Leadership",
     ],
     icon: MessageSquare,
     color: "var(--accent-green)",
@@ -44,10 +44,10 @@ const pillars: Pillar[] = [
       "PLG (Product-Led Growth) conversion flows",
       "Meeting booking & deal qualification",
       "Proposal generation & contract automation",
-      "Sales Intelligence & pipeline management"
+      "Sales Intelligence & pipeline management",
     ],
     icon: TrendingUp,
-    color: "oklch(0.72 0.18 300)", // violet
+    color: "var(--brand-charcoal)",
   },
   {
     name: "Retain & Expand",
@@ -57,10 +57,10 @@ const pillars: Pillar[] = [
       "Retention Marketing & Health Scoring",
       "Upsell + Expansion Campaigns",
       "Referral & Viral Growth Loops",
-      "Champion Tracking"
+      "Champion Tracking",
     ],
     icon: RefreshCw,
-    color: "oklch(0.78 0.16 70)", // amber
+    color: "var(--accent-gold)",
   },
 ];
 

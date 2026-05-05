@@ -9,7 +9,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — Magnivo.ai" },
-      { name: "description", content: "Talk to Magnivo.ai about a demo, partnership, investment, or general inquiry." },
+      {
+        name: "description",
+        content: "Talk to Magnivo.ai about a demo, partnership, investment, or general inquiry.",
+      },
       { property: "og:title", content: "Let's Talk — Magnivo.ai" },
       { property: "og:description", content: "Book a demo or reach the team." },
     ],
@@ -21,7 +24,13 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", company: "", intent: "Demo", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    intent: "Demo",
+    message: "",
+  });
 
   const reasons = [
     { t: "Demo", d: "See the platform and products in action." },
@@ -32,7 +41,8 @@ function ContactPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true); setErr(null);
+    setBusy(true);
+    setErr(null);
     const type = form.intent === "Demo" ? "demo" : "contact";
     const { error } = await supabase.from("submissions").insert({
       type,
@@ -56,14 +66,19 @@ function ContactPage() {
       <section className="container-x py-16 md:py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
         <FadeIn>
           <div className="label-eyebrow">Contact</div>
-          <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">Let's Talk</h1>
+          <h1 className="mt-4 text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            Let's Talk
+          </h1>
           <p className="mt-4 text-muted-foreground text-base md:text-lg max-w-md">
-            Tell us what you're trying to build. We'll route you to the right person within one business day.
+            Tell us what you're trying to build. We'll route you to the right person within one
+            business day.
           </p>
           <div className="mt-8 space-y-3">
             {reasons.map((r) => (
               <div key={r.t} className="surface-card p-4 md:p-5 flex items-start gap-4">
-                <div className="h-8 w-8 rounded-md border border-border bg-card flex items-center justify-center text-[var(--accent-blue)] text-xs font-semibold shrink-0">{r.t[0]}</div>
+                <div className="h-8 w-8 rounded-md border border-border bg-card flex items-center justify-center text-[var(--accent-blue)] text-xs font-semibold shrink-0">
+                  {r.t[0]}
+                </div>
                 <div>
                   <div className="font-semibold">{r.t}</div>
                   <div className="text-sm text-muted-foreground">{r.d}</div>
@@ -71,35 +86,93 @@ function ContactPage() {
               </div>
             ))}
           </div>
-          <a href="#" className="btn-ghost mt-8 inline-flex"><Calendar size={14} /> Book directly via Calendly</a>
+          <a href="#" className="btn-ghost mt-8 inline-flex">
+            <Calendar size={14} /> Book directly via Calendly
+          </a>
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <form
-            className="surface-card p-6 md:p-8"
-            onSubmit={submit}
-          >
+          <form className="surface-card p-6 md:p-8" onSubmit={submit}>
             {sent ? (
               <div className="py-12 text-center">
-                <div className="mx-auto h-12 w-12 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)] text-2xl">✓</div>
+                <div className="mx-auto h-12 w-12 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)] text-2xl">
+                  ✓
+                </div>
                 <h3 className="mt-5 text-2xl font-bold">Message sent</h3>
-                <p className="mt-2 text-muted-foreground">We saved your details and will be in touch shortly.</p>
-                <button onClick={() => { setSent(false); setForm({ name: "", email: "", company: "", intent: "Demo", message: "" }); }} className="btn-ghost mt-6">Send another</button>
+                <p className="mt-2 text-muted-foreground">
+                  We saved your details and will be in touch shortly.
+                </p>
+                <button
+                  onClick={() => {
+                    setSent(false);
+                    setForm({ name: "", email: "", company: "", intent: "Demo", message: "" });
+                  }}
+                  className="btn-ghost mt-6"
+                >
+                  Send another
+                </button>
               </div>
             ) : (
               <div className="space-y-4">
-                <Field label="Name"><input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="cinput" placeholder="Jane Doe" /></Field>
-                <Field label="Email"><input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="cinput" placeholder="jane@company.com" /></Field>
-                <Field label="Company"><input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="cinput" placeholder="Acme Inc." /></Field>
+                <Field label="Name">
+                  <input
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="cinput"
+                    placeholder="Jane Doe"
+                  />
+                </Field>
+                <Field label="Email">
+                  <input
+                    required
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className="cinput"
+                    placeholder="jane@company.com"
+                  />
+                </Field>
+                <Field label="Company">
+                  <input
+                    value={form.company}
+                    onChange={(e) => setForm({ ...form, company: e.target.value })}
+                    className="cinput"
+                    placeholder="Acme Inc."
+                  />
+                </Field>
                 <Field label="Intent">
-                  <select value={form.intent} onChange={(e) => setForm({ ...form, intent: e.target.value })} className="cinput">
-                    <option>Demo</option><option>Partnership</option><option>Investment</option><option>General</option>
+                  <select
+                    value={form.intent}
+                    onChange={(e) => setForm({ ...form, intent: e.target.value })}
+                    className="cinput"
+                  >
+                    <option>Demo</option>
+                    <option>Partnership</option>
+                    <option>Investment</option>
+                    <option>General</option>
                   </select>
                 </Field>
-                <Field label="Message"><textarea rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="cinput" placeholder="Tell us a bit about your goals..." /></Field>
-                {err && <div className="text-sm text-[oklch(0.7_0.2_25)]">{err}</div>}
+                <Field label="Message">
+                  <textarea
+                    rows={5}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className="cinput"
+                    placeholder="Tell us a bit about your goals..."
+                  />
+                </Field>
+                {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
                 <button type="submit" disabled={busy} className="btn-primary w-full justify-center">
-                  {busy ? <><Loader2 size={14} className="animate-spin" /> Sending…</> : <>Send Message <ArrowRight size={14} /></>}
+                  {busy ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> Sending…
+                    </>
+                  ) : (
+                    <>
+                      Send Message <ArrowRight size={14} />
+                    </>
+                  )}
                 </button>
               </div>
             )}

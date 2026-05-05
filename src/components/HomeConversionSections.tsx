@@ -17,20 +17,28 @@ export function TrustSnapshot({ onAudit }: { onAudit: () => void }) {
     { value: "10 days", label: "to launch the first GTM system", icon: Clock3 },
     { value: "52 agents", label: "across prospecting, content, CRM, and ops", icon: Zap },
     { value: "Human-led", label: "strategy, QA, and weekly optimization", icon: Handshake },
-    { value: "No lock-in", label: "start with a focused 90-day operating sprint", icon: ShieldCheck },
+    {
+      value: "No lock-in",
+      label: "start with a focused 90-day operating sprint",
+      icon: ShieldCheck,
+    },
   ];
 
   return (
     <section className="container-x relative -mt-4 sm:-mt-8 z-10">
-      <div className="premium-card overflow-hidden border-border/60 bg-card/80 shadow-[0_24px_80px_-44px_color-mix(in_oklab,var(--accent-blue)_50%,transparent)]">
+      <div className="premium-card overflow-hidden border-border/60 bg-card/80">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr]">
           <div className="border-b lg:border-b-0 lg:border-r border-border/60 p-5 sm:p-7">
-            <div className="label-eyebrow text-[var(--accent-green)]">Trust starts with clarity</div>
+            <div className="label-eyebrow text-[var(--accent-green)]">
+              Trust starts with clarity
+            </div>
             <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-foreground">
               Know what we would build before you commit.
             </h2>
             <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              The free audit gives you a practical GTM diagnosis, not a generic sales call. We map your current pipeline motion, identify gaps, and show the highest-leverage system to install first.
+              The free audit gives you a practical GTM diagnosis, not a generic sales call. We map
+              your current pipeline motion, identify gaps, and show the highest-leverage system to
+              install first.
             </p>
             <button onClick={onAudit} className="btn-primary mt-6 w-full sm:w-auto justify-center">
               Get Free GTM Audit <ArrowRight size={14} />
@@ -40,7 +48,10 @@ export function TrustSnapshot({ onAudit }: { onAudit: () => void }) {
             {proof.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.value} className="border-b sm:border-r border-border/50 p-5 sm:p-6 last:border-b-0 even:sm:border-r-0">
+                <div
+                  key={item.value}
+                  className="border-b sm:border-r border-border/50 p-5 sm:p-6 last:border-b-0 even:sm:border-r-0"
+                >
                   <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background/60 text-[var(--accent-blue)]">
                     <Icon size={19} />
                   </div>
@@ -85,7 +96,8 @@ export function AuditBlueprint({ onAudit }: { onAudit: () => void }) {
               From scattered GTM to one operating system.
             </h2>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Visitors convert when they trust the process. So we make the first step concrete, low-risk, and easy to understand.
+              Visitors convert when they trust the process. So we make the first step concrete,
+              low-risk, and easy to understand.
             </p>
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
               <button onClick={onAudit} className="btn-primary justify-center">
@@ -110,8 +122,12 @@ export function AuditBlueprint({ onAudit }: { onAudit: () => void }) {
                       <div className="text-xs font-bold tracking-[0.16em] uppercase text-muted-foreground">
                         Step 0{index + 1}
                       </div>
-                      <h3 className="mt-2 text-lg sm:text-xl font-bold text-foreground">{step.title}</h3>
-                      <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">{step.body}</p>
+                      <h3 className="mt-2 text-lg sm:text-xl font-bold text-foreground">
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                        {step.body}
+                      </p>
                     </div>
                   </div>
                 </FadeIn>
@@ -119,7 +135,7 @@ export function AuditBlueprint({ onAudit }: { onAudit: () => void }) {
             })}
 
             <FadeIn delay={0.22}>
-              <div className="rounded-xl border border-[var(--accent-green)]/30 bg-[var(--accent-green)]/10 p-5 sm:p-6">
+              <div className="rounded-lg border border-[var(--accent-green)]/30 bg-[var(--accent-green)]/10 p-5 sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--accent-green)] text-background">
                     <BadgeCheck size={21} />
@@ -127,7 +143,8 @@ export function AuditBlueprint({ onAudit }: { onAudit: () => void }) {
                   <div className="flex-1">
                     <h3 className="font-bold text-foreground">What you leave with</h3>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      A GTM gap map, priority use cases, first sprint recommendation, and a clear next-step proposal if there is a fit.
+                      A GTM gap map, priority use cases, first sprint recommendation, and a clear
+                      next-step proposal if there is a fit.
                     </p>
                   </div>
                 </div>

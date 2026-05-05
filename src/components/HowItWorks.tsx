@@ -32,14 +32,18 @@ export function HowItWorks() {
             Live in <span className="text-gradient">three simple steps</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-base md:text-lg">
-            From connection to compounding revenue — orchestrated by AI agents that work while you sleep.
+            From connection to compounding revenue — orchestrated by AI agents that work while you
+            sleep.
           </p>
         </div>
       </FadeIn>
 
       <div className="mt-14 md:mt-20 relative">
         {/* Connector line — desktop horizontal */}
-        <div className="hidden md:block absolute top-9 left-[12%] right-[12%] step-line" aria-hidden />
+        <div
+          className="hidden md:block absolute top-9 left-[12%] right-[12%] step-line"
+          aria-hidden
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 relative">
           {steps.map((s, i) => {
@@ -51,7 +55,10 @@ export function HowItWorks() {
                   {i > 0 && (
                     <div
                       className="md:hidden absolute -top-10 left-1/2 -translate-x-1/2 w-px h-10 step-line"
-                      style={{ background: "linear-gradient(180deg, transparent, color-mix(in oklab, var(--accent-blue) 50%, transparent), color-mix(in oklab, var(--accent-green) 40%, transparent), transparent)" }}
+                      style={{
+                        background:
+                          "linear-gradient(180deg, transparent, color-mix(in oklab, var(--accent-blue) 50%, transparent), color-mix(in oklab, var(--accent-green) 40%, transparent), transparent)",
+                      }}
                       aria-hidden
                     />
                   )}
@@ -73,10 +80,10 @@ export function HowItWorks() {
           })}
         </div>
       </div>
-      
+
       <FadeIn delay={0.3}>
         <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10 text-sm font-medium text-[var(--accent-blue)] shadow-[0_0_15px_color-mix(in_oklab,var(--accent-blue)_20%,transparent)]">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10 text-sm font-medium text-[var(--accent-blue)]">
             From onboarding to first results: 10 business days.
           </div>
         </div>

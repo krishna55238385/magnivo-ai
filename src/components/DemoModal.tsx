@@ -10,14 +10,20 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
 
   useEffect(() => {
     if (!open) {
-      setSent(false); setErr(null); setBusy(false);
+      setSent(false);
+      setErr(null);
+      setBusy(false);
     }
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
@@ -26,7 +32,8 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true); setErr(null);
+    setBusy(true);
+    setErr(null);
     const { error } = await supabase.from("submissions").insert({
       type: "gtm_audit",
       name: form.name.trim(),
@@ -37,15 +44,29 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
       source: "demo_modal",
     });
     setBusy(false);
-    if (error) { setErr(error.message); return; }
+    if (error) {
+      setErr(error.message);
+      return;
+    }
     setSent(true);
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm animate-in fade-in" onClick={onClose} />
-      <div className="relative w-full md:max-w-lg bg-card border border-border md:rounded-xl rounded-t-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom md:zoom-in-95">
-        <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground p-1" aria-label="Close">
+    <div
+      className="fixed inset-0 z-[100] flex items-end md:items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm animate-in fade-in"
+        onClick={onClose}
+      />
+      <div className="relative w-full md:max-w-lg bg-card border border-border md:rounded-lg rounded-t-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom md:zoom-in-95">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground p-1"
+          aria-label="Close"
+        >
           <X size={18} />
         </button>
 
@@ -55,25 +76,67 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
               <CalendarCheck size={24} />
             </div>
             <h3 className="mt-5 text-2xl font-bold tracking-tight">Audit requested</h3>
-            <p className="mt-2 text-muted-foreground text-sm">We'll reach out within one business day with the next step.</p>
-            <button onClick={onClose} className="btn-ghost mt-6">Close</button>
+            <p className="mt-2 text-muted-foreground text-sm">
+              We'll reach out within one business day with the next step.
+            </p>
+            <button onClick={onClose} className="btn-ghost mt-6">
+              Close
+            </button>
           </div>
         ) : (
           <>
             <div className="label-eyebrow text-[var(--accent-blue)]">Free GTM Audit</div>
-            <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">Find the fastest path to pipeline</h2>
-            <p className="mt-2 text-sm text-muted-foreground">30 minutes. We review your motion and send a practical GTM gap map.</p>
+            <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight">
+              Find the fastest path to pipeline
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              30 minutes. We review your motion and send a practical GTM gap map.
+            </p>
 
             <form onSubmit={submit} className="mt-6 space-y-3">
-              <input required placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="dinput" />
-              <input required type="email" placeholder="Work email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="dinput" />
-              <input placeholder="Company" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="dinput" />
-              <textarea rows={3} placeholder="What are you trying to improve? Pipeline, outbound, inbound, CRM, retention..." value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="dinput" />
-              {err && <div className="text-sm text-[oklch(0.7_0.2_25)]">{err}</div>}
+              <input
+                required
+                placeholder="Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="dinput"
+              />
+              <input
+                required
+                type="email"
+                placeholder="Work email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="dinput"
+              />
+              <input
+                placeholder="Company"
+                value={form.company}
+                onChange={(e) => setForm({ ...form, company: e.target.value })}
+                className="dinput"
+              />
+              <textarea
+                rows={3}
+                placeholder="What are you trying to improve? Pipeline, outbound, inbound, CRM, retention..."
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                className="dinput"
+              />
+              {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
               <button type="submit" disabled={busy} className="btn-primary w-full justify-center">
-                {busy ? <><Loader2 size={14} className="animate-spin" /> Submitting...</> : <>Request Free Audit <ArrowRight size={14} /></>}
+                {busy ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" /> Submitting...
+                  </>
+                ) : (
+                  <>
+                    Request Free Audit <ArrowRight size={14} />
+                  </>
+                )}
               </button>
-              <p className="text-[11px] text-muted-foreground text-center">No pitch. No pressure. By submitting, you agree to be contacted by Magnivo.ai.</p>
+              <p className="text-[11px] text-muted-foreground text-center">
+                No pitch. No pressure. By submitting, you agree to be contacted by Magnivo.ai.
+              </p>
             </form>
           </>
         )}

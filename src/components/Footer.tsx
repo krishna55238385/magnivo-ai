@@ -1,27 +1,26 @@
 import { Link } from "@tanstack/react-router";
 import { products } from "@/lib/site-data";
+import { MagnivoLogo } from "./MagnivoLogo";
 
 export function Footer() {
   return (
     <footer className="border-t border-border mt-16 sm:mt-24">
       <div className="container-x py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8">
         <div className="sm:col-span-2">
-          <div className="flex items-center gap-2.5 font-bold text-foreground">
-            <img src="/logo.png" alt="Magnivo.ai Logo" className="h-7 w-7 object-contain" />
-            <span className="text-base tracking-tight">
-              Magnivo<span className="text-[var(--accent-blue)]">.ai</span>
-            </span>
-          </div>
+          <Link to="/" className="inline-flex w-fit shrink-0" aria-label="Magnivo.ai home">
+            <MagnivoLogo className="text-xl sm:text-2xl" />
+          </Link>
           <p className="text-sm text-muted-foreground mt-4 max-w-xs">
             The Revenue Brain for Modern B2B.
           </p>
-          <div className="mt-6 flex flex-col gap-2 text-sm">
-          </div>
+          <div className="mt-6 flex flex-col gap-2 text-sm"></div>
         </div>
 
         <FooterCol title="Products">
           {products.slice(0, 5).map((p) => (
-            <Link key={p.slug} to="/products/$slug" params={{ slug: p.slug }}>{p.name}</Link>
+            <Link key={p.slug} to="/products/$slug" params={{ slug: p.slug }}>
+              {p.name}
+            </Link>
           ))}
           <Link to="/products">All Products</Link>
         </FooterCol>
@@ -53,25 +52,45 @@ export function Footer() {
         </FooterCol>
 
         <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-border bg-card/50 p-6 premium-card">
-            <div className="text-[10px] font-bold tracking-[0.2em] text-[var(--accent-blue)] uppercase mb-3">Priority Access</div>
-            <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">Book Your Free GTM Audit</h4>
-            <p className="text-xs text-muted-foreground mb-5 leading-relaxed">Get a 30-min diagnosis of your revenue engine and a 10-day implementation blueprint.</p>
-            <button 
-              onClick={() => window.dispatchEvent(new CustomEvent('open-demo-modal'))}
-              className="w-full py-2.5 rounded-lg bg-[var(--accent-blue)] text-white text-xs font-bold hover:brightness-110 transition-all shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--accent-blue)_50%,transparent)]"
-            >
-              Start My Audit
-            </button>
-          </div>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#C4922A' }}>
+                Priority Access
+              </div>
+              <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">
+                Book Your Free GTM Audit
+              </h4>
+              <p className="text-xs text-muted-foreground mb-5 leading-relaxed">
+                Get a 30-min diagnosis of your revenue engine and a 10-day implementation blueprint.
+              </p>
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent("open-demo-modal"))}
+                className="btn-primary w-full justify-center text-sm py-3"
+              >
+                Start My Audit
+              </button>
+            </div>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="container-x pt-6 pb-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <div>© 2026 Magnivo.ai. All rights reserved.</div>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-5">
-            <a href="https://linkedin.com/company/magnivo-ai" target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
-            <a href="https://twitter.com/magnivoai" target="_blank" rel="noreferrer" className="hover:text-foreground">Twitter</a>
+            <a
+              href="https://linkedin.com/company/magnivo-ai"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://twitter.com/magnivoai"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              Twitter
+            </a>
           </div>
         </div>
       </div>
