@@ -9,10 +9,24 @@ import {
   Layers,
   Radio,
   ListOrdered,
+  Bell,
+  ShieldCheck,
 } from "lucide-react";
 
-const cardStyle = { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" } as const;
-const subtleCard = { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" } as const;
+const cardStyle = {
+  background: "rgba(255,255,255,0.92)",
+  border: "1px solid rgba(26,26,26,0.10)",
+  boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+} as const;
+const subtleCard = {
+  background: "rgba(255,255,255,0.7)",
+  border: "1px solid rgba(26,26,26,0.08)",
+} as const;
+const ink = "rgba(26,26,26,0.86)";
+const inkMuted = "rgba(26,26,26,0.55)";
+const inkFaint = "rgba(26,26,26,0.35)";
+const accent = "var(--accent-blue)";
+const accent2 = "var(--accent-green)";
 
 function HeroToolbar() {
   const views = ["Intelligence", "Pipeline", "Agents"];
@@ -23,10 +37,10 @@ function HeroToolbar() {
     >
       <div
         className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-w-0 flex-1 max-w-md"
-        style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ background: "rgba(26,26,26,0.03)", border: "1px solid rgba(26,26,26,0.08)" }}
       >
-        <Search size={11} className="shrink-0" style={{ color: "rgba(255,255,255,0.35)" }} />
-        <span className="text-[9px] font-mono truncate" style={{ color: "rgba(255,255,255,0.32)" }}>
+        <Search size={11} className="shrink-0" style={{ color: inkMuted }} />
+        <span className="text-[9px] font-mono truncate" style={{ color: inkFaint }}>
           Search accounts, signals, playbooks…
         </span>
       </div>
@@ -37,8 +51,8 @@ function HeroToolbar() {
             className="rounded-md px-2 py-1 text-[9px] font-semibold"
             style={
               i === 0
-                ? { background: "rgba(196,146,42,0.15)", color: "#C4922A", border: "1px solid rgba(196,146,42,0.3)" }
-                : { color: "rgba(255,255,255,0.38)", border: "1px solid rgba(255,255,255,0.08)" }
+                ? { background: "rgba(27,58,45,0.10)", color: "var(--accent-blue)", border: "1px solid rgba(27,58,45,0.22)" }
+                : { color: inkMuted, border: "1px solid rgba(26,26,26,0.10)" }
             }
           >
             {v}
@@ -46,17 +60,24 @@ function HeroToolbar() {
         ))}
         <div
           className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-mono"
-          style={{ color: "rgba(110,231,183,0.9)", border: "1px solid rgba(110,231,183,0.2)" }}
+          style={{ color: "var(--accent-green)", border: "1px solid rgba(196,146,42,0.25)" }}
         >
           <Radio size={9} className="shrink-0" />
           Live
         </div>
         <div
           className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-mono"
-          style={{ color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.08)" }}
+          style={{ color: inkMuted, border: "1px solid rgba(26,26,26,0.10)" }}
         >
           <Layers size={9} className="shrink-0 opacity-70" />
           All workspaces
+        </div>
+        <div
+          className="hidden md:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-mono"
+          style={{ color: inkMuted, border: "1px solid rgba(26,26,26,0.10)" }}
+        >
+          <ShieldCheck size={9} className="shrink-0 opacity-70" />
+          Guardrails
         </div>
       </div>
     </div>
@@ -76,24 +97,24 @@ function PipelineStrip() {
       className="flex flex-wrap items-stretch gap-1.5 rounded-xl px-2.5 py-2 pointer-events-none"
       style={subtleCard}
     >
-      <div className="flex items-center gap-1.5 text-[9px] font-bold tracking-widest uppercase shrink-0 mr-1" style={{ color: "rgba(255,255,255,0.35)" }}>
+      <div className="flex items-center gap-1.5 text-[9px] font-bold tracking-widest uppercase shrink-0 mr-1" style={{ color: inkFaint }}>
         Pipeline
       </div>
       {stages.map((s, i) => (
         <div key={s.label} className="flex items-center gap-2 min-w-0">
           {i > 0 && (
-            <span className="text-[10px] hidden sm:inline" style={{ color: "rgba(255,255,255,0.15)" }}>
+            <span className="text-[10px] hidden sm:inline" style={{ color: "rgba(26,26,26,0.20)" }}>
               →
             </span>
           )}
           <div
             className="rounded-lg px-2.5 py-1 flex items-center gap-2"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+            style={{ background: "rgba(26,26,26,0.03)", border: "1px solid rgba(26,26,26,0.08)" }}
           >
-            <span className="text-[10px] font-medium whitespace-nowrap" style={{ color: "rgba(255,255,255,0.65)" }}>
+            <span className="text-[10px] font-medium whitespace-nowrap" style={{ color: inkMuted }}>
               {s.label}
             </span>
-            <span className="text-[11px] font-bold tabular-nums" style={{ color: i >= stages.length - 1 ? "#6ee7b7" : "#C4922A" }}>
+            <span className="text-[11px] font-bold tabular-nums" style={{ color: i >= stages.length - 1 ? accent : accent2 }}>
               {s.count}
             </span>
           </div>
@@ -115,28 +136,28 @@ function AccountsQueuePanel() {
     <div className="rounded-xl p-3 flex flex-col min-h-0 pointer-events-none" style={cardStyle}>
       <div className="flex items-start justify-between gap-2 mb-3">
         <div>
-          <div className="text-xs font-bold" style={{ color: "rgba(255,255,255,0.88)" }}>
+          <div className="text-xs font-bold" style={{ color: ink }}>
             Hot account queue
           </div>
-          <div className="text-[10px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.38)" }}>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: inkMuted }}>
             247 tracked · sync 2m ago
           </div>
         </div>
         <div className="flex gap-1.5 shrink-0">
-          <span className="text-[9px] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(196,146,42,0.15)", color: "#C4922A" }}>
+          <span className="text-[9px] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(27,58,45,0.10)", color: accent }}>
             Filter
           </span>
-          <span className="hidden sm:inline text-[9px] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.45)" }}>
+          <span className="hidden sm:inline text-[9px] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(26,26,26,0.03)", color: inkMuted }}>
             Export
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-1.5 px-1 pb-1.5 border-b mb-1.5" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="grid grid-cols-12 gap-1.5 px-1 pb-1.5 border-b mb-1.5" style={{ borderColor: "rgba(26,26,26,0.10)" }}>
         {["Account", "Signal", "Score"].map((h, i) => (
           <div
             key={h}
             className={`text-[9px] font-bold uppercase tracking-wider ${i === 0 ? "col-span-5" : i === 1 ? "col-span-4" : "col-span-3"}`}
-            style={{ color: "rgba(255,255,255,0.35)" }}
+            style={{ color: inkFaint }}
           >
             {h}
           </div>
@@ -149,18 +170,18 @@ function AccountsQueuePanel() {
             className="grid grid-cols-12 gap-1.5 items-center px-1.5 py-1.5 rounded-lg"
             style={
               i === 0
-                ? { background: "rgba(196,146,42,0.08)", border: "1px solid rgba(196,146,42,0.2)" }
-                : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }
+                ? { background: "rgba(27,58,45,0.08)", border: "1px solid rgba(27,58,45,0.18)" }
+                : { background: "rgba(26,26,26,0.02)", border: "1px solid rgba(26,26,26,0.07)" }
             }
           >
             <div className="col-span-5 flex items-center gap-1.5 min-w-0">
               <div
                 className="w-5 h-5 rounded text-[9px] font-black flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.55)" }}
+                style={{ background: "rgba(26,26,26,0.06)", color: inkMuted }}
               >
                 {r.name[0]}
               </div>
-              <span className="text-[10px] font-medium truncate" style={{ color: "rgba(255,255,255,0.78)" }}>
+              <span className="text-[10px] font-medium truncate" style={{ color: ink }}>
                 {r.name}
               </span>
             </div>
@@ -169,37 +190,42 @@ function AccountsQueuePanel() {
                 className="inline-block text-[9px] font-semibold px-1.5 py-0.5 rounded-full truncate max-w-full"
                 style={
                   r.hot
-                    ? { background: "rgba(196,146,42,0.15)", color: "#C4922A" }
-                    : { background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.45)" }
+                    ? { background: "rgba(196,146,42,0.20)", color: "var(--accent-green)" }
+                    : { background: "rgba(26,26,26,0.04)", color: inkMuted }
                 }
               >
                 {r.tag}
               </span>
             </div>
             <div className="col-span-3 flex items-center gap-1">
-              <div className="flex-1 h-1 rounded-full min-w-0" style={{ background: "rgba(255,255,255,0.08)" }}>
+              <div className="flex-1 h-1 rounded-full min-w-0" style={{ background: "rgba(26,26,26,0.10)" }}>
                 <div
                   className="h-full rounded-full"
                   style={{
                     width: `${r.score}%`,
-                    background: r.score > 85 ? "#C4922A" : r.score > 70 ? "#1B3A2D" : "rgba(255,255,255,0.25)",
+                    background:
+                      r.score > 85
+                        ? "var(--accent-blue)"
+                        : r.score > 70
+                          ? "var(--accent-green)"
+                          : "rgba(26,26,26,0.25)",
                   }}
                 />
               </div>
-              <span className="text-[9px] font-bold tabular-nums w-5 shrink-0" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <span className="text-[9px] font-bold tabular-nums w-5 shrink-0" style={{ color: inkMuted }}>
                 {r.score}
               </span>
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-2 pt-2 flex flex-wrap items-center gap-2 border-t text-[9px] font-mono" style={{ borderColor: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.35)" }}>
+      <div className="mt-2 pt-2 flex flex-wrap items-center gap-2 border-t text-[9px] font-mono" style={{ borderColor: "rgba(26,26,26,0.08)", color: inkMuted }}>
         <span className="inline-flex items-center gap-1">
-          <span className="h-1 w-1 rounded-full animate-pulse" style={{ background: "#C4922A" }} />
+          <span className="h-1 w-1 rounded-full animate-pulse" style={{ background: "var(--accent-blue)" }} />
           Outbound agent
         </span>
         <span className="hidden sm:inline-flex items-center gap-1">
-          <span className="h-1 w-1 rounded-full animate-pulse" style={{ background: "#6ee7b7" }} />
+          <span className="h-1 w-1 rounded-full animate-pulse" style={{ background: "var(--accent-green)" }} />
           Enrichment
         </span>
         <span className="ml-auto">Next sync 58s</span>
@@ -227,21 +253,21 @@ function ExecutionAndQueueSection() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pointer-events-none">
       <div className="rounded-xl p-4 relative overflow-hidden" style={subtleCard}>
-        <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: "rgba(255,255,255,0.30)" }}>
+        <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: inkFaint }}>
           <Box size={11} />
           Live execution log
         </div>
         <div className="space-y-2 max-h-[140px] overflow-hidden relative">
-          <div className="absolute inset-x-0 bottom-0 h-10 z-10" style={{ background: "linear-gradient(to top, #12201a, transparent)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-10 z-10" style={{ background: "linear-gradient(to top, rgba(245,242,236,1), rgba(245,242,236,0))" }} />
           {liveLogs.map((log, i) => (
             <div key={i} className="flex gap-2 sm:gap-3 text-[10px] font-mono items-start" style={{ opacity: 1 - i * 0.14 }}>
-              <span className="whitespace-nowrap w-12 shrink-0" style={{ color: "rgba(255,255,255,0.30)" }}>
+              <span className="whitespace-nowrap w-12 shrink-0" style={{ color: inkFaint }}>
                 {log.time}
               </span>
-              <span className="hidden sm:inline font-bold whitespace-nowrap w-[6.5rem] shrink-0" style={{ color: "#C4922A" }}>
+              <span className="hidden sm:inline font-bold whitespace-nowrap w-[6.5rem] shrink-0" style={{ color: accent }}>
                 [{log.agent}]
               </span>
-              <span className="truncate min-w-0" style={{ color: "rgba(255,255,255,0.50)" }}>
+              <span className="truncate min-w-0" style={{ color: inkMuted }}>
                 {log.action}
               </span>
             </div>
@@ -249,7 +275,7 @@ function ExecutionAndQueueSection() {
         </div>
       </div>
       <div className="rounded-xl p-4 relative overflow-hidden" style={subtleCard}>
-        <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: "rgba(255,255,255,0.30)" }}>
+        <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: inkFaint }}>
           <ListOrdered size={11} />
           Queued actions
         </div>
@@ -258,15 +284,15 @@ function ExecutionAndQueueSection() {
             <div
               key={q.id}
               className="flex items-start gap-2 text-[10px] font-mono rounded-lg px-2 py-1.5"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.05)" }}
+              style={{ background: "rgba(26,26,26,0.02)", border: "1px solid rgba(26,26,26,0.08)" }}
             >
-              <span className="shrink-0 font-bold" style={{ color: "rgba(196,146,42,0.85)" }}>
+              <span className="shrink-0 font-bold" style={{ color: accent }}>
                 {q.id}
               </span>
-              <span className="flex-1 min-w-0 truncate" style={{ color: "rgba(255,255,255,0.52)" }}>
+              <span className="flex-1 min-w-0 truncate" style={{ color: inkMuted }}>
                 {q.task}
               </span>
-              <span className="shrink-0 tabular-nums" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <span className="shrink-0 tabular-nums" style={{ color: inkFaint }}>
                 {q.eta}
               </span>
             </div>
@@ -287,40 +313,51 @@ export function HeroVisual() {
       <div
         className="absolute -inset-4 rounded-3xl pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(27,58,45,0.18) 0%, transparent 70%)",
-          filter: "blur(24px)",
+          background:
+            "radial-gradient(ellipse at center, color-mix(in oklab, var(--accent-blue) 28%, transparent), transparent 72%)",
+          filter: "blur(26px)",
         }}
       />
 
       {/* Dark dashboard card */}
-      <div className="relative rounded-2xl overflow-hidden dashboard-card">
+      <div
+        className="relative rounded-2xl overflow-hidden max-h-[560px]"
+        style={{
+          background: "rgba(255,255,255,0.85)",
+          border: "1px solid rgba(26,26,26,0.12)",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.14)",
+        }}
+      >
         {/* Inner top gradient */}
         <div
           className="absolute inset-x-0 top-0 h-48 pointer-events-none"
-          style={{ background: "linear-gradient(180deg, rgba(196,146,42,0.05) 0%, transparent 100%)" }}
+          style={{
+            background:
+              "linear-gradient(180deg, color-mix(in oklab, var(--accent-green) 14%, transparent) 0%, transparent 100%)",
+          }}
         />
 
         <div className="p-3 sm:p-3.5 md:p-4 relative">
           {/* Window chrome bar */}
           <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 px-1">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(196,146,42,0.5)" }} />
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(27,58,45,0.7)" }} />
+            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(26,26,26,0.12)" }} />
+            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "color-mix(in oklab, var(--accent-green) 75%, #fff)" }} />
+            <span className="h-2.5 w-2.5 rounded-full" style={{ background: "color-mix(in oklab, var(--accent-blue) 78%, #fff)" }} />
             <div
               className="ml-1 sm:ml-4 min-w-0 flex-1 truncate text-[10px] sm:text-xs font-medium font-mono"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              style={{ color: inkMuted }}
             >
               magnivo.ai / intelligence
             </div>
-            <div className="ml-auto hidden min-[420px]:flex items-center gap-2 text-[10px] font-mono" style={{ color: "rgba(196,146,42,0.8)" }}>
-              <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: "#C4922A" }} />
+            <div className="ml-auto hidden min-[420px]:flex items-center gap-2 text-[10px] font-mono" style={{ color: accent }}>
+              <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: accent }} />
               SYSTEM_ONLINE
             </div>
           </div>
 
           <div className="grid grid-cols-12 gap-2.5 sm:gap-3.5">
             {/* Sidebar */}
-            <div className="col-span-3 hidden md:flex flex-col gap-1.5">
+            <div className="col-span-3 hidden sm:flex flex-col gap-1.5" style={{ borderRight: "1px solid rgba(26,26,26,0.10)", paddingRight: 10 }}>
               {[
                 { name: "Leadfinder", active: false },
                 { name: "Reachout", active: false },
@@ -331,17 +368,17 @@ export function HeroVisual() {
               ].map((item) => (
                 <div
                   key={item.name}
-                  className="px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
+                  className="px-2.5 py-2 rounded-lg text-[11px] font-medium transition-all duration-200"
                   style={
                     item.active
                       ? {
-                          background: "rgba(196,146,42,0.12)",
-                          border: "1px solid rgba(196,146,42,0.25)",
-                          color: "#C4922A",
+                          background: "rgba(27,58,45,0.10)",
+                          border: "1px solid rgba(27,58,45,0.18)",
+                          color: "var(--accent-blue)",
                         }
                       : {
                           border: "1px solid transparent",
-                          color: "rgba(255,255,255,0.40)",
+                          color: inkMuted,
                         }
                   }
                 >
@@ -351,58 +388,58 @@ export function HeroVisual() {
             </div>
 
             {/* Main content */}
-            <div className="col-span-12 md:col-span-9 flex flex-col gap-2.5 sm:gap-3.5">
+            <div className="col-span-12 sm:col-span-9 flex flex-col gap-2.5 sm:gap-3.5">
               <HeroToolbar />
 
               {/* Metric cards row */}
               <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-2.5">
                 <div className="rounded-xl p-4 sm:p-5 flex flex-col justify-center" style={cardStyle}>
-                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.40)" }}>
+                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     PIPELINE
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
                       $4.2M
                     </span>
-                    <span className="text-xs font-semibold flex items-center" style={{ color: "#C4922A" }}>
+                    <span className="text-xs font-semibold flex items-center" style={{ color: accent }}>
                       <TrendingUp size={12} className="mr-0.5" /> +14%
                     </span>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="text-xs font-medium" style={{ color: inkMuted }}>
                     vs last month
                   </div>
                 </div>
 
                 <div className="rounded-xl p-4 sm:p-5 flex flex-col justify-center" style={cardStyle}>
-                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.40)" }}>
+                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     WIN RATE
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
                       32.8%
                     </span>
-                    <span className="text-xs font-semibold flex items-center" style={{ color: "#6ee7b7" }}>
+                    <span className="text-xs font-semibold flex items-center" style={{ color: accent2 }}>
                       <TrendingUp size={12} className="mr-0.5" /> +5.2%
                     </span>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="text-xs font-medium" style={{ color: inkMuted }}>
                     vs last month
                   </div>
                 </div>
 
                 <div className="rounded-xl p-4 sm:p-5 flex flex-col justify-center" style={cardStyle}>
-                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.40)" }}>
+                  <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     AI ACTIONS
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
                       84,592
                     </span>
-                    <span className="text-xs font-semibold flex items-center" style={{ color: "#C4922A" }}>
+                    <span className="text-xs font-semibold flex items-center" style={{ color: accent }}>
                       <Zap size={12} className="mr-0.5" /> Active
                     </span>
                   </div>
-                  <div className="text-xs font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="text-xs font-medium" style={{ color: inkMuted }}>
                     this week
                   </div>
                 </div>
@@ -415,11 +452,11 @@ export function HeroVisual() {
                 <div className="md:col-span-7 space-y-2.5 min-w-0">
                   <div className="rounded-xl p-4 sm:p-5 relative overflow-hidden" style={cardStyle}>
                     <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2 text-xs mb-4">
-                      <div className="flex items-center gap-2.5 font-bold" style={{ color: "rgba(255,255,255,0.85)" }}>
-                        <BrainCircuit size={15} style={{ color: "#C4922A" }} />
+                      <div className="flex items-center gap-2.5 font-bold" style={{ color: ink }}>
+                        <BrainCircuit size={15} style={{ color: accent2 }} />
                         Intelligence — deal risk
                       </div>
-                      <span className="font-medium" style={{ color: "rgba(255,255,255,0.40)" }}>
+                      <span className="font-medium" style={{ color: inkMuted }}>
                         last 7 days
                       </span>
                     </div>
@@ -427,14 +464,14 @@ export function HeroVisual() {
                     <div className="relative w-full h-20 md:h-24 mt-1">
                       <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
                         {[0, 1, 2, 3].map((i) => (
-                          <div key={i} className="border-t w-full" style={{ borderColor: "rgba(255,255,255,0.15)" }} />
+                          <div key={i} className="border-t w-full" style={{ borderColor: "rgba(26,26,26,0.10)" }} />
                         ))}
                       </div>
                       <svg viewBox="0 0 400 100" className="w-full h-full overflow-visible relative z-10" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id="heroDarkChartGrad" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#C4922A" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#C4922A" stopOpacity="0" />
+                            <stop offset="0%" stopColor="var(--accent-green)" stopOpacity="0.25" />
+                            <stop offset="100%" stopColor="var(--accent-green)" stopOpacity="0" />
                           </linearGradient>
                         </defs>
                         <path
@@ -444,7 +481,7 @@ export function HeroVisual() {
                         <path
                           d="M0,80 L40,75 L80,85 L120,65 L160,70 L200,50 L240,55 L280,35 L320,40 L360,20 L400,25"
                           fill="none"
-                          stroke="#C4922A"
+                          stroke="var(--accent-green)"
                           strokeWidth="2.5"
                           strokeLinecap="round"
                         />
@@ -455,13 +492,13 @@ export function HeroVisual() {
                           { x: 360, y: 20, val: "15%" },
                         ].map((p, i) => (
                           <g key={i}>
-                            <circle cx={p.x} cy={p.y} r="5" fill="#C4922A" fillOpacity="0.15" />
-                            <circle cx={p.x} cy={p.y} r="2.5" fill="#12201a" stroke="#C4922A" strokeWidth="1.5" />
+                            <circle cx={p.x} cy={p.y} r="5" fill="var(--accent-green)" fillOpacity="0.16" />
+                            <circle cx={p.x} cy={p.y} r="2.5" fill="rgba(255,255,255,0.92)" stroke="var(--accent-green)" strokeWidth="1.5" />
                             <text
                               x={p.x}
                               y={p.y - 10}
                               fontSize="9"
-                              fill="rgba(255,255,255,0.6)"
+                              fill={inkMuted}
                               textAnchor="middle"
                               fontFamily="monospace"
                             >
@@ -479,30 +516,30 @@ export function HeroVisual() {
                 </div>
               </div>
 
-              {/* Sub-cards row */}
-              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-2.5">
+              {/* Sub-cards row (md+ only to keep hero compact) */}
+              <div className="hidden md:grid grid-cols-3 gap-2.5">
                 <div className="rounded-xl p-4 sm:p-5 relative overflow-hidden" style={cardStyle}>
-                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    <TrendingUp size={13} style={{ color: "#C4922A" }} />
+                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: ink }}>
+                    <TrendingUp size={13} style={{ color: accent2 }} />
                     Forecast accuracy
-                    <span className="ml-auto font-bold" style={{ color: "#C4922A" }}>
+                    <span className="ml-auto font-bold" style={{ color: accent }}>
                       94.2%
                     </span>
                   </div>
-                  <div className="w-full rounded-full h-1.5 mb-2" style={{ background: "rgba(255,255,255,0.08)" }}>
-                    <div className="h-1.5 rounded-full" style={{ width: "94%", background: "linear-gradient(90deg, #1B3A2D, #C4922A)" }} />
+                  <div className="w-full rounded-full h-1.5 mb-2" style={{ background: "rgba(26,26,26,0.10)" }}>
+                    <div className="h-1.5 rounded-full" style={{ width: "94%", background: "linear-gradient(90deg, var(--accent-blue), var(--accent-green))" }} />
                   </div>
-                  <div className="flex justify-between text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="flex justify-between text-[10px] font-mono" style={{ color: inkMuted }}>
                     <span>$2.4M predicted</span>
                     <span>$2.5M actual</span>
                   </div>
                 </div>
 
                 <div className="rounded-xl p-4 sm:p-5" style={cardStyle}>
-                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    <Bot size={13} style={{ color: "#6ee7b7" }} />
+                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: ink }}>
+                    <Bot size={13} style={{ color: accent }} />
                     Agents online
-                    <span className="ml-auto font-bold" style={{ color: "#6ee7b7" }}>
+                    <span className="ml-auto font-bold" style={{ color: accent }}>
                       24/24
                     </span>
                   </div>
@@ -513,7 +550,7 @@ export function HeroVisual() {
                         className="flex-1 rounded-sm animate-pulse"
                         style={{
                           height: `${h * 10}%`,
-                          background: "rgba(27,58,45,0.6)",
+                          background: "color-mix(in oklab, var(--accent-blue) 60%, transparent)",
                           animationDelay: `${i * 80}ms`,
                         }}
                       />
@@ -522,25 +559,25 @@ export function HeroVisual() {
                 </div>
 
                 <div className="rounded-xl p-4 sm:p-5" style={cardStyle}>
-                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    <Activity size={13} style={{ color: "#C4922A" }} />
+                  <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: ink }}>
+                    <Activity size={13} style={{ color: accent2 }} />
                     Intent signals
-                    <span className="ml-auto font-bold" style={{ color: "#C4922A" }}>
+                    <span className="ml-auto font-bold" style={{ color: accent2 }}>
                       HIGH
                     </span>
                   </div>
                   <div className="flex flex-col gap-1.5">
                     {[
                       { company: "Acme Corp", dot: "#ef4444" },
-                      { company: "GlobalTech", dot: "#C4922A" },
-                      { company: "Nexus", dot: "#1B3A2D" },
+                      { company: "GlobalTech", dot: "var(--accent-green)" },
+                      { company: "Nexus", dot: "var(--accent-blue)" },
                     ].map((s, i) => (
                       <div
                         key={i}
                         className="flex items-center justify-between text-[10px] font-mono rounded px-2 py-1"
-                        style={{ background: "rgba(255,255,255,0.04)" }}
+                        style={{ background: "rgba(26,26,26,0.02)", border: "1px solid rgba(26,26,26,0.06)" }}
                       >
-                        <span style={{ color: "rgba(255,255,255,0.7)" }}>{s.company}</span>
+                        <span style={{ color: inkMuted }}>{s.company}</span>
                         <span className="h-1.5 w-1.5 rounded-full" style={{ background: s.dot }} />
                       </div>
                     ))}
@@ -548,9 +585,28 @@ export function HeroVisual() {
                 </div>
               </div>
 
-              <div className="max-h-[160px] overflow-hidden relative">
-                <div className="absolute inset-x-0 bottom-0 h-10 z-20" style={{ background: "linear-gradient(to top, rgba(18,32,26,1), rgba(18,32,26,0))" }} />
+              {/* Execution layer (md+ only) */}
+              <div className="hidden md:block max-h-[150px] overflow-hidden relative">
+                <div
+                  className="absolute inset-x-0 bottom-0 h-10 z-20"
+                  style={{ background: "linear-gradient(to top, rgba(245,242,236,1), rgba(245,242,236,0))" }}
+                />
                 <ExecutionAndQueueSection />
+              </div>
+
+              {/* Compact footer strip for small screens (keeps complexity without adding height) */}
+              <div className="md:hidden rounded-xl px-3 py-2 pointer-events-none" style={subtleCard}>
+                <div className="flex items-center justify-between gap-2 text-[10px] font-mono" style={{ color: inkMuted }}>
+                  <span className="inline-flex items-center gap-1">
+                    <span className="h-1 w-1 rounded-full" style={{ background: accent }} /> Agents: 24/24
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <span className="h-1 w-1 rounded-full" style={{ background: accent2 }} /> Forecast: 94%
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <span className="h-1 w-1 rounded-full" style={{ background: accent }} /> Queue: 4
+                  </span>
+                </div>
               </div>
             </div>
           </div>
