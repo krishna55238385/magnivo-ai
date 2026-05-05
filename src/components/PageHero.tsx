@@ -22,7 +22,9 @@ export function PageHero({
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-5 sm:mt-6 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">{subtitle}</p>
+            <p className="mt-5 sm:mt-6 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              {subtitle}
+            </p>
           )}
           {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
         </FadeIn>

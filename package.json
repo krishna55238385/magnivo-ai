@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "vercel-build": "vite build && node scripts/vercel-package.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint src --ext .ts,.tsx",
     "format": "prettier --write ."
   },
   "dependencies": {

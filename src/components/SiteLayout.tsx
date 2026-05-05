@@ -51,9 +51,7 @@ function SmoothScroll() {
   return null;
 }
 
-const DemoModal = lazy(() =>
-  import("./DemoModal").then((m) => ({ default: m.DemoModal }))
-);
+const DemoModal = lazy(() => import("./DemoModal").then((m) => ({ default: m.DemoModal })));
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [auditOpen, setAuditOpen] = useState(false);
@@ -79,9 +77,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         </button>
       </div>
       <Suspense fallback={null}>
-        {auditOpen ? (
-          <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} />
-        ) : null}
+        {auditOpen ? <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} /> : null}
       </Suspense>
     </>
   );

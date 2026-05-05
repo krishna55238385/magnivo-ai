@@ -86,7 +86,13 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-3">
               <input required name="name" placeholder="Name" className="dinput" />
-              <input required type="email" name="email" placeholder="Work email" className="dinput" />
+              <input
+                required
+                type="email"
+                name="email"
+                placeholder="Work email"
+                className="dinput"
+              />
               <input name="company" placeholder="Company" className="dinput" />
               <textarea
                 rows={3}
@@ -95,7 +101,11 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
                 className="dinput"
               />
               {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
-              <button type="submit" disabled={submitting} className="btn-primary w-full justify-center">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn-primary w-full justify-center"
+              >
                 {submitting ? (
                   <>
                     <Loader2 size={14} className="animate-spin" /> Submitting...

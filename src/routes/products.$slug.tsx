@@ -16,8 +16,14 @@ export const Route = createFileRoute("/products/$slug")({
       ? [
           { title: `${loaderData.product.name} — Magnivo.ai` },
           { name: "description", content: loaderData.product.description },
-          { property: "og:title", content: `${loaderData.product.name} — ${loaderData.product.tagline}` },
+          {
+            property: "og:title",
+            content: `${loaderData.product.name} — ${loaderData.product.tagline}`,
+          },
           { property: "og:description", content: loaderData.product.description },
+          { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
         ]
       : [{ title: "Product — Magnivo.ai" }],
     links: loaderData
@@ -29,7 +35,9 @@ export const Route = createFileRoute("/products/$slug")({
       <div className="container-x py-32 text-center">
         <h1 className="text-4xl font-bold">Product not found</h1>
         <p className="mt-4 text-muted-foreground">This product doesn't exist.</p>
-        <Link to="/products" className="btn-primary mt-8 inline-flex">All Products</Link>
+        <Link to="/products" className="btn-primary mt-8 inline-flex">
+          All Products
+        </Link>
       </div>
     </SiteLayout>
   ),
@@ -61,10 +69,16 @@ function ProductDetail() {
               <span className="pill-blue">{product.tagline}</span>
             </div>
             <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold">{product.name}</h1>
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl">{product.description}</p>
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl">
+              {product.description}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary">Start Free <ArrowRight size={14} /></Link>
-              <Link to="/contact" className="btn-ghost">Book Demo</Link>
+              <Link to="/contact" className="btn-primary">
+                Start Free <ArrowRight size={14} />
+              </Link>
+              <Link to="/contact" className="btn-ghost">
+                Book Demo
+              </Link>
             </div>
           </FadeIn>
         </div>
@@ -94,7 +108,8 @@ function ProductDetail() {
               <div className="label-eyebrow">Use Case</div>
               <h3 className="mt-3 text-xl font-semibold">Built for fast-moving revenue teams</h3>
               <p className="mt-3 text-muted-foreground">
-                {product.name} plugs into your existing motion and starts producing measurable lift in days — not quarters.
+                {product.name} plugs into your existing motion and starts producing measurable lift
+                in days — not quarters.
               </p>
             </div>
           </FadeIn>
@@ -103,7 +118,8 @@ function ProductDetail() {
               <div className="label-eyebrow">Integrations</div>
               <h3 className="mt-3 text-xl font-semibold">Works with your stack</h3>
               <p className="mt-3 text-muted-foreground">
-                Salesforce, HubSpot, Snowflake, Slack, LinkedIn, Gmail, and 100+ more — plus a full API for custom workflows.
+                Salesforce, HubSpot, Snowflake, Slack, LinkedIn, Gmail, and 100+ more — plus a full
+                API for custom workflows.
               </p>
             </div>
           </FadeIn>
@@ -116,8 +132,12 @@ function ProductDetail() {
             <h2 className="text-3xl md:text-4xl font-bold">See {product.name} in action</h2>
             <p className="mt-4 text-muted-foreground">A 20-minute personalized walkthrough.</p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">Book Demo <ArrowRight size={14} /></Link>
-              <Link to="/products" className="btn-ghost w-full sm:w-auto justify-center">All Products</Link>
+              <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">
+                Book Demo <ArrowRight size={14} />
+              </Link>
+              <Link to="/products" className="btn-ghost w-full sm:w-auto justify-center">
+                All Products
+              </Link>
             </div>
           </div>
         </FadeIn>

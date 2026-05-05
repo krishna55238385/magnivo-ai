@@ -15,8 +15,14 @@ export const Route = createFileRoute("/solutions/$slug")({
       ? [
           { title: `${loaderData.solution.name} — Magnivo.ai Solutions` },
           { name: "description", content: loaderData.solution.description },
-          { property: "og:title", content: `${loaderData.solution.name} — ${loaderData.solution.model}` },
+          {
+            property: "og:title",
+            content: `${loaderData.solution.name} — ${loaderData.solution.model}`,
+          },
           { property: "og:description", content: loaderData.solution.description },
+          { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+          { name: "twitter:card", content: "summary_large_image" },
+          { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
         ]
       : [{ title: "Solution — Magnivo.ai" }],
     links: loaderData
@@ -28,7 +34,9 @@ export const Route = createFileRoute("/solutions/$slug")({
       <div className="container-x py-32 text-center">
         <h1 className="text-4xl font-bold">Solution not found</h1>
         <p className="mt-4 text-muted-foreground">This solution doesn't exist.</p>
-        <Link to="/solutions" className="btn-primary mt-8 inline-flex">All Solutions</Link>
+        <Link to="/solutions" className="btn-primary mt-8 inline-flex">
+          All Solutions
+        </Link>
       </div>
     </SiteLayout>
   ),
@@ -52,10 +60,16 @@ function SolutionDetail() {
               <span className="pill-green">{solution.model}</span>
             </div>
             <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold">{solution.name}</h1>
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl">{solution.description}</p>
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl">
+              {solution.description}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary">Get Started <ArrowRight size={14} /></Link>
-              <Link to="/contact" className="btn-ghost">Request Consultation</Link>
+              <Link to="/contact" className="btn-primary">
+                Get Started <ArrowRight size={14} />
+              </Link>
+              <Link to="/contact" className="btn-ghost">
+                Request Consultation
+              </Link>
             </div>
           </FadeIn>
         </div>
@@ -65,9 +79,12 @@ function SolutionDetail() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-20">
           <FadeIn>
             <div className="label-eyebrow text-[var(--accent-green)]">The Engagement</div>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold">What's included in {solution.name}</h2>
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold">
+              What's included in {solution.name}
+            </h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              We don't just hand over tools; we build the infrastructure and the teams needed to run an AI-native revenue engine.
+              We don't just hand over tools; we build the infrastructure and the teams needed to run
+              an AI-native revenue engine.
             </p>
             <ul className="mt-8 space-y-4">
               {solution.included.map((item) => (
@@ -102,7 +119,10 @@ function SolutionDetail() {
             <div className="label-eyebrow">Strategic Alignment</div>
             <h2 className="mt-3 text-2xl font-bold">Why {solution.name}?</h2>
             <p className="mt-4 text-muted-foreground leading-relaxed">
-              In the age of AI, software alone is a commodity. The real value lies in how it's orchestrated within your specific business context. Our {solution.name} solution ensures that your AI agents aren't just running, but are optimized for your unique ICP, product-led motions, and enterprise sales cycles.
+              In the age of AI, software alone is a commodity. The real value lies in how it's
+              orchestrated within your specific business context. Our {solution.name} solution
+              ensures that your AI agents aren't just running, but are optimized for your unique
+              ICP, product-led motions, and enterprise sales cycles.
             </p>
           </FadeIn>
         </div>
@@ -115,8 +135,12 @@ function SolutionDetail() {
             Schedule a session with our solutions architects to map out your AI transition.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/contact" className="btn-primary">Book Consultation <ArrowRight size={14} /></Link>
-            <Link to="/solutions" className="btn-ghost">View All Solutions</Link>
+            <Link to="/contact" className="btn-primary">
+              Book Consultation <ArrowRight size={14} />
+            </Link>
+            <Link to="/solutions" className="btn-ghost">
+              View All Solutions
+            </Link>
           </div>
         </FadeIn>
       </section>

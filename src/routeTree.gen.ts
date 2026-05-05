@@ -9,10 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as InvestorsRouteImport } from './routes/investors'
+import { Route as DataSecurityRouteImport } from './routes/data-security'
 import { Route as DashboardImageRouteImport } from './routes/dashboard-image'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,9 +25,19 @@ import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 import { Route as ResourcesSlugRouteImport } from './routes/resources.$slug'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -40,6 +53,11 @@ const PlatformRoute = PlatformRouteImport.update({
 const InvestorsRoute = InvestorsRouteImport.update({
   id: '/investors',
   path: '/investors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DataSecurityRoute = DataSecurityRouteImport.update({
+  id: '/data-security',
+  path: '/data-security',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardImageRoute = DashboardImageRouteImport.update({
@@ -87,10 +105,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
+  '/data-security': typeof DataSecurityRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -101,10 +122,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
+  '/data-security': typeof DataSecurityRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -116,10 +140,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
+  '/data-security': typeof DataSecurityRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
   '/solutions': typeof SolutionsRouteWithChildren
+  '/terms': typeof TermsRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/resources/$slug': typeof ResourcesSlugRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
@@ -132,10 +159,13 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/dashboard-image'
+    | '/data-security'
     | '/investors'
     | '/platform'
     | '/pricing'
+    | '/privacy-policy'
     | '/solutions'
+    | '/terms'
     | '/products/$slug'
     | '/resources/$slug'
     | '/solutions/$slug'
@@ -146,10 +176,13 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/dashboard-image'
+    | '/data-security'
     | '/investors'
     | '/platform'
     | '/pricing'
+    | '/privacy-policy'
     | '/solutions'
+    | '/terms'
     | '/products/$slug'
     | '/resources/$slug'
     | '/solutions/$slug'
@@ -160,10 +193,13 @@ export interface FileRouteTypes {
     | '/'
     | '/contact'
     | '/dashboard-image'
+    | '/data-security'
     | '/investors'
     | '/platform'
     | '/pricing'
+    | '/privacy-policy'
     | '/solutions'
+    | '/terms'
     | '/products/$slug'
     | '/resources/$slug'
     | '/solutions/$slug'
@@ -175,10 +211,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   DashboardImageRoute: typeof DashboardImageRoute
+  DataSecurityRoute: typeof DataSecurityRoute
   InvestorsRoute: typeof InvestorsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
+  TermsRoute: typeof TermsRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ResourcesSlugRoute: typeof ResourcesSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -187,11 +226,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
       fullPath: '/solutions'
       preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -213,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/investors'
       fullPath: '/investors'
       preLoaderRoute: typeof InvestorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/data-security': {
+      id: '/data-security'
+      path: '/data-security'
+      fullPath: '/data-security'
+      preLoaderRoute: typeof DataSecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard-image': {
@@ -290,10 +350,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   DashboardImageRoute: DashboardImageRoute,
+  DataSecurityRoute: DataSecurityRoute,
   InvestorsRoute: InvestorsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
+  TermsRoute: TermsRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ResourcesSlugRoute: ResourcesSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,

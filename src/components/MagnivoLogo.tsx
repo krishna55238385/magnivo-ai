@@ -6,7 +6,7 @@ export function MagnivoLogo({ className }: { className?: string }) {
     <span
       className={cn(
         "inline-flex items-center font-serif font-normal tracking-tight text-foreground lowercase",
-        className
+        className,
       )}
     >
       <span className="leading-none">magnivo</span>

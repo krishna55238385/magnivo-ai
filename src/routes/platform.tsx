@@ -35,6 +35,14 @@ export const Route = createFileRoute("/platform")({
         content:
           "One platform that unifies data, intelligence, and autonomous execution into a compounding B2B revenue engine. Used by B2B founders scaling to Series B.",
       },
+      { property: "og:title", content: "The GTM Operating System — Magnivo.ai" },
+      {
+        property: "og:description",
+        content: "One platform. Data, intelligence, and autonomous execution unified.",
+      },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://magnivo.ai/platform" }],
   }),
@@ -42,7 +50,7 @@ export const Route = createFileRoute("/platform")({
 });
 
 const DemoModal = lazy(() =>
-  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal }))
+  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal })),
 );
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
@@ -187,9 +195,7 @@ function PlatformPage() {
         <CtaSection onAudit={open} ctaRef={ctaRef} />
       </div>
       <Suspense fallback={null}>
-        {demoOpen ? (
-          <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
-        ) : null}
+        {demoOpen ? <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} /> : null}
       </Suspense>
     </SiteLayout>
   );

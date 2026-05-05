@@ -9,10 +9,11 @@ export function CustomCursor() {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [accent, setAccent] = useState<"blue" | "green">("blue");
-  
+
+  const activeRef = useRef(false);
   const posRef = useRef({ x: -200, y: -200 });
   const targetRef = useRef({ x: -200, y: -200 });
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const canUseFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -20,12 +21,15 @@ export function CustomCursor() {
 
     const onMove = (e: PointerEvent) => {
       targetRef.current = { x: e.clientX, y: e.clientY };
-      if (!active) setActive(true);
-      
+      if (!activeRef.current) {
+        activeRef.current = true;
+        setActive(true);
+      }
+
       const target = e.target as HTMLElement;
       const isInteractive = !!target.closest("a, button, [role='button'], input, select");
       setHovering(isInteractive);
-      
+
       // Smart color detection based on context or explicit data attribute
       if (target.closest("[class*='green']") || target.closest("[style*='green']")) {
         setAccent("green");
@@ -34,14 +38,17 @@ export function CustomCursor() {
       }
     };
 
-    const onLeave = () => setActive(false);
-    
+    const onLeave = () => {
+      activeRef.current = false;
+      setActive(false);
+    };
+
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerleave", onLeave);
 
     const animate = () => {
       const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
-      
+
       posRef.current.x = lerp(posRef.current.x, targetRef.current.x, 0.08);
       posRef.current.y = lerp(posRef.current.y, targetRef.current.y, 0.08);
 
@@ -49,7 +56,7 @@ export function CustomCursor() {
       if (glow) {
         glow.style.transform = `translate3d(calc(${posRef.current.x}px - 50%), calc(${posRef.current.y}px - 50%), 0)`;
       }
-      
+
       requestRef.current = requestAnimationFrame(animate);
     };
 
@@ -60,7 +67,7 @@ export function CustomCursor() {
       window.removeEventListener("pointerleave", onLeave);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [active]);
+  }, []);
 
   return (
     <div

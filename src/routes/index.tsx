@@ -21,19 +21,19 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 
 const HeroVisual = lazy(() =>
-  import("@/components/HeroVisual").then((m) => ({ default: m.HeroVisual }))
+  import("@/components/HeroVisual").then((m) => ({ default: m.HeroVisual })),
 );
 const DataLayerScrollSystem = lazy(() =>
-  import("@/components/DataLayerScrollSystem").then((m) => ({ default: m.DataLayerScrollSystem }))
+  import("@/components/DataLayerScrollSystem").then((m) => ({ default: m.DataLayerScrollSystem })),
 );
 const TrustSnapshot = lazy(() =>
-  import("@/components/HomeConversionSections").then((m) => ({ default: m.TrustSnapshot }))
+  import("@/components/HomeConversionSections").then((m) => ({ default: m.TrustSnapshot })),
 );
 const AuditBlueprint = lazy(() =>
-  import("@/components/HomeConversionSections").then((m) => ({ default: m.AuditBlueprint }))
+  import("@/components/HomeConversionSections").then((m) => ({ default: m.AuditBlueprint })),
 );
 const DemoModal = lazy(() =>
-  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal }))
+  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal })),
 );
 
 export const Route = createFileRoute("/")({
@@ -71,7 +71,8 @@ export const Route = createFileRoute("/")({
           applicationCategory: "BusinessApplication",
           operatingSystem: "Web",
           url: "https://magnivo.ai",
-          description: "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
+          description:
+            "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
           offers: {
             "@type": "Offer",
             price: "0",
@@ -134,11 +135,14 @@ function HomePage() {
 
             <h1 className="text-center text-4xl leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
               <span className="block text-foreground">The AI Brain Behind</span>
-              <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>Your GTM OS.</span>
+              <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>
+                Your GTM OS.
+              </span>
             </h1>
 
             <p className="mt-6 sm:mt-8 md:mt-9 text-center text-base sm:text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
-              Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention — through one intelligent system built for B2B growth.
+              Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention —
+              through one intelligent system built for B2B growth.
             </p>
 
             <div className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center">
@@ -159,20 +163,17 @@ function HomePage() {
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium">
-              {[
-                "No pitch",
-                "30-min GTM audit",
-                "Revenue blueprint",
-                "Limited founding spots",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 shadow-sm"
-                >
-                  <Check size={13} style={{ color: "#1B3A2D" }} />
-                  {item}
-                </span>
-              ))}
+              {["No pitch", "30-min GTM audit", "Revenue blueprint", "Limited founding spots"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 shadow-sm"
+                  >
+                    <Check size={13} style={{ color: "#1B3A2D" }} />
+                    {item}
+                  </span>
+                ),
+              )}
             </div>
           </FadeIn>
 
@@ -789,7 +790,7 @@ function HomePage() {
               <div className="label-eyebrow mb-4">WHO IT'S FOR</div>
               <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground">
                 Built for the teams{" "}
-                <span className="block mt-1" style={{ color: '#1B3A2D' }}>
+                <span className="block mt-1" style={{ color: "#1B3A2D" }}>
                   driving modern B2B revenue.
                 </span>
               </h2>
@@ -849,7 +850,10 @@ function HomePage() {
               return (
                 <FadeIn key={i} delay={i * 0.05}>
                   <div className="group h-full bg-card border border-border hover:border-[#1B3A2D]/30 hover:shadow-md transition-all duration-300 rounded-xl p-5 flex flex-col premium-card">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4" style={{ color: '#1B3A2D', background: 'rgba(27,58,45,0.08)' }}>
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
+                      style={{ color: "#1B3A2D", background: "rgba(27,58,45,0.08)" }}
+                    >
                       <Icon size={18} />
                     </div>
                     <h3 className="text-lg font-bold text-foreground mb-2">{card.title}</h3>
@@ -859,7 +863,7 @@ function HomePage() {
                     <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-5">
                       {card.body}
                     </p>
-                    <div className="text-sm font-bold leading-snug" style={{ color: '#1B3A2D' }}>
+                    <div className="text-sm font-bold leading-snug" style={{ color: "#1B3A2D" }}>
                       → {card.outcome}
                     </div>
                   </div>
@@ -913,7 +917,11 @@ function HomePage() {
             },
           ].map((point, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <div className="premium-card p-6 md:p-8 h-full border-t-[3px] border-t-transparent transition-all flex flex-col justify-center text-center" style={{ ':hover': { borderTopColor: '#1B3A2D' } }} onMouseEnter={e => (e.currentTarget.style.borderTopColor='#1B3A2D')} onMouseLeave={e => (e.currentTarget.style.borderTopColor='transparent')}>
+              <div
+                className="premium-card p-6 md:p-8 h-full border-t-[3px] border-t-transparent transition-all flex flex-col justify-center text-center"
+                onMouseEnter={(e) => (e.currentTarget.style.borderTopColor = "#1B3A2D")}
+                onMouseLeave={(e) => (e.currentTarget.style.borderTopColor = "transparent")}
+              >
                 <h3 className="text-xl font-bold text-foreground mb-4">{point.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{point.desc}</p>
               </div>

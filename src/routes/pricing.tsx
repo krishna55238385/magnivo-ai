@@ -10,6 +10,11 @@ export const Route = createFileRoute("/pricing")({
     meta: [
       { title: "Pricing — Magnivo.ai" },
       { name: "description", content: "A Growth Engine Built Around Your Goals." },
+      { property: "og:title", content: "Pricing — Magnivo.ai" },
+      { property: "og:description", content: "Scoped to your GTM stage. No long-term contracts." },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://magnivo.ai/pricing" }],
   }),

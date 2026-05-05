@@ -1,6 +1,16 @@
 import {
-  Search, Send, Compass, Orbit, Share2, Bot, BrainCircuit,
-  Workflow, Cpu, Sparkles, Hammer, GitBranch,
+  Search,
+  Send,
+  Compass,
+  Orbit,
+  Share2,
+  Bot,
+  BrainCircuit,
+  Workflow,
+  Cpu,
+  Sparkles,
+  Hammer,
+  GitBranch,
   type LucideIcon,
 } from "lucide-react";
 
@@ -90,7 +100,8 @@ export const products: Product[] = [
     slug: "intelligence",
     name: "Intelligence",
     tagline: "Revenue intelligence",
-    description: "Conversation, deal, and pipeline intelligence — call analysis, risk scoring, and forecast accuracy in one signal layer.",
+    description:
+      "Conversation, deal, and pipeline intelligence — call analysis, risk scoring, and forecast accuracy in one signal layer.",
     icon: BrainCircuit,
     features: [
       "Call & meeting analysis with deal-level summaries",
@@ -115,7 +126,12 @@ export const solutions: Solution[] = [
     slug: "gtm-operations",
     name: "GTM Operations",
     description: "End-to-end AI GTM deployment across systems, teams, and motions.",
-    included: ["RevOps audit & blueprint", "Stack implementation", "AI workflow rollout", "Enablement & training"],
+    included: [
+      "RevOps audit & blueprint",
+      "Stack implementation",
+      "AI workflow rollout",
+      "Enablement & training",
+    ],
     outcome: "Cut ramp time and lift pipeline efficiency in 90 days.",
     model: "Done-for-you",
     icon: Workflow,
@@ -124,7 +140,12 @@ export const solutions: Solution[] = [
     slug: "agent-studio",
     name: "Agent Studio",
     description: "Custom AI agents and workflows built around your data and processes.",
-    included: ["Use-case discovery", "Agent design & build", "Integrations & evals", "Ongoing optimization"],
+    included: [
+      "Use-case discovery",
+      "Agent design & build",
+      "Integrations & evals",
+      "Ongoing optimization",
+    ],
     outcome: "Replace repetitive ops with measurable agent throughput.",
     model: "Retainer + project",
     icon: Cpu,
@@ -133,7 +154,12 @@ export const solutions: Solution[] = [
     slug: "ai-growth",
     name: "AI Growth",
     description: "AI-orchestrated marketing across content, demand, and lifecycle.",
-    included: ["Growth model design", "Content & SEO engine", "Paid + lifecycle agents", "Reporting & attribution"],
+    included: [
+      "Growth model design",
+      "Content & SEO engine",
+      "Paid + lifecycle agents",
+      "Reporting & attribution",
+    ],
     outcome: "Compounding pipeline from a leaner growth team.",
     model: "Retainer + project",
     icon: Sparkles,
@@ -142,7 +168,12 @@ export const solutions: Solution[] = [
     slug: "magnivo-build",
     name: "Magnivo Build",
     description: "Idea to product in days — AI-native MVPs ready to ship.",
-    included: ["Product scoping", "Design & build sprint", "Launch infrastructure", "Iterate & scale"],
+    included: [
+      "Product scoping",
+      "Design & build sprint",
+      "Launch infrastructure",
+      "Iterate & scale",
+    ],
     outcome: "Validated, production-ready products in weeks, not quarters.",
     model: "Done-for-you",
     icon: Hammer,
@@ -150,8 +181,14 @@ export const solutions: Solution[] = [
   {
     slug: "revops",
     name: "RevOps",
-    description: "AI-augmented RevOps — auto-hygiene, auto-forecasting, and auto-routing powered by Magnivo agents on top of your stack.",
-    included: ["CRM hygiene & data model", "Pipeline architecture & routing", "AI forecasting & dashboards", "Attribution & revenue analytics"],
+    description:
+      "AI-augmented RevOps — auto-hygiene, auto-forecasting, and auto-routing powered by Magnivo agents on top of your stack.",
+    included: [
+      "CRM hygiene & data model",
+      "Pipeline architecture & routing",
+      "AI forecasting & dashboards",
+      "Attribution & revenue analytics",
+    ],
     outcome: "A self-cleaning, self-forecasting revenue engine your team can trust.",
     model: "Retainer + project",
     icon: GitBranch,
@@ -195,16 +232,36 @@ export const resources: Resource[] = [
 
 export const personas = [
   { title: "B2B SaaS Companies", hook: "(Series Seed–A) needing scalable pipeline" },
-  { title: "Professional Services & Agencies", hook: "seeking consistent inbound and outbound leads" },
+  {
+    title: "Professional Services & Agencies",
+    hook: "seeking consistent inbound and outbound leads",
+  },
   { title: "B2B Marketplaces", hook: "scaling both supply and demand sides efficiently" },
-  { title: "RevOps & Sales-Led Teams", hook: "automating and augmenting their existing GTM motions" },
-  { title: "Funded Startups", hook: "pre-Sales hire looking to build automated GTM infrastructure" },
+  {
+    title: "RevOps & Sales-Led Teams",
+    hook: "automating and augmenting their existing GTM motions",
+  },
+  {
+    title: "Funded Startups",
+    hook: "pre-Sales hire looking to build automated GTM infrastructure",
+  },
 ];
 
 export const platformLayers = [
-  { name: "Data Layer", description: "Unified customer, product, and intent data — clean, queryable, real-time." },
-  { name: "Agent Layer", description: "Specialized AI agents trained on your domain, governed by guardrails." },
-  { name: "Automation Layer", description: "Workflows that execute across your stack — sales, marketing, ops." },
-  { name: "Orchestration Layer", description: "Cross-team coordination with shared context, memory, and outcomes." },
+  {
+    name: "Data Layer",
+    description: "Unified customer, product, and intent data — clean, queryable, real-time.",
+  },
+  {
+    name: "Agent Layer",
+    description: "Specialized AI agents trained on your domain, governed by guardrails.",
+  },
+  {
+    name: "Automation Layer",
+    description: "Workflows that execute across your stack — sales, marketing, ops.",
+  },
+  {
+    name: "Orchestration Layer",
+    description: "Cross-team coordination with shared context, memory, and outcomes.",
+  },
 ];
-

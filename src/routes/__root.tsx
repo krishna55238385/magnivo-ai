@@ -55,9 +55,17 @@ export const Route = createRootRoute({
         }),
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
-      { name: "twitter:title", content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
+      {
+        property: "og:title",
+        content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams",
+      },
+      {
+        name: "twitter:title",
+        content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams",
+      },
       {
         property: "og:description",
         content:
@@ -91,7 +99,9 @@ function RootShell({ children }: { children: React.ReactNode }) {
           rel="preload"
           as="style"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
-          onLoad={(e) => { (e.target as HTMLLinkElement).rel = "stylesheet"; }}
+          onLoad={(e) => {
+            (e.target as HTMLLinkElement).rel = "stylesheet";
+          }}
         />
         <noscript>
           <link

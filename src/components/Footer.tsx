@@ -32,10 +32,16 @@ export function Footer() {
         </FooterCol>
 
         <FooterCol title="Resources">
-          <a href="#">Case Studies</a>
-          <a href="#">GTM Playbook</a>
-          <a href="#">AI Benchmarks</a>
-          <a href="#">Blog</a>
+          <Link to="/resources/$slug" params={{ slug: "series-b-saas-pipeline" }}>
+            Case Studies
+          </Link>
+          <Link to="/resources/$slug" params={{ slug: "ai-gtm-playbook-2025" }}>
+            GTM Playbook
+          </Link>
+          <Link to="/resources/$slug" params={{ slug: "future-of-revops" }}>
+            AI Benchmarks
+          </Link>
+          <Link to="/resources">All Resources</Link>
         </FooterCol>
 
         <FooterCol title="Company">
@@ -46,29 +52,32 @@ export function Footer() {
         </FooterCol>
 
         <FooterCol title="Legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Data Security</a>
+          <Link to="/privacy-policy">Privacy Policy</Link>
+          <Link to="/terms">Terms of Service</Link>
+          <Link to="/data-security">Data Security</Link>
         </FooterCol>
 
         <div className="lg:col-span-2">
-            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: 'var(--accent-gold)' }}>
-                Priority Access
-              </div>
-              <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">
-                Book Your Free GTM Audit
-              </h4>
-              <p className="text-xs text-muted-foreground mb-5 leading-relaxed">
-                Get a 30-min diagnosis of your revenue engine and a 10-day implementation blueprint.
-              </p>
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent("open-demo-modal"))}
-                className="btn-primary w-full justify-center text-sm py-3"
-              >
-                Start My Audit
-              </button>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+            <div
+              className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3"
+              style={{ color: "var(--accent-gold)" }}
+            >
+              Priority Access
             </div>
+            <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">
+              Book Your Free GTM Audit
+            </h4>
+            <p className="text-xs text-muted-foreground mb-5 leading-relaxed">
+              Get a 30-min diagnosis of your revenue engine and a 10-day implementation blueprint.
+            </p>
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("open-demo-modal"))}
+              className="btn-primary w-full justify-center text-sm py-3"
+            >
+              Start My Audit
+            </button>
+          </div>
         </div>
       </div>
       <div className="border-t border-border">

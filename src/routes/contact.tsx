@@ -15,6 +15,9 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Let's Talk — Magnivo.ai" },
       { property: "og:description", content: "Book a demo or reach the team." },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://magnivo.ai/contact" }],
   }),
@@ -76,7 +79,12 @@ function ContactPage() {
               </div>
             ))}
           </div>
-          <a href="#" className="btn-ghost mt-8 inline-flex">
+          <a
+            href="https://calendly.com/magnivo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost mt-8 inline-flex"
+          >
             <Calendar size={14} /> Book directly via Calendly
           </a>
         </FadeIn>
@@ -99,7 +107,13 @@ function ContactPage() {
                   <input required name="name" className="cinput" placeholder="Jane Doe" />
                 </Field>
                 <Field label="Email">
-                  <input required type="email" name="email" className="cinput" placeholder="jane@company.com" />
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    className="cinput"
+                    placeholder="jane@company.com"
+                  />
                 </Field>
                 <Field label="Company">
                   <input name="company" className="cinput" placeholder="Acme Inc." />
@@ -121,7 +135,11 @@ function ContactPage() {
                   />
                 </Field>
                 {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
-                <button type="submit" disabled={submitting} className="btn-primary w-full justify-center">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary w-full justify-center"
+                >
                   {submitting ? (
                     <>
                       <Loader2 size={14} className="animate-spin" /> Sending…

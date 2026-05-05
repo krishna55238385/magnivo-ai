@@ -24,7 +24,7 @@ export function FadeIn({ children, delay = 0, y = 16, className, style, ...rest 
           observer.disconnect();
         }
       },
-      { rootMargin: "-60px" }
+      { rootMargin: "-60px" },
     );
     observer.observe(el);
     return () => observer.disconnect();

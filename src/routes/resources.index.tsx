@@ -9,7 +9,15 @@ export const Route = createFileRoute("/resources/")({
   head: () => ({
     meta: [
       { title: "Resources — Magnivo.ai" },
-      { name: "description", content: "Insights, playbooks, and guides on AI-native GTM and autonomous revenue agents." },
+      {
+        name: "description",
+        content: "Insights, playbooks, and guides on AI-native GTM and autonomous revenue agents.",
+      },
+      { property: "og:title", content: "Resources — Magnivo.ai" },
+      { property: "og:description", content: "Insights, playbooks, and guides on AI-native GTM." },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://magnivo.ai/resources" }],
   }),
@@ -49,16 +57,20 @@ function ResourcesPage() {
                     <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:bg-background transition-colors">
                       <Icon size={20} />
                     </div>
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60">{r.type}</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60">
+                      {r.type}
+                    </span>
                   </div>
                   <h2 className="text-2xl font-bold group-hover:text-[var(--accent-blue)] transition-colors leading-tight">
                     {r.title}
                   </h2>
-                  <p className="mt-4 text-muted-foreground leading-relaxed">
-                    {r.description}
-                  </p>
+                  <p className="mt-4 text-muted-foreground leading-relaxed">{r.description}</p>
                   <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-[var(--accent-blue)]">
-                    Read {r.type} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    Read {r.type}{" "}
+                    <ArrowRight
+                      size={14}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                   </div>
                 </Link>
               </FadeIn>
@@ -71,13 +83,16 @@ function ResourcesPage() {
         <div className="surface-card p-8 md:p-12 border border-border/50 bg-secondary/20 flex flex-col md:flex-row items-center gap-8 justify-between">
           <div className="max-w-xl text-center md:text-left">
             <h2 className="text-2xl font-bold">Subscribe to GTM Weekly</h2>
-            <p className="mt-2 text-muted-foreground">Get the latest AI GTM playbooks and benchmark data delivered to your inbox every Tuesday.</p>
+            <p className="mt-2 text-muted-foreground">
+              Get the latest AI GTM playbooks and benchmark data delivered to your inbox every
+              Tuesday.
+            </p>
           </div>
           <div className="flex w-full md:w-auto gap-3">
-            <input 
-              type="email" 
-              placeholder="name@company.com" 
-              className="flex-1 md:w-64 h-11 bg-background border border-border rounded-md px-4 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]" 
+            <input
+              type="email"
+              placeholder="name@company.com"
+              className="flex-1 md:w-64 h-11 bg-background border border-border rounded-md px-4 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent-blue)]"
             />
             <button className="btn-primary h-11">Subscribe</button>
           </div>

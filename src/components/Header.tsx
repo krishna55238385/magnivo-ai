@@ -29,9 +29,7 @@ const RESOURCE_ICONS = {
   Glossary: FileText,
 };
 
-const DemoModal = lazy(() =>
-  import("./DemoModal").then((m) => ({ default: m.DemoModal }))
-);
+const DemoModal = lazy(() => import("./DemoModal").then((m) => ({ default: m.DemoModal })));
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -259,9 +257,7 @@ export function Header() {
         </div>
       )}
       <Suspense fallback={null}>
-        {demoOpen ? (
-          <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
-        ) : null}
+        {demoOpen ? <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} /> : null}
       </Suspense>
     </header>
   );
@@ -622,9 +618,17 @@ function MobileAccordion({ title, children }: { title: string; children: React.R
   );
 }
 
-function FeatureCard({ label, title }: { label: string; title: string }) {
+function FeatureCard({
+  label,
+  title,
+  href = "/resources",
+}: {
+  label: string;
+  title: string;
+  href?: string;
+}) {
   return (
-    <a href="#" className="surface-card hover-blue p-4 flex gap-3 items-center">
+    <a href={href} className="surface-card hover-blue p-4 flex gap-3 items-center">
       <div className="h-12 w-16 rounded-md bg-gradient-to-br from-[var(--accent-blue)]/30 to-[var(--accent-green)]/20 border border-border" />
       <div>
         <div className="label-eyebrow">{label}</div>

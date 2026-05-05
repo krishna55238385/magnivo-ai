@@ -9,9 +9,16 @@ export const Route = createFileRoute("/products/")({
   head: () => ({
     meta: [
       { title: "Products — Magnivo.ai" },
-      { name: "description", content: "Six AI products built for modern revenue teams: Leadfinder, Reachout, Compass, Orbit, Socialiq, and Agentdesk." },
+      {
+        name: "description",
+        content:
+          "Six AI products built for modern revenue teams: Leadfinder, Reachout, Compass, Orbit, Socialiq, and Agentdesk.",
+      },
       { property: "og:title", content: "6 AI Products. One Revenue Ecosystem." },
       { property: "og:description", content: "AI-native tools across the full revenue stack." },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://magnivo.ai/products" }],
   }),
@@ -50,7 +57,9 @@ function ProductsPage() {
                     ))}
                   </ul>
                   <div className="mt-7">
-                    <Link to="/products/$slug" params={{ slug: p.slug }} className="btn-ghost">Learn More <ArrowRight size={14} /></Link>
+                    <Link to="/products/$slug" params={{ slug: p.slug }} className="btn-ghost">
+                      Learn More <ArrowRight size={14} />
+                    </Link>
                   </div>
                 </div>
               </FadeIn>
