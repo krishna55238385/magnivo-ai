@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 type FadeInProps = {
   children: React.ReactNode;
@@ -10,39 +11,25 @@ type FadeInProps = {
   "aria-label"?: string;
 };
 
-export function FadeIn({ children, delay = 0, y = 16, className, style, ...rest }: FadeInProps) {
+export function FadeIn({ children, delay = 0, y = 24, className, style, ...rest }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "-60px" },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : `translateY(${y}px)`,
-        transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${delay}s`,
-        ...style,
+      initial={{ opacity: 0, y, filter: "blur(4px)" }}
+      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y, filter: "blur(4px)" }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       }}
+      className={className}
+      style={style}
       {...rest}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

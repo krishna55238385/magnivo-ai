@@ -16,9 +16,17 @@ import {
   Store,
   BarChart2,
 } from "lucide-react";
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useRef } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useInView,
+  AnimatePresence,
+} from "framer-motion";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 const HeroVisual = lazy(() =>
   import("@/components/HeroVisual").then((m) => ({ default: m.HeroVisual })),
@@ -83,6 +91,151 @@ const softwareAppLd = JSON.stringify({
   },
 });
 
+const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+/* ─── Word-by-word blur reveal ──────────────────────────────── */
+const wordContainer = {
+  hidden: {},
+  visible: (delay: number) => ({
+    transition: { staggerChildren: 0.09, delayChildren: delay },
+  }),
+};
+const wordItem = {
+  hidden: { opacity: 0, y: 22, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.6, ease },
+  },
+};
+
+function WordReveal({
+  text,
+  className,
+  delay = 0,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.span
+      className={className}
+      variants={wordContainer}
+      custom={delay}
+      initial="hidden"
+      animate="visible"
+    >
+      {text.split(" ").map((word, i) => (
+        <motion.span key={i} variants={wordItem} className="inline-block mr-[0.28em] last:mr-0">
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+/* ─── Magnetic CTA button ───────────────────────────────────── */
+function MagneticButton({
+  children,
+  className,
+  onClick,
+  ...rest
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode }) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 350, damping: 25 });
+  const sy = useSpring(y, { stiffness: 350, damping: 25 });
+
+  const handleMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = btnRef.current!.getBoundingClientRect();
+    x.set((e.clientX - rect.left - rect.width / 2) * 0.28);
+    y.set((e.clientY - rect.top - rect.height / 2) * 0.28);
+  };
+  const handleLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.button
+      ref={btnRef}
+      style={{ x: sx, y: sy }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      whileTap={{ scale: 0.96 }}
+      className={className}
+      onClick={onClick}
+      {...(rest as object)}
+    >
+      {children}
+    </motion.button>
+  );
+}
+
+/* ─── Infinite marquee strip ────────────────────────────────── */
+function MarqueeStrip({ items }: { items: string[] }) {
+  const doubled = [...items, ...items];
+  return (
+    <div className="marquee-container overflow-hidden">
+      <motion.div
+        className="flex gap-3"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 35, ease: "linear", repeat: Infinity }}
+        style={{ width: "max-content" }}
+      >
+        {doubled.map((pill, i) => (
+          <span
+            key={i}
+            className="whitespace-nowrap rounded-full border border-border/60 bg-white/70 px-5 py-2 text-[12px] font-semibold text-foreground/70 shadow-sm"
+          >
+            {pill}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Staggered card list ───────────────────────────────────── */
+function StaggerList({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.1 } },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export const staggerItem = {
+  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.65, ease },
+  },
+};
+
 function HomePage() {
   const [demoOpen, setDemoOpen] = useState(false);
 
@@ -124,56 +277,87 @@ function HomePage() {
         <div className="hidden md:block absolute bottom-40 left-1/4 h-1 w-1 rounded-full bg-foreground/60 float-y" />
 
         <div className="container-x relative w-full">
-          <FadeIn>
-            <div className="flex justify-center mb-6 sm:mb-8">
-              <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                THE AI GTM OPERATING SYSTEM
-              </div>
-            </div>
+          {/* Eyebrow */}
+          <motion.div
+            className="flex justify-center mb-6 sm:mb-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease }}
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-gold)] animate-pulse" />
+              The AI GTM Operating System
+            </span>
+          </motion.div>
 
-            <h1 className="text-center text-4xl leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
-              <span className="block text-foreground">The AI Brain Behind</span>
-              <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>
-                Your GTM OS.
-              </span>
-            </h1>
+          {/* Headline — word-by-word reveal */}
+          <h1 className="text-center text-4xl leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
+            <WordReveal text="The AI Brain Behind" className="block text-foreground" delay={0.1} />
+            <WordReveal
+              text="Your GTM OS."
+              className="block mt-1 md:mt-2"
+              delay={0.38}
+            />
+          </h1>
+          <style>{`.word-green span{color:#1B3A2D}`}</style>
+          <motion.p
+            className="mt-6 sm:mt-8 md:mt-9 text-center text-base sm:text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.72, ease }}
+          >
+            Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention —
+            through one intelligent system built for B2B growth.
+          </motion.p>
 
-            <p className="mt-6 sm:mt-8 md:mt-9 text-center text-base sm:text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
-              Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention —
-              through one intelligent system built for B2B growth.
-            </p>
+          {/* CTAs */}
+          <motion.div
+            className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9, ease }}
+          >
+            <MagneticButton
+              onClick={() => setDemoOpen(true)}
+              className="btn-primary w-full sm:w-auto justify-center text-base sm:text-lg px-7 sm:px-9 py-3.5"
+              data-cursor-text="Audit"
+            >
+              Book a Free GTM Audit <ArrowRight size={16} />
+            </MagneticButton>
+            <a
+              href="#ten-day-plan"
+              className="btn-text-link w-full sm:w-auto justify-center text-base sm:text-lg"
+            >
+              See the 10‑Day Plan <ArrowRight size={15} />
+            </a>
+          </motion.div>
 
-            <div className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center">
-              <button
-                onClick={() => setDemoOpen(true)}
-                className="btn-primary w-full sm:w-auto justify-center text-base sm:text-lg px-7 sm:px-9 py-3.5"
-                data-cursor-text="Audit"
-              >
-                Book a Free GTM Audit <ArrowRight size={16} />
-              </button>
-              <a
-                href="#ten-day-plan"
-                className="btn-text-link w-full sm:w-auto justify-center text-base sm:text-lg"
-                data-cursor-text="Plan"
-              >
-                See the 10‑Day Plan <ArrowRight size={15} />
-              </a>
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium">
-              {["No pitch", "30-min GTM audit", "Revenue blueprint", "Limited founding spots"].map(
-                (item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 shadow-sm"
-                  >
-                    <Check size={13} style={{ color: "#1B3A2D" }} />
-                    {item}
-                  </span>
-                ),
-              )}
-            </div>
-          </FadeIn>
+          {/* Trust badges — stagger in */}
+          <motion.div
+            className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.08, delayChildren: 1.05 } },
+            }}
+          >
+            {["No pitch", "30-min GTM audit", "Revenue blueprint", "Limited founding spots"].map(
+              (item) => (
+                <motion.span
+                  key={item}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.88 },
+                    visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "backOut" } },
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 shadow-sm"
+                >
+                  <Check size={13} style={{ color: "#1B3A2D" }} />
+                  {item}
+                </motion.span>
+              ),
+            )}
+          </motion.div>
 
           <FadeIn delay={0.2} className="mt-8 sm:mt-12 md:mt-16">
             <Suspense fallback={null}>
@@ -191,30 +375,25 @@ function HomePage() {
         <TrustSnapshot onAudit={() => setDemoOpen(true)} />
       </Suspense>
 
-      {/* CREDIBILITY BAR (quiet, premium) */}
-      <section className="border-y border-border py-10 overflow-hidden relative bg-card/30">
-        <div className="text-center text-[10px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-7">
+      {/* CREDIBILITY BAR — infinite marquee */}
+      <section className="border-y border-border py-8 overflow-hidden relative bg-card/30">
+        <div className="text-center text-[10px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-6">
           Built for modern B2B revenue teams
         </div>
-        <div className="container-x">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-            {[
-              "Pipeline Intelligence",
-              "Autonomous Outreach",
-              "AI Agents",
-              "Attribution",
-              "AEO + GEO",
-              "RevOps System",
-            ].map((pill) => (
-              <div
-                key={pill}
-                className="rounded-full border border-border/60 bg-white/70 px-4 py-2 text-center text-[12px] font-semibold text-foreground/70 shadow-[var(--shadow-card)]"
-              >
-                {pill}
-              </div>
-            ))}
-          </div>
-        </div>
+        <MarqueeStrip
+          items={[
+            "Pipeline Intelligence",
+            "Autonomous Outreach",
+            "AI Agents",
+            "Revenue Attribution",
+            "AEO + GEO",
+            "RevOps System",
+            "Deal Intelligence",
+            "Lifecycle Automation",
+            "Buying Signal Detection",
+            "AI Content Engine",
+          ]}
+        />
       </section>
 
       <Suspense fallback={<div className="py-16" />}>
@@ -253,8 +432,8 @@ function HomePage() {
           </div>
         </FadeIn>
 
-        <div className="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch lg:items-center">
-          <FadeIn delay={0.05}>
+        <StaggerList className="mt-10 md:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch lg:items-center">
+          <motion.div variants={staggerItem}>
             <div className="premium-card p-5 md:p-7 h-full bg-card/50 border-border/50">
               <div className="text-xs font-bold tracking-widest text-muted-foreground mb-6">
                 BEFORE MAGNIVO
@@ -274,9 +453,9 @@ function HomePage() {
                 ))}
               </ul>
             </div>
-          </FadeIn>
+          </motion.div>
 
-          <FadeIn delay={0.1}>
+          <motion.div variants={staggerItem}>
             <div className="premium-card p-5 sm:p-7 md:p-9 h-full border-[var(--accent-green)]/30 relative z-10 scale-100 lg:scale-105 bg-card">
               <div className="text-xs font-bold tracking-widest text-[var(--accent-green)] mb-6">
                 WITH MAGNIVO
@@ -303,9 +482,9 @@ function HomePage() {
                 ))}
               </ul>
             </div>
-          </FadeIn>
+          </motion.div>
 
-          <FadeIn delay={0.15}>
+          <motion.div variants={staggerItem}>
             <div className="premium-card p-5 md:p-7 h-full bg-card/50 border-border/50">
               <div className="text-xs font-bold tracking-widest text-[var(--accent-blue)] mb-6">
                 WHAT YOU GET
@@ -325,8 +504,8 @@ function HomePage() {
                 ))}
               </ul>
             </div>
-          </FadeIn>
-        </div>
+          </motion.div>
+        </StaggerList>
       </section>
 
       <div className="container-x">
@@ -533,7 +712,9 @@ function HomePage() {
 
               <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-left border-y border-[var(--accent-green)]/20 py-8">
                 <div className="md:px-6">
-                  <div className="text-5xl font-black text-foreground mb-3">70%+</div>
+                  <div className="text-5xl font-black text-foreground mb-3 tabular-nums">
+                    <AnimatedCounter target={70} suffix="%+" />
+                  </div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">
                     of B2B buyers research on AI engines before contacting a vendor
                   </div>
@@ -547,7 +728,9 @@ function HomePage() {
                   </a>
                 </div>
                 <div className="md:px-6 md:border-l border-[var(--accent-green)]/20">
-                  <div className="text-5xl font-black text-foreground mb-3">3x</div>
+                  <div className="text-5xl font-black text-foreground mb-3 tabular-nums">
+                    <AnimatedCounter target={3} suffix="x" />
+                  </div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">
                     more pipeline for companies running autonomous GTM vs manual outreach
                   </div>
@@ -561,7 +744,9 @@ function HomePage() {
                   </a>
                 </div>
                 <div className="md:px-6 md:border-l border-[var(--accent-green)]/20">
-                  <div className="text-5xl font-black text-foreground mb-3">60%</div>
+                  <div className="text-5xl font-black text-foreground mb-3 tabular-nums">
+                    <AnimatedCounter target={60} suffix="%" />
+                  </div>
                   <div className="text-sm text-[var(--accent-green)] font-semibold leading-relaxed">
                     lower CAC for businesses using unified AI growth systems vs point solutions
                   </div>

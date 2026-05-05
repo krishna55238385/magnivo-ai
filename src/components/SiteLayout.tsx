@@ -1,6 +1,7 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CustomCursor } from "./CustomCursor";
+import { ScrollProgress } from "./ScrollProgress";
 import { useEffect, useState, lazy, Suspense } from "react";
 
 function SmoothScroll() {
@@ -64,6 +65,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <ScrollProgress />
       <SmoothScroll />
       <div className="relative overflow-x-clip">
         <CustomCursor />

@@ -1,51 +1,33 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useInView, animate } from "framer-motion";
 
-export function AnimatedCounter({
-  to,
-  suffix = "",
-  prefix = "",
-  duration = 1600,
-}: {
-  to: number;
-  suffix?: string;
+interface Props {
+  target: number;
   prefix?: string;
+  suffix?: string;
   duration?: number;
-}) {
-  const [val, setVal] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const started = useRef(false);
+}
+
+export function AnimatedCounter({ target, prefix = "", suffix = "", duration = 1.8 }: Props) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const inView = useInView(nodeRef, { once: true, margin: "-40px 0px" });
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && !started.current) {
-            started.current = true;
-            const start = performance.now();
-            const tick = (now: number) => {
-              const p = Math.min(1, (now - start) / duration);
-              const eased = 1 - Math.pow(1 - p, 3);
-              setVal(to * eased);
-              if (p < 1) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-          }
-        });
+    if (!inView || !nodeRef.current) return;
+    const node = nodeRef.current;
+    const ctrl = animate(0, target, {
+      duration,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      onUpdate(v) {
+        node.textContent = prefix + Math.round(v) + suffix;
       },
-      { threshold: 0.4 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [to, duration]);
+    });
+    return () => ctrl.stop();
+  }, [inView, target, prefix, suffix, duration]);
 
-  const formatted = Number.isInteger(to) ? Math.round(val).toLocaleString() : val.toFixed(1);
   return (
-    <span ref={ref}>
-      {prefix}
-      {formatted}
-      {suffix}
+    <span ref={nodeRef}>
+      {prefix}0{suffix}
     </span>
   );
 }
