@@ -1,17 +1,10 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Loader2 } from "lucide-react";
+import { useForm } from "@formspree/react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
-import { supabase } from "@/integrations/supabase/client";
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100),
-  email: z.string().email("Invalid email address").max(200),
-  company: z.string().max(150).optional(),
-  message: z.string().max(2000).optional(),
-});
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -28,17 +21,16 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Invalid email address").max(200),
+  company: z.string().max(150).optional(),
+  message: z.string().max(2000).optional(),
+});
+
 function ContactPage() {
-  const [sent, setSent] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    company: "",
-    intent: "Demo",
-    message: "",
-  });
+  const [state, handleFormspree] = useForm(import.meta.env.VITE_FORMSPREE_ID);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const reasons = [
     { t: "Demo", d: "See the platform and products in action." },
@@ -47,34 +39,18 @@ function ContactPage() {
     { t: "General", d: "Anything else — say hi." },
   ];
 
-  async function submit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setBusy(true);
-    setErr(null);
+    const formData = Object.fromEntries(new FormData(e.currentTarget));
 
-    const parsed = contactSchema.safeParse(form);
+    const parsed = contactSchema.safeParse(formData);
     if (!parsed.success) {
-      setErr(parsed.error.errors[0]?.message ?? "Invalid input");
-      setBusy(false);
+      setValidationError(parsed.error.errors[0]?.message ?? "Invalid input");
       return;
     }
 
-    const type = form.intent === "Demo" ? "demo" : "contact";
-    const { error } = await supabase.from("submissions").insert({
-      type,
-      name: form.name.trim(),
-      email: form.email.trim(),
-      company: form.company.trim() || null,
-      intent: form.intent,
-      message: form.message.trim() || null,
-      source: "contact_page",
-    });
-    setBusy(false);
-    if (error) {
-      setErr(error.message);
-      return;
-    }
-    setSent(true);
+    setValidationError(null);
+    await handleFormspree(e);
   }
 
   return (
@@ -108,8 +84,8 @@ function ContactPage() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <form className="surface-card p-6 md:p-8" onSubmit={submit}>
-            {sent ? (
+          <form className="surface-card p-6 md:p-8" onSubmit={handleSubmit}>
+            {state.succeeded ? (
               <div className="py-12 text-center">
                 <div className="mx-auto h-12 w-12 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)] text-2xl">
                   ✓
@@ -118,23 +94,13 @@ function ContactPage() {
                 <p className="mt-2 text-muted-foreground">
                   We saved your details and will be in touch shortly.
                 </p>
-                <button
-                  onClick={() => {
-                    setSent(false);
-                    setForm({ name: "", email: "", company: "", intent: "Demo", message: "" });
-                  }}
-                  className="btn-ghost mt-6"
-                >
-                  Send another
-                </button>
               </div>
             ) : (
               <div className="space-y-4">
                 <Field label="Name">
                   <input
                     required
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    name="name"
                     className="cinput"
                     placeholder="Jane Doe"
                   />
@@ -143,26 +109,20 @@ function ContactPage() {
                   <input
                     required
                     type="email"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    name="email"
                     className="cinput"
                     placeholder="jane@company.com"
                   />
                 </Field>
                 <Field label="Company">
                   <input
-                    value={form.company}
-                    onChange={(e) => setForm({ ...form, company: e.target.value })}
+                    name="company"
                     className="cinput"
                     placeholder="Acme Inc."
                   />
                 </Field>
                 <Field label="Intent">
-                  <select
-                    value={form.intent}
-                    onChange={(e) => setForm({ ...form, intent: e.target.value })}
-                    className="cinput"
-                  >
+                  <select name="intent" className="cinput">
                     <option>Demo</option>
                     <option>Partnership</option>
                     <option>Investment</option>
@@ -172,15 +132,22 @@ function ContactPage() {
                 <Field label="Message">
                   <textarea
                     rows={5}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    name="message"
                     className="cinput"
                     placeholder="Tell us a bit about your goals..."
                   />
                 </Field>
-                {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
-                <button type="submit" disabled={busy} className="btn-primary w-full justify-center">
-                  {busy ? (
+                {(validationError || (state.errors && state.errors.length > 0)) && (
+                  <div className="text-sm text-[var(--destructive)]">
+                    {validationError ?? "Something went wrong. Please try again."}
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  disabled={state.submitting}
+                  className="btn-primary w-full justify-center"
+                >
+                  {state.submitting ? (
                     <>
                       <Loader2 size={14} className="animate-spin" /> Sending…
                     </>
