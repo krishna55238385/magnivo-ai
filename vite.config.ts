@@ -18,4 +18,7 @@ export default defineConfig(({ command }) => ({
     port: 8080,
     strictPort: false,
   },
+  build: {
+    target: "es2020",
+  },
 }));
