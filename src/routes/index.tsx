@@ -86,13 +86,13 @@ function HomePage() {
             </div>
 
             <h1 className="text-center text-4xl leading-[1.06] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
-              <span className="block text-foreground">The Autonomous</span>
-              <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>Pipeline Engine.</span>
+              <span className="block text-foreground">The AI GTM</span>
+              <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>Operating System.</span>
             </h1>
 
             <p className="mt-5 sm:mt-7 md:mt-8 text-center text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
               Magnivo turns scattered tools, data, and manual outreach into one autonomous system for
-              pipeline, conversion, and retention.
+              pipeline, conversion, and retention — built for B2B revenue teams.
             </p>
 
             <div className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center">

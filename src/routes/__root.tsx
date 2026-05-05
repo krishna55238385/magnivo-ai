@@ -29,26 +29,26 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
+      { title: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
       {
         name: "description",
         content:
-          "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams.",
+          "Magnivo turns scattered tools, data, and manual outreach into one autonomous system for pipeline, conversion, and retention. Built for B2B revenue teams.",
       },
       { name: "author", content: "Magnivo.ai" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
-      { name: "twitter:title", content: "Magnivo.ai — Revenue Intelligence for Modern B2B" },
+      { property: "og:title", content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
+      { name: "twitter:title", content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
       {
         property: "og:description",
         content:
-          "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams.",
+          "One autonomous system for pipeline, conversion, and retention. Built for B2B revenue teams at $500K–$5M ARR.",
       },
       {
         name: "twitter:description",
         content:
-          "Magnivo.ai is the AI Growth Stack that unifies pipeline intelligence, autonomous execution, and strategic consulting into one compounding system for B2B revenue teams.",
+          "One autonomous system for pipeline, conversion, and retention. Built for B2B revenue teams at $500K–$5M ARR.",
       },
     ],
     links: [
@@ -70,9 +70,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
+          rel="preload"
+          as="style"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
-          rel="stylesheet"
+          onLoad={(e) => { (e.target as HTMLLinkElement).rel = "stylesheet"; }}
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
         <link
           rel="icon"
           href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B3A2D'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='700' font-size='20' fill='%23F5F2EC'%3EM%3C/text%3E%3C/svg%3E"

@@ -11,7 +11,7 @@ export function Footer() {
             <MagnivoLogo className="text-xl sm:text-2xl" />
           </Link>
           <p className="text-sm text-muted-foreground mt-4 max-w-xs">
-            The Revenue Brain for Modern B2B.
+            The AI GTM Operating System for B2B Revenue Teams.
           </p>
           <div className="mt-6 flex flex-col gap-2 text-sm"></div>
         </div>
