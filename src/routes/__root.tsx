@@ -36,24 +36,6 @@ export const Route = createRootRoute({
           "Magnivo turns scattered tools, data, and manual outreach into one autonomous system for pipeline, conversion, and retention. Built for B2B revenue teams.",
       },
       { name: "author", content: "Magnivo.ai" },
-      {
-        tagName: "script",
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Magnivo.ai",
-          url: "https://magnivo.ai",
-          logo: "https://magnivo.ai/logo.png",
-          description: "The AI GTM Operating System for B2B Revenue Teams",
-          sameAs: [],
-          contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "sales",
-            url: "https://magnivo.ai/contact",
-          },
-        }),
-      },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://magnivo.ai/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -112,6 +94,25 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <link
           rel="icon"
           href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B3A2D'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='700' font-size='20' fill='%23F5F2EC'%3EM%3C/text%3E%3C/svg%3E"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Magnivo.ai",
+              url: "https://magnivo.ai",
+              logo: "https://magnivo.ai/logo.png",
+              description: "The AI GTM Operating System for B2B Revenue Teams",
+              sameAs: [],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "sales",
+                url: "https://magnivo.ai/contact",
+              },
+            }),
+          }}
         />
         <HeadContent />
       </head>

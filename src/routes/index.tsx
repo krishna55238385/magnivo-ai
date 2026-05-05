@@ -61,29 +61,26 @@ export const Route = createFileRoute("/")({
       },
       { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
       { tagName: "link", rel: "canonical", href: "https://magnivo.ai/" },
-      {
-        tagName: "script",
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          name: "Magnivo.ai",
-          applicationCategory: "BusinessApplication",
-          operatingSystem: "Web",
-          url: "https://magnivo.ai",
-          description:
-            "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "USD",
-            description: "Free GTM audit available",
-          },
-        }),
-      },
     ],
   }),
   component: HomePage,
+});
+
+const softwareAppLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Magnivo.ai",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  url: "https://magnivo.ai",
+  description:
+    "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    description: "Free GTM audit available",
+  },
 });
 
 function HomePage() {
@@ -91,6 +88,7 @@ function HomePage() {
 
   return (
     <SiteLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: softwareAppLd }} />
       {/* HERO SECTION */}
       <section className="relative overflow-hidden min-h-[calc(100svh-3.5rem)] sm:min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-10 sm:pt-14 md:pt-20 pb-10 sm:pb-14 md:pb-20">
         <div className="aurora" aria-hidden />
