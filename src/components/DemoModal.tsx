@@ -1,11 +1,17 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Loader2, X, CalendarCheck } from "lucide-react";
-import { useForm, ValidationError } from "@formspree/react";
 
 export function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [state, handleSubmit] = useForm("mzdorjpv");
+  const [submitting, setSubmitting] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!open) {
+      setSucceeded(false);
+      setErr(null);
+      setSubmitting(false);
+    }
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -21,6 +27,29 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
   }, [open, onClose]);
 
   if (!open) return null;
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSubmitting(true);
+    setErr(null);
+    try {
+      const res = await fetch("https://formspree.io/f/mzdorjpv", {
+        method: "POST",
+        body: new FormData(e.currentTarget),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setSucceeded(true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setErr(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      setErr("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div
@@ -41,7 +70,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
           <X size={18} />
         </button>
 
-        {state.succeeded ? (
+        {succeeded ? (
           <div className="py-10 text-center">
             <div className="mx-auto h-14 w-14 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)]">
               <CalendarCheck size={24} />
@@ -65,35 +94,18 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-3">
-              <input
-                required
-                name="name"
-                placeholder="Name"
-                className="dinput"
-              />
-              <ValidationError field="name" prefix="Name" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
-              <input
-                required
-                type="email"
-                name="email"
-                placeholder="Work email"
-                className="dinput"
-              />
-              <ValidationError field="email" prefix="Email" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
-              <input
-                name="company"
-                placeholder="Company"
-                className="dinput"
-              />
+              <input required name="name" placeholder="Name" className="dinput" />
+              <input required type="email" name="email" placeholder="Work email" className="dinput" />
+              <input name="company" placeholder="Company" className="dinput" />
               <textarea
                 rows={3}
                 name="message"
                 placeholder="What are you trying to improve? Pipeline, outbound, inbound, CRM, retention..."
                 className="dinput"
               />
-              <ValidationError field="message" prefix="Message" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
-              <button type="submit" disabled={state.submitting} className="btn-primary w-full justify-center">
-                {state.submitting ? (
+              {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
+              <button type="submit" disabled={submitting} className="btn-primary w-full justify-center">
+                {submitting ? (
                   <>
                     <Loader2 size={14} className="animate-spin" /> Submitting...
                   </>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Loader2 } from "lucide-react";
-import { useForm, ValidationError } from "@formspree/react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
@@ -29,8 +28,9 @@ const contactSchema = z.object({
 });
 
 function ContactPage() {
-  const [state, handleFormspree] = useForm("mzdorjpv");
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
   const reasons = [
     { t: "Demo", d: "See the platform and products in action." },
@@ -45,12 +45,29 @@ function ContactPage() {
 
     const parsed = contactSchema.safeParse(formData);
     if (!parsed.success) {
-      setValidationError(parsed.error.errors[0]?.message ?? "Invalid input");
+      setErr(parsed.error.errors[0]?.message ?? "Invalid input");
       return;
     }
 
-    setValidationError(null);
-    await handleFormspree(e);
+    setErr(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://formspree.io/f/mzdorjpv", {
+        method: "POST",
+        body: new FormData(e.currentTarget),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setSucceeded(true);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setErr(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      setErr("Network error. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -85,43 +102,26 @@ function ContactPage() {
 
         <FadeIn delay={0.1}>
           <form className="surface-card p-6 md:p-8" onSubmit={handleSubmit}>
-            {state.succeeded ? (
+            {succeeded ? (
               <div className="py-12 text-center">
                 <div className="mx-auto h-12 w-12 rounded-full bg-[var(--accent-green)]/15 border border-[var(--accent-green)]/40 flex items-center justify-center text-[var(--accent-green)] text-2xl">
                   ✓
                 </div>
                 <h3 className="mt-5 text-2xl font-bold">Message sent</h3>
                 <p className="mt-2 text-muted-foreground">
-                  We saved your details and will be in touch shortly.
+                  We'll be in touch within one business day.
                 </p>
               </div>
             ) : (
               <div className="space-y-4">
                 <Field label="Name">
-                  <input
-                    required
-                    name="name"
-                    className="cinput"
-                    placeholder="Jane Doe"
-                  />
-                  <ValidationError field="name" prefix="Name" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
+                  <input required name="name" className="cinput" placeholder="Jane Doe" />
                 </Field>
                 <Field label="Email">
-                  <input
-                    required
-                    type="email"
-                    name="email"
-                    className="cinput"
-                    placeholder="jane@company.com"
-                  />
-                  <ValidationError field="email" prefix="Email" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
+                  <input required type="email" name="email" className="cinput" placeholder="jane@company.com" />
                 </Field>
                 <Field label="Company">
-                  <input
-                    name="company"
-                    className="cinput"
-                    placeholder="Acme Inc."
-                  />
+                  <input name="company" className="cinput" placeholder="Acme Inc." />
                 </Field>
                 <Field label="Intent">
                   <select name="intent" className="cinput">
@@ -138,17 +138,10 @@ function ContactPage() {
                     className="cinput"
                     placeholder="Tell us a bit about your goals..."
                   />
-                  <ValidationError field="message" prefix="Message" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
                 </Field>
-                {validationError && (
-                  <div className="text-sm text-[var(--destructive)]">{validationError}</div>
-                )}
-                <button
-                  type="submit"
-                  disabled={state.submitting}
-                  className="btn-primary w-full justify-center"
-                >
-                  {state.submitting ? (
+                {err && <div className="text-sm text-[var(--destructive)]">{err}</div>}
+                <button type="submit" disabled={submitting} className="btn-primary w-full justify-center">
+                  {submitting ? (
                     <>
                       <Loader2 size={14} className="animate-spin" /> Sending…
                     </>
