@@ -18,15 +18,15 @@ function HeroToolbar() {
   const views = ["Intelligence", "Pipeline", "Agents"];
   return (
     <div
-      className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between rounded-xl px-3 py-2.5 pointer-events-none"
+      className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between rounded-xl px-2.5 py-2 pointer-events-none"
       style={subtleCard}
     >
       <div
         className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 min-w-0 flex-1 max-w-md"
         style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.06)" }}
       >
-        <Search size={12} className="shrink-0" style={{ color: "rgba(255,255,255,0.35)" }} />
-        <span className="text-[10px] font-mono truncate" style={{ color: "rgba(255,255,255,0.32)" }}>
+        <Search size={11} className="shrink-0" style={{ color: "rgba(255,255,255,0.35)" }} />
+        <span className="text-[9px] font-mono truncate" style={{ color: "rgba(255,255,255,0.32)" }}>
           Search accounts, signals, playbooks…
         </span>
       </div>
@@ -34,7 +34,7 @@ function HeroToolbar() {
         {views.map((v, i) => (
           <div
             key={v}
-            className="rounded-md px-2 py-1 text-[10px] font-semibold"
+            className="rounded-md px-2 py-1 text-[9px] font-semibold"
             style={
               i === 0
                 ? { background: "rgba(196,146,42,0.15)", color: "#C4922A", border: "1px solid rgba(196,146,42,0.3)" }
@@ -45,17 +45,17 @@ function HeroToolbar() {
           </div>
         ))}
         <div
-          className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-mono"
+          className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-mono"
           style={{ color: "rgba(110,231,183,0.9)", border: "1px solid rgba(110,231,183,0.2)" }}
         >
-          <Radio size={10} className="shrink-0" />
+          <Radio size={9} className="shrink-0" />
           Live
         </div>
         <div
-          className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] font-mono"
+          className="hidden sm:inline-flex items-center gap-1 rounded-md px-2 py-1 text-[9px] font-mono"
           style={{ color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.08)" }}
         >
-          <Layers size={10} className="shrink-0 opacity-70" />
+          <Layers size={9} className="shrink-0 opacity-70" />
           All workspaces
         </div>
       </div>
@@ -73,7 +73,7 @@ function PipelineStrip() {
   ];
   return (
     <div
-      className="flex flex-wrap items-stretch gap-2 rounded-xl px-3 py-2.5 pointer-events-none"
+      className="flex flex-wrap items-stretch gap-1.5 rounded-xl px-2.5 py-2 pointer-events-none"
       style={subtleCard}
     >
       <div className="flex items-center gap-1.5 text-[9px] font-bold tracking-widest uppercase shrink-0 mr-1" style={{ color: "rgba(255,255,255,0.35)" }}>
@@ -87,7 +87,7 @@ function PipelineStrip() {
             </span>
           )}
           <div
-            className="rounded-lg px-2.5 py-1.5 flex items-center gap-2"
+            className="rounded-lg px-2.5 py-1 flex items-center gap-2"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
           >
             <span className="text-[10px] font-medium whitespace-nowrap" style={{ color: "rgba(255,255,255,0.65)" }}>
@@ -112,7 +112,7 @@ const accountRows = [
 
 function AccountsQueuePanel() {
   return (
-    <div className="rounded-xl p-3 sm:p-4 flex flex-col min-h-0 pointer-events-none" style={cardStyle}>
+    <div className="rounded-xl p-3 flex flex-col min-h-0 pointer-events-none" style={cardStyle}>
       <div className="flex items-start justify-between gap-2 mb-3">
         <div>
           <div className="text-xs font-bold" style={{ color: "rgba(255,255,255,0.88)" }}>
@@ -279,7 +279,10 @@ function ExecutionAndQueueSection() {
 
 export function HeroVisual() {
   return (
-    <div className="relative mx-auto mt-8 sm:mt-12 md:mt-16 max-w-5xl float-dashboard pointer-events-none" aria-hidden>
+    <div
+      className="relative mx-auto mt-8 sm:mt-10 md:mt-12 max-w-3xl float-dashboard pointer-events-none origin-top scale-[0.84] sm:scale-[0.88] md:scale-[0.9]"
+      aria-hidden
+    >
       {/* Outer glow wrapper */}
       <div
         className="absolute -inset-4 rounded-3xl pointer-events-none"
@@ -297,7 +300,7 @@ export function HeroVisual() {
           style={{ background: "linear-gradient(180deg, rgba(196,146,42,0.05) 0%, transparent 100%)" }}
         />
 
-        <div className="p-3 sm:p-4 md:p-5 relative">
+        <div className="p-3 sm:p-3.5 md:p-4 relative">
           {/* Window chrome bar */}
           <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 px-1">
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
@@ -315,7 +318,7 @@ export function HeroVisual() {
             </div>
           </div>
 
-          <div className="grid grid-cols-12 gap-3 sm:gap-4">
+          <div className="grid grid-cols-12 gap-2.5 sm:gap-3.5">
             {/* Sidebar */}
             <div className="col-span-3 hidden md:flex flex-col gap-1.5">
               {[
@@ -348,17 +351,17 @@ export function HeroVisual() {
             </div>
 
             {/* Main content */}
-            <div className="col-span-12 md:col-span-9 flex flex-col gap-3 sm:gap-4">
+            <div className="col-span-12 md:col-span-9 flex flex-col gap-2.5 sm:gap-3.5">
               <HeroToolbar />
 
               {/* Metric cards row */}
-              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-2.5">
                 <div className="rounded-xl p-4 sm:p-5 flex flex-col justify-center" style={cardStyle}>
                   <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.40)" }}>
                     PIPELINE
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-2xl sm:text-3xl font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
                       $4.2M
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: "#C4922A" }}>
@@ -375,7 +378,7 @@ export function HeroVisual() {
                     WIN RATE
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-2xl sm:text-3xl font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
                       32.8%
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: "#6ee7b7" }}>
@@ -392,7 +395,7 @@ export function HeroVisual() {
                     AI ACTIONS
                   </div>
                   <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-2xl sm:text-3xl font-bold" style={{ color: "#fff" }}>
+                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: "#fff" }}>
                       84,592
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: "#C4922A" }}>
@@ -408,8 +411,8 @@ export function HeroVisual() {
               <PipelineStrip />
 
               {/* Chart + accounts: stack on small screens, split md+ */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-                <div className="md:col-span-7 space-y-3 min-w-0">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-2.5">
+                <div className="md:col-span-7 space-y-2.5 min-w-0">
                   <div className="rounded-xl p-4 sm:p-5 relative overflow-hidden" style={cardStyle}>
                     <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2 text-xs mb-4">
                       <div className="flex items-center gap-2.5 font-bold" style={{ color: "rgba(255,255,255,0.85)" }}>
@@ -477,7 +480,7 @@ export function HeroVisual() {
               </div>
 
               {/* Sub-cards row */}
-              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-2.5">
                 <div className="rounded-xl p-4 sm:p-5 relative overflow-hidden" style={cardStyle}>
                   <div className="flex items-center gap-2 text-xs font-bold mb-3" style={{ color: "rgba(255,255,255,0.75)" }}>
                     <TrendingUp size={13} style={{ color: "#C4922A" }} />
@@ -545,7 +548,10 @@ export function HeroVisual() {
                 </div>
               </div>
 
-              <ExecutionAndQueueSection />
+              <div className="max-h-[160px] overflow-hidden relative">
+                <div className="absolute inset-x-0 bottom-0 h-10 z-20" style={{ background: "linear-gradient(to top, rgba(18,32,26,1), rgba(18,32,26,0))" }} />
+                <ExecutionAndQueueSection />
+              </div>
             </div>
           </div>
         </div>
