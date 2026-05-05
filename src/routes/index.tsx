@@ -35,6 +35,32 @@ const DemoModal = lazy(() =>
 );
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Magnivo AI — The AI Brain Behind Your GTM OS" },
+      {
+        name: "description",
+        content:
+          "Magnivo runs your entire B2B revenue motion — outreach, pipeline, and retention — through one AI-powered GTM operating system built for B2B teams.",
+      },
+      { property: "og:title", content: "Magnivo AI — The AI GTM Operating System" },
+      {
+        property: "og:description",
+        content: "52 AI agents. One revenue system. Built for B2B teams scaling to $5M ARR.",
+      },
+      { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://magnivo.ai/" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Magnivo AI — The AI GTM Operating System" },
+      {
+        name: "twitter:description",
+        content: "52 AI agents. One revenue system. Built for B2B revenue teams.",
+      },
+      { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
+      { tagName: "link", rel: "canonical", href: "https://magnivo.ai/" },
+    ],
+  }),
   component: HomePage,
 });
 

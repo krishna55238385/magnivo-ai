@@ -38,6 +38,7 @@ function AdminPage() {
   const { user, isAdmin, loading, signOut } = useAuth();
   const [items, setItems] = useState<Submission[]>([]);
   const [busy, setBusy] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "demo" | "contact">("all");
   const [statusFilter, setStatusFilter] = useState<"all" | "new" | "in_progress" | "closed">("all");
   const [active, setActive] = useState<Submission | null>(null);
@@ -52,19 +53,30 @@ function AdminPage() {
 
   async function load() {
     setBusy(true);
-    const { data, error } = await supabase
-      .from("submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (!error && data) setItems(data as Submission[]);
-    setBusy(false);
+    setLoadError(null);
+    try {
+      const { data, error } = await supabase
+        .from("submissions")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      if (data) setItems(data as Submission[]);
+    } catch (err) {
+      console.error("[admin] Failed to load submissions:", err);
+      setLoadError("Failed to load submissions. Please refresh.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function setStatus(id: string, status: Submission["status"]) {
-    const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
-    if (!error) {
+    try {
+      const { error } = await supabase.from("submissions").update({ status }).eq("id", id);
+      if (error) throw error;
       setItems((prev) => prev.map((i) => (i.id === id ? { ...i, status } : i)));
       if (active?.id === id) setActive({ ...active, status });
+    } catch (err) {
+      console.error("[admin] Failed to update submission status:", err);
     }
   }
 
@@ -147,6 +159,11 @@ function AdminPage() {
       </header>
 
       <main className="container-x py-8 md:py-10">
+        {loadError && (
+          <div className="mb-6 p-4 rounded-lg border border-red-200 bg-red-50 text-red-700 text-sm">
+            {loadError}
+          </div>
+        )}
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <StatCard icon={<Inbox size={16} />} label="Total" value={stats.total} />

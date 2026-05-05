@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Loader2 } from "lucide-react";
+import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { supabase } from "@/integrations/supabase/client";
+
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Invalid email address").max(200),
+  company: z.string().max(150).optional(),
+  message: z.string().max(2000).optional(),
+});
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -43,6 +51,14 @@ function ContactPage() {
     e.preventDefault();
     setBusy(true);
     setErr(null);
+
+    const parsed = contactSchema.safeParse(form);
+    if (!parsed.success) {
+      setErr(parsed.error.errors[0]?.message ?? "Invalid input");
+      setBusy(false);
+      return;
+    }
+
     const type = form.intent === "Demo" ? "demo" : "contact";
     const { error } = await supabase.from("submissions").insert({
       type,

@@ -31,13 +31,19 @@ export function useAuth() {
   }, []);
 
   async function checkAdmin(userId: string) {
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId)
-      .eq("role", "admin")
-      .maybeSingle();
-    setIsAdmin(!!data);
+    try {
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId)
+        .eq("role", "admin")
+        .maybeSingle();
+      if (error) throw error;
+      setIsAdmin(!!data);
+    } catch (err) {
+      console.error("[useAuth] checkAdmin failed:", err);
+      setIsAdmin(false);
+    }
   }
 
   return { session, user, loading, isAdmin, signOut: () => supabase.auth.signOut() };
