@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Database, ScanSearch, Network, Radar } from "lucide-react";
 import { FadeIn } from "@/components/FadeIn";
 
@@ -8,7 +8,7 @@ const LAYERS = [
     id: "ground-truth",
     label: "Ground Truth",
     icon: Database,
-    color: "#06402b",
+    color: "var(--magnivo-deep-green)",
     title: "Your Ground Truth Layer",
     subtitle: "The only data source your business actually owns.",
     body: "Before intelligence. Before automation. We unify the raw signals your business is already generating — but not using. CRM, website, product — all in one place.",
@@ -23,7 +23,7 @@ const LAYERS = [
     id: "hidden-demand",
     label: "Hidden Demand",
     icon: ScanSearch,
-    color: "#c5a059",
+    color: "var(--accent-gold-soft)",
     title: "Your Hidden Demand Layer",
     subtitle: "Most of your buyers never fill a form.",
     body: "We identify them anyway — before your competitors do. Anonymous web traffic gets resolved into named accounts with full buying context and intent scoring.",
@@ -38,7 +38,7 @@ const LAYERS = [
     id: "engagement",
     label: "Engagement",
     icon: Network,
-    color: "#002819",
+    color: "var(--magnivo-darkest)",
     title: "Your Engagement Layer",
     subtitle: "Every campaign, click, and interaction is a signal.",
     body: "We unify them into one system so you stop guessing which activity drives pipeline and start knowing — across every channel, in real time.",
@@ -53,7 +53,7 @@ const LAYERS = [
     id: "in-market",
     label: "In-Market Signals",
     icon: Radar,
-    color: "#775a19",
+    color: "var(--magnivo-dark-gold)",
     title: "Your In-Market Signal Layer",
     subtitle: "Not all activity matters.",
     body: "We isolate real buying intent from noise — identifying which accounts are actively researching, comparing, and ready to buy right now, before they reach out.",
@@ -325,7 +325,7 @@ function InMarketViz() {
 
 const VIZ = [<GroundTruthViz />, <HiddenDemandViz />, <EngagementViz />, <InMarketViz />];
 
-export function DataLayerScrollSystem() {
+export const DataLayerScrollSystem = memo(function DataLayerScrollSystem() {
   const [active, setActive] = useState(0);
   const layer = LAYERS[active];
   const Icon = layer.icon;
@@ -451,4 +451,4 @@ export function DataLayerScrollSystem() {
       </div>
     </section>
   );
-}
+});

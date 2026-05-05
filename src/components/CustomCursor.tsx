@@ -72,6 +72,7 @@ export function CustomCursor() {
       style={{
         background: `radial-gradient(circle, color-mix(in oklab, var(--accent-${accent}) 25%, transparent) 0%, transparent 80%)`,
         opacity: hovering ? 1 : 0.6,
+        willChange: "transform",
       }}
     />
   );

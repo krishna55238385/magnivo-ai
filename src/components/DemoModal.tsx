@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ArrowRight, Loader2, X, CalendarCheck } from "lucide-react";
+import { z } from "zod";
+import { useFormSubmission } from "@/hooks/useFormSubmission";
+
+const demoSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Invalid email address").max(200),
+  company: z.string().max(150).optional(),
+  message: z.string().max(2000).optional(),
+});
 
 export function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [submitting, setSubmitting] = useState(false);
-  const [succeeded, setSucceeded] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+  const { submitting, succeeded, err, setErr, submit, reset } = useFormSubmission();
 
   useEffect(() => {
-    if (!open) {
-      setSucceeded(false);
-      setErr(null);
-      setSubmitting(false);
-    }
+    if (!open) reset();
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -30,25 +33,13 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitting(true);
-    setErr(null);
-    try {
-      const res = await fetch("https://formspree.io/f/mzdorjpv", {
-        method: "POST",
-        body: new FormData(e.currentTarget),
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setSucceeded(true);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setErr(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
-      }
-    } catch {
-      setErr("Network error. Please check your connection and try again.");
-    } finally {
-      setSubmitting(false);
+    const formData = Object.fromEntries(new FormData(e.currentTarget));
+    const parsed = demoSchema.safeParse(formData);
+    if (!parsed.success) {
+      setErr(parsed.error.errors[0]?.message ?? "Invalid input");
+      return;
     }
+    await submit(e.currentTarget);
   }
 
   return (

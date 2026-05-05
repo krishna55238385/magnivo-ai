@@ -14,13 +14,13 @@ import {
 } from "lucide-react";
 
 const cardStyle = {
-  background: "rgba(255,255,255,0.92)",
-  border: "1px solid rgba(26,26,26,0.10)",
-  boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+  background: "rgba(255,255,255,0.94)",
+  border: "1px solid var(--border-soft)",
+  boxShadow: "var(--shadow-soft)",
 } as const;
 const subtleCard = {
-  background: "rgba(255,255,255,0.7)",
-  border: "1px solid rgba(26,26,26,0.08)",
+  background: "rgba(255,255,255,0.72)",
+  border: "1px solid var(--border-faint)",
 } as const;
 const ink = "rgba(26,26,26,0.86)";
 const inkMuted = "rgba(26,26,26,0.55)";
@@ -120,6 +120,41 @@ function PipelineStrip() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function InsightsStrip() {
+  const items = [
+    { label: "3 anomalies flagged", tone: "rgba(27,58,45,0.10)", color: "var(--accent-blue)", icon: Bell },
+    { label: "2 guardrails active", tone: "rgba(196,146,42,0.18)", color: "var(--accent-green)", icon: ShieldCheck },
+  ] as const;
+  return (
+    <div className="flex flex-wrap items-center gap-2 rounded-xl px-2.5 py-2 pointer-events-none" style={subtleCard}>
+      <span className="text-[9px] font-bold tracking-widest uppercase" style={{ color: inkFaint }}>
+        Insights
+      </span>
+      <span className="mx-1 hidden sm:inline text-[10px]" style={{ color: "rgba(26,26,26,0.22)" }}>
+        •
+      </span>
+      <div className="flex flex-wrap items-center gap-2">
+        {items.map((it) => {
+          const Icon = it.icon;
+          return (
+            <span
+              key={it.label}
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold"
+              style={{ background: it.tone, color: it.color, border: "1px solid rgba(26,26,26,0.08)" }}
+            >
+              <Icon size={11} className="opacity-80" />
+              {it.label}
+            </span>
+          );
+        })}
+      </div>
+      <span className="ml-auto hidden sm:inline text-[10px] font-mono" style={{ color: inkMuted }}>
+        Updated 12s ago
+      </span>
     </div>
   );
 }
@@ -339,13 +374,15 @@ export function HeroVisual() {
 
         <div className="p-3 sm:p-3.5 md:p-4 relative">
           {/* Window chrome bar */}
-          <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 px-1">
+          <div
+            className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4 px-1"
+            style={{ color: inkMuted }}
+          >
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: "rgba(26,26,26,0.12)" }} />
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: "color-mix(in oklab, var(--accent-green) 75%, #fff)" }} />
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: "color-mix(in oklab, var(--accent-blue) 78%, #fff)" }} />
             <div
               className="ml-1 sm:ml-4 min-w-0 flex-1 truncate text-[10px] sm:text-xs font-medium font-mono"
-              style={{ color: inkMuted }}
             >
               magnivo.ai / intelligence
             </div>
@@ -390,6 +427,7 @@ export function HeroVisual() {
             {/* Main content */}
             <div className="col-span-12 sm:col-span-9 flex flex-col gap-2.5 sm:gap-3.5">
               <HeroToolbar />
+              <InsightsStrip />
 
               {/* Metric cards row */}
               <div className="grid grid-cols-1 min-[520px]:grid-cols-3 gap-2.5">
@@ -397,8 +435,11 @@ export function HeroVisual() {
                   <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     PIPELINE
                   </div>
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <span
+                      className="text-[20px] sm:text-[28px] font-bold tabular-nums whitespace-nowrap"
+                      style={{ color: ink, fontVariantNumeric: "tabular-nums" }}
+                    >
                       $4.2M
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: accent }}>
@@ -414,8 +455,11 @@ export function HeroVisual() {
                   <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     WIN RATE
                   </div>
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <span
+                      className="text-[20px] sm:text-[28px] font-bold tabular-nums whitespace-nowrap"
+                      style={{ color: ink, fontVariantNumeric: "tabular-nums" }}
+                    >
                       32.8%
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: accent2 }}>
@@ -431,8 +475,11 @@ export function HeroVisual() {
                   <div className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: inkFaint }}>
                     AI ACTIONS
                   </div>
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-[22px] sm:text-[28px] font-bold" style={{ color: ink }}>
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <span
+                      className="text-[20px] sm:text-[28px] font-bold tabular-nums whitespace-nowrap"
+                      style={{ color: ink, fontVariantNumeric: "tabular-nums" }}
+                    >
                       84,592
                     </span>
                     <span className="text-xs font-semibold flex items-center" style={{ color: accent }}>

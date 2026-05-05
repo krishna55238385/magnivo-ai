@@ -13,6 +13,7 @@ export const Route = createFileRoute("/solutions")({
       { property: "og:title", content: "Enterprise AI Solutions, Done With You." },
       { property: "og:description", content: "Five strategic solution lines for deep AI transformation." },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/solutions" }],
   }),
   component: SolutionsPage,
 });

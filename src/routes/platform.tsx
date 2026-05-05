@@ -36,6 +36,7 @@ export const Route = createFileRoute("/platform")({
           "One platform that unifies data, intelligence, and autonomous execution into a compounding B2B revenue engine. Used by B2B founders scaling to Series B.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/platform" }],
   }),
   component: PlatformPage,
 });

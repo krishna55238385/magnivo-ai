@@ -13,6 +13,7 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as InvestorsRouteImport } from './routes/investors'
+import { Route as DashboardImageRouteImport } from './routes/dashboard-image'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResourcesIndexRouteImport } from './routes/resources.index'
@@ -39,6 +40,11 @@ const PlatformRoute = PlatformRouteImport.update({
 const InvestorsRoute = InvestorsRouteImport.update({
   id: '/investors',
   path: '/investors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardImageRoute = DashboardImageRouteImport.update({
+  id: '/dashboard-image',
+  path: '/dashboard-image',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -80,6 +86,7 @@ const ProductsSlugRoute = ProductsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/dashboard-image': typeof DashboardImageRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/dashboard-image': typeof DashboardImageRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/dashboard-image': typeof DashboardImageRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/dashboard-image'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/dashboard-image'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact'
+    | '/dashboard-image'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -162,6 +174,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  DashboardImageRoute: typeof DashboardImageRoute
   InvestorsRoute: typeof InvestorsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/investors'
       fullPath: '/investors'
       preLoaderRoute: typeof InvestorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard-image': {
+      id: '/dashboard-image'
+      path: '/dashboard-image'
+      fullPath: '/dashboard-image'
+      preLoaderRoute: typeof DashboardImageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -269,6 +289,7 @@ const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  DashboardImageRoute: DashboardImageRoute,
   InvestorsRoute: InvestorsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,

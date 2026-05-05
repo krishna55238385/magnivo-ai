@@ -11,6 +11,7 @@ export const Route = createFileRoute("/pricing")({
       { title: "Pricing — Magnivo.ai" },
       { name: "description", content: "A Growth Engine Built Around Your Goals." },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/pricing" }],
   }),
   component: PricingPage,
 });

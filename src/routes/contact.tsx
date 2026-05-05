@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
+import { useFormSubmission } from "@/hooks/useFormSubmission";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Let's Talk — Magnivo.ai" },
       { property: "og:description", content: "Book a demo or reach the team." },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/contact" }],
   }),
   component: ContactPage,
 });
@@ -28,9 +29,7 @@ const contactSchema = z.object({
 });
 
 function ContactPage() {
-  const [submitting, setSubmitting] = useState(false);
-  const [succeeded, setSucceeded] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+  const { submitting, succeeded, err, setErr, submit } = useFormSubmission();
 
   const reasons = [
     { t: "Demo", d: "See the platform and products in action." },
@@ -49,25 +48,7 @@ function ContactPage() {
       return;
     }
 
-    setErr(null);
-    setSubmitting(true);
-    try {
-      const res = await fetch("https://formspree.io/f/mzdorjpv", {
-        method: "POST",
-        body: new FormData(e.currentTarget),
-        headers: { Accept: "application/json" },
-      });
-      if (res.ok) {
-        setSucceeded(true);
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setErr(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
-      }
-    } catch {
-      setErr("Network error. Please check your connection and try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    await submit(e.currentTarget);
   }
 
   return (

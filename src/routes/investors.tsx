@@ -13,6 +13,7 @@ export const Route = createFileRoute("/investors")({
       { property: "og:title", content: "Building the AI Operating System for Modern GTM" },
       { property: "og:description", content: "Investor brief: market, platform, traction, and vision." },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/investors" }],
   }),
   component: InvestorsPage,
 });

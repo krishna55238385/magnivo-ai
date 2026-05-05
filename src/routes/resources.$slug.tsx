@@ -29,6 +29,9 @@ export const Route = createFileRoute("/resources/$slug")({
           { property: "og:description", content: loaderData.resource.description },
         ]
       : [{ title: "Resource — Magnivo.ai" }],
+    links: loaderData
+      ? [{ rel: "canonical", href: `https://magnivo.ai/resources/${loaderData.resource.slug}` }]
+      : [],
   }),
   notFoundComponent: () => (
     <SiteLayout>

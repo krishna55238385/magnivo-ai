@@ -19,8 +19,10 @@ import {
 import { useState, lazy, Suspense } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
-import { HeroVisual } from "@/components/HeroVisual";
 
+const HeroVisual = lazy(() =>
+  import("@/components/HeroVisual").then((m) => ({ default: m.HeroVisual }))
+);
 const DataLayerScrollSystem = lazy(() =>
   import("@/components/DataLayerScrollSystem").then((m) => ({ default: m.DataLayerScrollSystem }))
 );
@@ -59,6 +61,25 @@ export const Route = createFileRoute("/")({
       },
       { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
       { tagName: "link", rel: "canonical", href: "https://magnivo.ai/" },
+      {
+        tagName: "script",
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "Magnivo.ai",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          url: "https://magnivo.ai",
+          description: "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
+          offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            description: "Free GTM audit available",
+          },
+        }),
+      },
     ],
   }),
   component: HomePage,
@@ -70,29 +91,29 @@ function HomePage() {
   return (
     <SiteLayout>
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden min-h-[calc(100svh-3.5rem)] sm:min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-12 md:pb-16">
+      <section className="relative overflow-hidden min-h-[calc(100svh-3.5rem)] sm:min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-10 sm:pt-14 md:pt-20 pb-10 sm:pb-14 md:pb-20">
         <div className="aurora" aria-hidden />
-        <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
+        <div className="absolute inset-0 dot-grid opacity-35" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="noise" aria-hidden />
 
         {/* Spotlights */}
         <div
-          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[min(1100px,150vw)] h-[520px] sm:h-[600px] pointer-events-none"
+          className="absolute -top-44 left-1/2 -translate-x-1/2 w-[min(1100px,150vw)] h-[560px] sm:h-[640px] pointer-events-none"
           aria-hidden
           style={{
             background:
-              "radial-gradient(ellipse at center top, color-mix(in oklab, var(--accent-blue) 35%, transparent), transparent 60%)",
-            filter: "blur(20px)",
+              "radial-gradient(ellipse at center top, color-mix(in oklab, var(--accent-blue) 30%, transparent), transparent 62%)",
+            filter: "blur(26px)",
           }}
         />
         <div
-          className="absolute -bottom-40 -left-32 w-[min(700px,130vw)] h-[420px] sm:h-[500px] pointer-events-none"
+          className="absolute -bottom-44 -left-32 w-[min(720px,130vw)] h-[440px] sm:h-[520px] pointer-events-none"
           aria-hidden
           style={{
             background:
               "radial-gradient(ellipse at left bottom, color-mix(in oklab, var(--accent-green) 25%, transparent), transparent 65%)",
-            filter: "blur(28px)",
+            filter: "blur(34px)",
           }}
         />
 
@@ -105,18 +126,18 @@ function HomePage() {
 
         <div className="container-x relative w-full">
           <FadeIn>
-            <div className="flex justify-center mb-5 sm:mb-7">
+            <div className="flex justify-center mb-6 sm:mb-8">
               <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
                 THE AI GTM OPERATING SYSTEM
               </div>
             </div>
 
-            <h1 className="text-center text-4xl leading-[1.06] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
+            <h1 className="text-center text-4xl leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
               <span className="block text-foreground">The AI Brain Behind</span>
               <span className="block mt-1 md:mt-2" style={{ color: "#1B3A2D" }}>Your GTM OS.</span>
             </h1>
 
-            <p className="mt-5 sm:mt-7 md:mt-8 text-center text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
+            <p className="mt-6 sm:mt-8 md:mt-9 text-center text-base sm:text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
               Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention — through one intelligent system built for B2B growth.
             </p>
 
@@ -156,7 +177,9 @@ function HomePage() {
           </FadeIn>
 
           <FadeIn delay={0.2} className="mt-8 sm:mt-12 md:mt-16">
-            <HeroVisual />
+            <Suspense fallback={null}>
+              <HeroVisual />
+            </Suspense>
           </FadeIn>
         </div>
       </section>
@@ -169,48 +192,25 @@ function HomePage() {
         <TrustSnapshot onAudit={() => setDemoOpen(true)} />
       </Suspense>
 
-      {/* CREDIBILITY BAR */}
-      <section className="border-y border-border py-6 overflow-hidden relative bg-card/30">
-        <div className="text-center text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6">
-          Built for the revenue stack of modern B2B
+      {/* CREDIBILITY BAR (quiet, premium) */}
+      <section className="border-y border-border py-10 overflow-hidden relative bg-card/30">
+        <div className="text-center text-[10px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-7">
+          Built for modern B2B revenue teams
         </div>
-        <div className="flex w-full overflow-hidden marquee-container">
-          <div className="marquee flex gap-6 md:gap-12 whitespace-nowrap items-center px-4 w-max">
+        <div className="container-x">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {[
-              "GTM Orchestration",
-              "AI Agents",
               "Pipeline Intelligence",
               "Autonomous Outreach",
-              "Account-Based Marketing",
-              "AEO + GEO Optimisation",
-              "Revenue Attribution",
-              "Demand Generation",
-              "AI Agent Orchestration",
-              "Lifecycle & Retention",
-              "GTM OS",
-              "Revenue Intelligence",
-              "Strategic AI Advisory",
-              "Growth Intelligence",
-              "GTM Orchestration",
               "AI Agents",
-              "Pipeline Intelligence",
-              "Autonomous Outreach",
-              "Account-Based Marketing",
-              "AEO + GEO Optimisation",
-              "Revenue Attribution",
-              "Demand Generation",
-              "AI Agent Orchestration",
-              "Lifecycle & Retention",
-              "GTM OS",
-              "Revenue Intelligence",
-              "Strategic AI Consulting",
-              "Growth Intelligence",
-            ].map((pill, i) => (
+              "Attribution",
+              "AEO + GEO",
+              "RevOps System",
+            ].map((pill) => (
               <div
-                key={i}
-                className="inline-flex items-center px-4 py-2 rounded-full border border-border bg-card text-sm font-medium text-foreground/80 shrink-0 shadow-sm"
+                key={pill}
+                className="rounded-full border border-border/60 bg-white/70 px-4 py-2 text-center text-[12px] font-semibold text-foreground/70 shadow-[var(--shadow-card)]"
               >
-                <div className="w-1.5 h-1.5 rounded-full mr-3" style={{ backgroundColor: '#C4922A' }} />
                 {pill}
               </div>
             ))}

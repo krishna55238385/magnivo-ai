@@ -1,0 +1,3 @@
+OG image required at: /og-image.png
+Spec: 1200x630px, brand colors (#1B3A2D bg, #C4922A accent), include Magnivo.ai wordmark and tagline.
+Referenced in: src/routes/index.tsx (og:image, twitter:image)

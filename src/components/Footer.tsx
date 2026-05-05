@@ -53,7 +53,7 @@ export function Footer() {
 
         <div className="lg:col-span-2">
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#C4922A' }}>
+              <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: 'var(--accent-gold)' }}>
                 Priority Access
               </div>
               <h4 className="text-lg font-bold text-foreground mb-3 leading-tight">

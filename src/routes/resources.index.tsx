@@ -11,6 +11,7 @@ export const Route = createFileRoute("/resources/")({
       { title: "Resources — Magnivo.ai" },
       { name: "description", content: "Insights, playbooks, and guides on AI-native GTM and autonomous revenue agents." },
     ],
+    links: [{ rel: "canonical", href: "https://magnivo.ai/resources" }],
   }),
   component: ResourcesPage,
 });
