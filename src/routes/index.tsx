@@ -81,7 +81,7 @@ function HomePage() {
           <FadeIn>
             <div className="flex justify-center mb-5 sm:mb-7">
               <div className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                CATEGORY-DEFINING AI GTM OPERATING SYSTEM
+                THE AI GTM OPERATING SYSTEM
               </div>
             </div>
 
@@ -91,8 +91,8 @@ function HomePage() {
             </h1>
 
             <p className="mt-5 sm:mt-7 md:mt-8 text-center text-base sm:text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium">
-              Magnivo helps B2B founders turn scattered tools, data, and manual outreach into one
-              AI-powered GTM engine for pipeline, conversion, and retention.
+              Magnivo turns scattered tools, data, and manual outreach into one autonomous system for
+              pipeline, conversion, and retention.
             </p>
 
             <div className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center">
@@ -101,23 +101,23 @@ function HomePage() {
                 className="btn-primary w-full sm:w-auto justify-center text-base sm:text-lg px-7 sm:px-9 py-3.5"
                 data-cursor-text="Audit"
               >
-                Book Free GTM Audit <ArrowRight size={16} />
+                Book a Free GTM Audit <ArrowRight size={16} />
               </button>
               <a
                 href="#ten-day-plan"
                 className="btn-text-link w-full sm:w-auto justify-center text-base sm:text-lg"
                 data-cursor-text="Plan"
               >
-                See the 10-Day Plan <ArrowRight size={15} />
+                See the 10‑Day Plan <ArrowRight size={15} />
               </a>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium">
               {[
                 "No pitch",
-                "30-minute audit",
-                "Clear GTM blueprint",
-                "Limited founding-client slots",
+                "30‑minute audit",
+                "Actionable blueprint",
+                "Limited founding‑client spots",
               ].map((item) => (
                 <span
                   key={item}
