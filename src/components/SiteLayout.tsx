@@ -1,34 +1,59 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CustomCursor } from "./CustomCursor";
-import { DemoModal } from "./DemoModal";
-import { useEffect, useState, useRef } from "react";
-import Lenis from "lenis";
+import { useEffect, useState, lazy, Suspense } from "react";
 
 function SmoothScroll() {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-    });
+    let lenis: { raf: (time: number) => void; destroy: () => void } | null = null;
+    let rafId: number;
+    let idleId: number | NodeJS.Timeout;
+    let destroyed = false;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    const init = async () => {
+      if (destroyed) return;
+      const { default: Lenis } = await import("lenis");
+      if (destroyed) return;
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+      });
+
+      function raf(time: number) {
+        lenis!.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+
+      rafId = requestAnimationFrame(raf);
+    };
+
+    if ("requestIdleCallback" in window) {
+      idleId = (window as Window & typeof globalThis).requestIdleCallback(init, { timeout: 2000 });
+    } else {
+      idleId = setTimeout(init, 200);
     }
 
-    requestAnimationFrame(raf);
-
     return () => {
-      lenis.destroy();
+      destroyed = true;
+      if ("cancelIdleCallback" in window) {
+        (window as Window & typeof globalThis).cancelIdleCallback(idleId as number);
+      } else {
+        clearTimeout(idleId as NodeJS.Timeout);
+      }
+      lenis?.destroy();
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
   return null;
 }
+
+const DemoModal = lazy(() =>
+  import("./DemoModal").then((m) => ({ default: m.DemoModal }))
+);
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [auditOpen, setAuditOpen] = useState(false);
@@ -53,7 +78,11 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           Book Free GTM Audit
         </button>
       </div>
-      <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} />
+      <Suspense fallback={null}>
+        {auditOpen ? (
+          <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} />
+        ) : null}
+      </Suspense>
     </>
   );
 }

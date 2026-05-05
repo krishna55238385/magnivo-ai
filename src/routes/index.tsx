@@ -15,18 +15,24 @@ import {
   Briefcase,
   Store,
   BarChart2,
-  Database,
-  ScanSearch,
-  Network,
-  Radar,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { HeroVisual } from "@/components/HeroVisual";
-import { DemoModal } from "@/components/DemoModal";
-import { DataLayerScrollSystem } from "@/components/DataLayerScrollSystem";
-import { AuditBlueprint, TrustSnapshot } from "@/components/HomeConversionSections";
+
+const DataLayerScrollSystem = lazy(() =>
+  import("@/components/DataLayerScrollSystem").then((m) => ({ default: m.DataLayerScrollSystem }))
+);
+const TrustSnapshot = lazy(() =>
+  import("@/components/HomeConversionSections").then((m) => ({ default: m.TrustSnapshot }))
+);
+const AuditBlueprint = lazy(() =>
+  import("@/components/HomeConversionSections").then((m) => ({ default: m.AuditBlueprint }))
+);
+const DemoModal = lazy(() =>
+  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal }))
+);
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -130,9 +136,13 @@ function HomePage() {
         </div>
       </section>
 
-      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+      <Suspense fallback={null}>
+        {demoOpen ? <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} /> : null}
+      </Suspense>
 
-      <TrustSnapshot onAudit={() => setDemoOpen(true)} />
+      <Suspense fallback={<div className="py-16" />}>
+        <TrustSnapshot onAudit={() => setDemoOpen(true)} />
+      </Suspense>
 
       {/* CREDIBILITY BAR */}
       <section className="border-y border-border py-6 overflow-hidden relative bg-card/30">
@@ -183,10 +193,14 @@ function HomePage() {
         </div>
       </section>
 
-      <AuditBlueprint onAudit={() => setDemoOpen(true)} />
+      <Suspense fallback={<div className="py-16" />}>
+        <AuditBlueprint onAudit={() => setDemoOpen(true)} />
+      </Suspense>
 
       {/* DATA FOUNDATION SECTION (INTERACTIVE) */}
-      <DataLayerScrollSystem />
+      <Suspense fallback={<div className="py-24" />}>
+        <DataLayerScrollSystem />
+      </Suspense>
 
       <div className="container-x">
         <div className="divider-glow" />

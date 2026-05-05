@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ChevronDown,
@@ -16,7 +16,6 @@ import {
   ListTree,
 } from "lucide-react";
 import { products, solutions, resources } from "@/lib/site-data";
-import { DemoModal } from "./DemoModal";
 import { MagnivoLogo } from "./MagnivoLogo";
 
 type MenuKey = "products" | "solutions" | "resources" | null;
@@ -29,6 +28,10 @@ const RESOURCE_ICONS = {
   Benchmark: BarChart3,
   Glossary: FileText,
 };
+
+const DemoModal = lazy(() =>
+  import("./DemoModal").then((m) => ({ default: m.DemoModal }))
+);
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -255,7 +258,11 @@ export function Header() {
           </div>
         </div>
       )}
-      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+      <Suspense fallback={null}>
+        {demoOpen ? (
+          <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+        ) : null}
+      </Suspense>
     </header>
   );
 }

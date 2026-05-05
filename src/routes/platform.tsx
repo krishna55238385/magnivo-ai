@@ -22,9 +22,8 @@ import {
   Plus,
   Minus,
 } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { DemoModal } from "@/components/DemoModal";
 import { FadeIn } from "@/components/FadeIn";
 
 export const Route = createFileRoute("/platform")({
@@ -40,6 +39,10 @@ export const Route = createFileRoute("/platform")({
   }),
   component: PlatformPage,
 });
+
+const DemoModal = lazy(() =>
+  import("@/components/DemoModal").then((m) => ({ default: m.DemoModal }))
+);
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 
@@ -182,7 +185,11 @@ function PlatformPage() {
         <FaqSection />
         <CtaSection onAudit={open} ctaRef={ctaRef} />
       </div>
-      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+      <Suspense fallback={null}>
+        {demoOpen ? (
+          <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
+        ) : null}
+      </Suspense>
     </SiteLayout>
   );
 }
