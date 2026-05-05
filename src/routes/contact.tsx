@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Loader2 } from "lucide-react";
-import { useForm } from "@formspree/react";
+import { useForm, ValidationError } from "@formspree/react";
 import { z } from "zod";
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
@@ -29,7 +29,7 @@ const contactSchema = z.object({
 });
 
 function ContactPage() {
-  const [state, handleFormspree] = useForm(import.meta.env.VITE_FORMSPREE_ID);
+  const [state, handleFormspree] = useForm("mzdorjpv");
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const reasons = [
@@ -104,6 +104,7 @@ function ContactPage() {
                     className="cinput"
                     placeholder="Jane Doe"
                   />
+                  <ValidationError field="name" prefix="Name" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
                 </Field>
                 <Field label="Email">
                   <input
@@ -113,6 +114,7 @@ function ContactPage() {
                     className="cinput"
                     placeholder="jane@company.com"
                   />
+                  <ValidationError field="email" prefix="Email" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
                 </Field>
                 <Field label="Company">
                   <input
@@ -136,11 +138,10 @@ function ContactPage() {
                     className="cinput"
                     placeholder="Tell us a bit about your goals..."
                   />
+                  <ValidationError field="message" prefix="Message" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
                 </Field>
-                {(validationError || (state.errors && state.errors.length > 0)) && (
-                  <div className="text-sm text-[var(--destructive)]">
-                    {validationError ?? "Something went wrong. Please try again."}
-                  </div>
+                {validationError && (
+                  <div className="text-sm text-[var(--destructive)]">{validationError}</div>
                 )}
                 <button
                   type="submit"

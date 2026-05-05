@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { ArrowRight, Loader2, X, CalendarCheck } from "lucide-react";
-import { useForm } from "@formspree/react";
+import { useForm, ValidationError } from "@formspree/react";
 
 export function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);
+  const [state, handleSubmit] = useForm("mzdorjpv");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -71,6 +71,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
                 placeholder="Name"
                 className="dinput"
               />
+              <ValidationError field="name" prefix="Name" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
               <input
                 required
                 type="email"
@@ -78,6 +79,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
                 placeholder="Work email"
                 className="dinput"
               />
+              <ValidationError field="email" prefix="Email" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
               <input
                 name="company"
                 placeholder="Company"
@@ -89,11 +91,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
                 placeholder="What are you trying to improve? Pipeline, outbound, inbound, CRM, retention..."
                 className="dinput"
               />
-              {state.errors && state.errors.length > 0 && (
-                <div className="text-sm text-[var(--destructive)]">
-                  Something went wrong. Please try again.
-                </div>
-              )}
+              <ValidationError field="message" prefix="Message" errors={state.errors} className="text-xs text-[var(--destructive)] mt-1" />
               <button type="submit" disabled={state.submitting} className="btn-primary w-full justify-center">
                 {state.submitting ? (
                   <>
