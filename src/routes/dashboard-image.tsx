@@ -9,7 +9,7 @@ function DashboardImagePage() {
   return (
     <div className="min-h-screen bg-[var(--surface-ivory)] flex items-center justify-center p-10">
       <div className="w-full max-w-[980px]">
-        <HeroVisual />
+        <HeroVisual interactive />
       </div>
     </div>
   );
