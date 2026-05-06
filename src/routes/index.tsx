@@ -517,7 +517,7 @@ function HomePage() {
 
           <FadeIn delay={0.2} className="mt-8 sm:mt-12 md:mt-16">
             <Suspense fallback={null}>
-              <HeroVisual />
+              <HeroVisual interactive />
             </Suspense>
           </FadeIn>
         </div>

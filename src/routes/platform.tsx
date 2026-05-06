@@ -248,86 +248,138 @@ function PlatformPage() {
 
 // ─── 1. HERO ─────────────────────────────────────────────────────────────────
 
+const DB_VIEWS: Record<string, { title: string; subtitle: string; rows: { name: string; score: number; tag: string; hot: boolean }[] }> = {
+  Dashboard: {
+    title: "Revenue Overview",
+    subtitle: "All systems live · updated 1m ago",
+    rows: [
+      { name: "Pipeline", score: 88, tag: "↑ $4.2M", hot: true },
+      { name: "Win Rate", score: 72, tag: "32.8%", hot: true },
+      { name: "Meetings", score: 65, tag: "47 booked", hot: false },
+      { name: "AI Signals", score: 91, tag: "2,100 today", hot: true },
+    ],
+  },
+  Accounts: {
+    title: "Account Intelligence",
+    subtitle: "247 tracked · synced 2m ago",
+    rows: [
+      { name: "Acme Corp", score: 94, tag: "High Intent", hot: true },
+      { name: "TechFlow Inc", score: 87, tag: "Decision Maker Active", hot: true },
+      { name: "Nordex", score: 72, tag: "Content Engaged", hot: false },
+      { name: "Vertex AI", score: 61, tag: "Job Posting Signal", hot: false },
+    ],
+  },
+  Pipeline: {
+    title: "Pipeline Tracker",
+    subtitle: "14 active deals · $1.8M at risk",
+    rows: [
+      { name: "Stripe Enterprise", score: 92, tag: "Proposal Sent", hot: true },
+      { name: "Linear Inc", score: 78, tag: "Discovery Call", hot: true },
+      { name: "Orbit Labs", score: 55, tag: "Stalled 12d", hot: false },
+      { name: "Hexade", score: 40, tag: "Cold — re-engage", hot: false },
+    ],
+  },
+  "AI Agents": {
+    title: "Agent Activity",
+    subtitle: "4 running · 1 queued",
+    rows: [
+      { name: "Outbound Agent", score: 97, tag: "Sending sequences", hot: true },
+      { name: "Content Agent", score: 83, tag: "Drafting 3 posts", hot: true },
+      { name: "Signal Agent", score: 76, tag: "Watching 247 accts", hot: false },
+      { name: "CRM Sync Agent", score: 60, tag: "Queued", hot: false },
+    ],
+  },
+  Analytics: {
+    title: "Revenue Attribution",
+    subtitle: "Last 30d · all channels",
+    rows: [
+      { name: "Outbound Email", score: 85, tag: "42% of pipeline", hot: true },
+      { name: "LinkedIn", score: 70, tag: "28% of pipeline", hot: true },
+      { name: "Content / SEO", score: 55, tag: "18% of pipeline", hot: false },
+      { name: "Paid", score: 38, tag: "12% of pipeline", hot: false },
+    ],
+  },
+};
+
+const NAV_ITEMS = ["Dashboard", "Accounts", "Pipeline", "AI Agents", "Analytics"] as const;
+type NavItem = typeof NAV_ITEMS[number];
+
 function DashboardUI() {
-  const rows = [
-    { name: "Acme Corp", score: 94, tag: "High Intent", hot: true },
-    { name: "TechFlow Inc", score: 87, tag: "Decision Maker Active", hot: true },
-    { name: "Nordex", score: 72, tag: "Content Engaged", hot: false },
-    { name: "Vertex AI", score: 61, tag: "Job Posting Signal", hot: false },
-  ];
+  const [activeTab, setActiveTab] = useState<NavItem>("Accounts");
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [filterOn, setFilterOn] = useState(false);
+
+  const view = DB_VIEWS[activeTab];
+  const displayedRows = filterOn ? view.rows.filter((r) => r.hot) : view.rows;
+  const urlSlug = activeTab.toLowerCase().replace(" ", "-");
 
   return (
-    <div className="w-full rounded-lg border border-border bg-white overflow-hidden">
+    <div className="w-full rounded-lg border border-border bg-white overflow-hidden select-none">
       {/* Chrome */}
       <div className="flex items-center gap-3 px-3 sm:px-4 py-2.5 border-b border-border/50 bg-secondary">
         <div className="flex gap-1.5 shrink-0">
           {["#ba1a1a", "#c5a059", "#06402b"].map((c, i) => (
-            <div
-              key={i}
-              style={{ background: c }}
-              className="w-2.5 h-2.5 rounded-full opacity-50"
-            />
+            <div key={i} style={{ background: c }} className="w-2.5 h-2.5 rounded-full opacity-50" />
           ))}
         </div>
         <div className="flex-1 flex justify-center min-w-0">
-          <div className="bg-white border border-border rounded-md px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] text-muted-foreground font-mono flex items-center gap-2 max-w-full overflow-hidden">
+          <div className="bg-white border border-border rounded-md px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] text-muted-foreground font-medium flex items-center gap-2 max-w-full overflow-hidden transition-all duration-200">
             <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-green)] animate-pulse shrink-0" />
-            <span className="truncate">app.magnivo.ai / accounts</span>
+            <span className="truncate">app.magnivo.ai / {urlSlug}</span>
           </div>
         </div>
       </div>
 
       {/* App body */}
       <div className="flex" style={{ height: 320 }}>
-        {/* Sidebar — hidden on mobile */}
+        {/* Sidebar */}
         <div className="hidden sm:flex w-36 lg:w-40 shrink-0 border-r border-border/50 bg-secondary/80 flex-col p-3 gap-0.5">
           <div className="px-2 py-1 text-[9px] font-bold tracking-[0.2em] text-muted-foreground uppercase mb-1">
             Workspace
           </div>
-          {[
-            { label: "Dashboard", active: false },
-            { label: "Accounts", active: true },
-            { label: "Pipeline", active: false },
-            { label: "AI Agents", active: false },
-            { label: "Analytics", active: false },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className={`px-2.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 cursor-default ${item.active ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "text-muted-foreground"}`}
-            >
-              <div
-                className={`w-1.5 h-1.5 rounded-full ${item.active ? "bg-[var(--accent-blue)]" : "bg-border/50"}`}
-              />
-              {item.label}
-            </div>
-          ))}
+          {NAV_ITEMS.map((label) => {
+            const active = activeTab === label;
+            return (
+              <button
+                key={label}
+                onClick={() => { setActiveTab(label); setSelectedRow(null); }}
+                className={`px-2.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 w-full text-left transition-colors duration-150 cursor-pointer ${active ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "text-muted-foreground hover:bg-border/30 hover:text-foreground"}`}
+              >
+                <div className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-150 ${active ? "bg-[var(--accent-blue)]" : "bg-border/50"}`} />
+                {label}
+              </button>
+            );
+          })}
           <div className="mt-auto pt-3 border-t border-border/50">
             <div className="px-2.5 py-2 rounded-lg bg-[var(--accent-green)]/10 text-[var(--accent-green)] text-xs font-semibold flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-green)] animate-pulse" />4
-              Agents Live
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-green)] animate-pulse" />
+              4 Agents Live
             </div>
           </div>
         </div>
 
         {/* Main */}
         <div className="flex-1 min-w-0 flex flex-col">
+          {/* Header */}
           <div className="px-3 sm:px-4 py-2.5 border-b border-border/50 flex items-center justify-between bg-white">
             <div>
-              <div className="text-sm font-semibold text-foreground">Account Intelligence</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">
-                247 tracked · synced 2m ago
-              </div>
+              <div className="text-sm font-semibold text-foreground transition-all duration-200">{view.title}</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">{view.subtitle}</div>
             </div>
             <div className="flex gap-2">
-              <div className="px-2.5 py-1 rounded-md bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] text-xs font-semibold">
-                Filter
-              </div>
-              <div className="px-2.5 py-1 rounded-md bg-muted text-muted-foreground text-xs hidden sm:block">
+              <button
+                onClick={() => { setFilterOn((f) => !f); setSelectedRow(null); }}
+                className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors duration-150 cursor-pointer ${filterOn ? "bg-[var(--accent-blue)] text-white" : "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] hover:bg-[var(--accent-blue)]/20"}`}
+              >
+                {filterOn ? "Hot only ✓" : "Filter"}
+              </button>
+              <button className="px-2.5 py-1 rounded-md bg-muted text-muted-foreground text-xs hidden sm:block cursor-pointer hover:bg-border/50 transition-colors duration-150">
                 Export
-              </div>
+              </button>
             </div>
           </div>
 
+          {/* Table header */}
           <div className="grid grid-cols-12 gap-2 px-3 sm:px-4 py-2 border-b border-border/30">
             {["Company", "Signal", "Score", ""].map((h, i) => (
               <div
@@ -339,55 +391,65 @@ function DashboardUI() {
             ))}
           </div>
 
+          {/* Rows */}
           <div className="flex-1 p-2 space-y-1 overflow-hidden">
-            {rows.map((r, i) => (
-              <div
-                key={r.name}
-                className={`grid grid-cols-12 gap-2 items-center px-2.5 py-2 rounded-lg ${i === 0 ? "bg-[var(--accent-blue)]/6 border border-[var(--accent-blue)]/15" : "bg-secondary/80 border border-border/50"}`}
-              >
-                <div className="col-span-4 flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-border/50 flex items-center justify-center text-[10px] font-black text-muted-foreground shrink-0">
-                    {r.name[0]}
-                  </div>
-                  <span className="text-xs font-medium text-foreground/80 truncate">{r.name}</span>
-                </div>
-                <div className="col-span-5">
-                  <span
-                    className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full ${r.hot ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "bg-muted text-muted-foreground"}`}
-                  >
-                    {r.tag}
-                  </span>
-                </div>
-                <div className="col-span-2 flex items-center gap-1.5">
-                  <div className="flex-1 h-1 rounded-full bg-border/50">
-                    <div
-                      className="h-full rounded-full"
-                      style={{
-                        width: `${r.score}%`,
-                        background:
-                          r.score > 85
-                            ? "var(--accent-green)"
-                            : r.score > 70
-                              ? "var(--accent-blue)"
-                              : "var(--border)",
-                      }}
-                    />
-                  </div>
-                  <span className="text-[10px] text-muted-foreground font-bold w-5 shrink-0">
-                    {r.score}
-                  </span>
-                </div>
-                <div className="col-span-1">
-                  {i === 0 && (
-                    <div className="px-1.5 py-1 rounded bg-[var(--accent-blue)] text-white text-[9px] font-bold text-center">
-                      →
+            {displayedRows.map((r, i) => {
+              const isSelected = selectedRow === i;
+              return (
+                <button
+                  key={r.name}
+                  onClick={() => setSelectedRow(isSelected ? null : i)}
+                  className={`grid grid-cols-12 gap-2 items-center px-2.5 py-2 rounded-lg w-full text-left transition-all duration-150 cursor-pointer
+                    ${isSelected
+                      ? "bg-[var(--accent-green)]/8 border border-[var(--accent-green)]/25 shadow-sm"
+                      : r.hot
+                        ? "bg-[var(--accent-blue)]/5 border border-[var(--accent-blue)]/12 hover:bg-[var(--accent-blue)]/10"
+                        : "bg-secondary/80 border border-border/50 hover:bg-secondary"
+                    }`}
+                >
+                  <div className="col-span-4 flex items-center gap-2">
+                    <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-black shrink-0 transition-colors duration-150 ${isSelected ? "bg-[var(--accent-green)]/20 text-[var(--accent-green)]" : "bg-border/50 text-muted-foreground"}`}>
+                      {r.name[0]}
                     </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                    <span className="text-xs font-medium text-foreground/80 truncate">{r.name}</span>
+                  </div>
+                  <div className="col-span-5">
+                    <span className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full transition-colors duration-150 ${isSelected ? "bg-[var(--accent-green)]/15 text-[var(--accent-green)]" : r.hot ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "bg-muted text-muted-foreground"}`}>
+                      {r.tag}
+                    </span>
+                  </div>
+                  <div className="col-span-2 flex items-center gap-1.5">
+                    <div className="flex-1 h-1 rounded-full bg-border/50">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: `${r.score}%`,
+                          background: isSelected
+                            ? "var(--accent-green)"
+                            : r.score > 85
+                              ? "var(--accent-green)"
+                              : r.score > 70
+                                ? "var(--accent-blue)"
+                                : "var(--border)",
+                        }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-muted-foreground font-bold w-5 shrink-0">{r.score}</span>
+                  </div>
+                  <div className="col-span-1">
+                    <div className={`px-1.5 py-1 rounded text-[9px] font-bold text-center transition-all duration-150 ${isSelected ? "bg-[var(--accent-green)] text-white" : i === 0 ? "bg-[var(--accent-blue)] text-white" : "opacity-0"}`}>
+                      {isSelected ? "✓" : "→"}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+            {displayedRows.length === 0 && (
+              <div className="text-center text-[11px] text-muted-foreground py-6">No hot accounts right now</div>
+            )}
           </div>
 
+          {/* Footer */}
           <div className="px-3 sm:px-4 py-2 border-t border-border/50 bg-secondary/60 flex items-center gap-3 overflow-hidden">
             <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground shrink-0">
               <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-blue)] animate-pulse" />
