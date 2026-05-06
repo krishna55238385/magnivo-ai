@@ -31,6 +31,9 @@ import { AnimatedCounter } from "@/components/AnimatedCounter";
 const HeroVisual = lazy(() =>
   import("@/components/HeroVisual").then((m) => ({ default: m.HeroVisual })),
 );
+const HomeDashboard = lazy(() =>
+  import("@/components/HomeDashboard").then((m) => ({ default: m.HomeDashboard })),
+);
 const DataLayerScrollSystem = lazy(() =>
   import("@/components/DataLayerScrollSystem").then((m) => ({ default: m.DataLayerScrollSystem })),
 );
@@ -517,7 +520,7 @@ function HomePage() {
 
           <FadeIn delay={0.2} className="mt-8 sm:mt-12 md:mt-16">
             <Suspense fallback={null}>
-              <HeroVisual interactive />
+              <HomeDashboard />
             </Suspense>
           </FadeIn>
         </div>
