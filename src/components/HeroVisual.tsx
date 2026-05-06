@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 /* ─── Tokens ─────────────────────────────────────────────────── */
+const FF      = "'Inter','Helvetica Neue',Arial,system-ui,sans-serif";
 const BG      = "#f4f5f9";
 const SURFACE = "#ffffff";
 const BORDER  = "rgba(0,0,0,0.072)";
@@ -242,7 +243,7 @@ function WinArc({ pct, color }: { pct: number; color: string }) {
       <text
         x="25" y="28" textAnchor="middle"
         fontSize="9" fontWeight="700" fill={INK}
-        fontFamily="system-ui,sans-serif"
+        fontFamily="'Inter',system-ui,sans-serif"
       >
         {pct}%
       </text>
@@ -268,7 +269,7 @@ function TopNav() {
 
       {/* URL pill */}
       <div
-        className="hidden sm:flex items-center gap-1 px-2 py-[3px] rounded text-[8px] font-mono mr-3"
+        className="hidden sm:flex items-center gap-1 px-2 py-[3px] rounded text-[8px] font-medium tracking-tight mr-3"
         style={{ background: "rgba(0,0,0,0.04)", color: INK3, border: `1px solid ${BORDER}` }}
       >
         magnivo.ai / intelligence
@@ -747,7 +748,7 @@ function PipelineChart() {
               <text
                 x={ANNOT_PT.x + 1} y={ANNOT_PT.y - 12}
                 fontSize="6.5" fill={EM} textAnchor="middle"
-                fontFamily="system-ui,sans-serif" fontWeight="700"
+                fontFamily="'Inter',system-ui,sans-serif" fontWeight="600"
               >
                 Q2 Push ↑
               </text>
@@ -776,7 +777,7 @@ function PipelineChart() {
             <motion.text
               x={TAIL.x + 4} y={TAIL.y - 5}
               fontSize="6.5" fill={EM}
-              fontFamily="monospace" fontWeight="700"
+              fontFamily="'Inter',system-ui,sans-serif" fontWeight="600"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               transition={{ delay: 2.55 }}
             >
@@ -787,7 +788,7 @@ function PipelineChart() {
           {/* X-axis labels */}
           <div className="flex justify-between mt-[3px]">
             {X_LABELS.map((l, i) => (
-              <span key={i} className="text-[6.5px] font-mono" style={{ color: l ? INK3 : "transparent" }}>
+              <span key={i} className="text-[6.5px] font-medium tabular-nums" style={{ color: l ? INK3 : "transparent" }}>
                 {l || "."}
               </span>
             ))}
@@ -1161,6 +1162,7 @@ export function HeroVisual({ interactive = false }: { interactive?: boolean }) {
       <div
         className="relative rounded-2xl overflow-hidden flex flex-col"
         style={{
+          fontFamily: FF,
           background: BG,
           border: "1px solid rgba(0,0,0,0.09)",
           boxShadow: [
