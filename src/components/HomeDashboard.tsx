@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, animate, type Variants } from "framer-motion";
 import {
   Bell, Search, TrendingUp, Target, Zap, BarChart2,
-  RefreshCw, ArrowUpRight, CheckCircle2, Radio, Filter,
+  RefreshCw, Radio, Filter,
 } from "lucide-react";
 
 /* ─── Design tokens ──────────────────────────────────────────── */
@@ -706,149 +706,104 @@ export function HomeDashboard() {
       <div className="absolute -inset-10 rounded-3xl pointer-events-none"
         style={{ background:"radial-gradient(ellipse at 50% 50%,rgba(59,130,246,0.07),rgba(16,185,129,0.05),transparent 68%)", filter:"blur(40px)" }} />
 
-      {/* Shell */}
-      <div style={{
-        background: BG, borderRadius:16, overflow:"hidden",
-        border:"1px solid rgba(0,0,0,0.08)",
-        boxShadow:"0 0 0 1px rgba(255,255,255,0.6) inset, 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06), 0 24px 48px rgba(0,0,0,0.06), 0 48px 80px rgba(0,0,0,0.04)",
-        display:"flex", flexDirection:"column",
-        userSelect:"none",
-      }}>
+      {/* Shell — matches platform DashboardUI */}
+      <div className="w-full rounded-xl border border-border bg-white overflow-hidden select-none"
+        style={{ boxShadow:"0 2px 4px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.06),0 24px 48px rgba(0,0,0,0.06)" }}>
 
         {/* Chrome bar */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, padding:"0 12px", height:34, background:S, borderBottom:`1px solid ${BD}`, flexShrink:0 }}>
-          <div style={{ display:"flex", gap:5, flexShrink:0 }}>
+        <div className="flex items-center gap-3 px-3 py-2 border-b border-border/50 bg-secondary">
+          <div className="flex gap-1.5 shrink-0">
             {["#ff5f57","#febc2e","#28c840"].map((c,i)=>(
-              <div key={i} style={{ width:10, height:10, borderRadius:"50%", background:c }} />
+              <div key={i} style={{ background:c }} className="w-2.5 h-2.5 rounded-full" />
             ))}
           </div>
-          {/* Tab strip */}
-          <div style={{ display:"flex", flex:1, height:"100%", overflow:"hidden", marginLeft:4 }}>
-            {TABS.map(t=>{
-              const active = tab===t;
-              return (
-                <button key={t} onClick={()=>setTab(t)}
-                  style={{ position:"relative", display:"flex", alignItems:"center", gap:4, padding:"0 10px", height:"100%",
-                    border:"none", cursor:"pointer", fontSize:9, fontWeight: active ? 700 : 500,
-                    color: active ? INK : INK3, background: active ? BG : "transparent",
-                    borderRight:`1px solid ${BD}`, transition:"all 0.15s", flexShrink:0, whiteSpace:"nowrap" }}>
-                  <span style={{ color: active ? BLUE : "inherit" }}>{TAB_ICONS[t]}</span>
-                  {t}
-                  {active && <div style={{ position:"absolute", bottom:0, left:8, right:8, height:2, borderRadius:"2px 2px 0 0", background:BLUE }} />}
-                </button>
-              );
-            })}
+          <div className="flex-1 flex justify-center min-w-0">
+            <div className="bg-white border border-border/60 rounded px-2 py-0.5 text-[9px] text-muted-foreground font-medium flex items-center gap-1.5 max-w-[220px] overflow-hidden transition-all duration-200">
+              <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse shrink-0" />
+              <span className="truncate">app.magnivo.ai/{TAB_URL[tab]}</span>
+            </div>
           </div>
-          {/* Right chrome */}
-          <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0 }}>
-            <div style={{ padding:"3px 8px", borderRadius:6, border:`1px solid ${BD}`, background:"rgba(0,0,0,0.03)",
-              fontSize:8, color:INK3, display:"flex", alignItems:"center", gap:4 }}>
-              <div style={{ width:5, height:5, borderRadius:"50%", background:EM }} />
-              app.magnivo.ai/{TAB_URL[tab]}
+          <div className="flex items-center gap-1 shrink-0">
+            <div className="w-4 h-4 rounded flex items-center justify-center bg-border/30 cursor-pointer hover:bg-border/60 transition-colors">
+              <Bell size={8} className="text-muted-foreground" />
             </div>
-            <div style={{ width:20, height:20, borderRadius:6, border:`1px solid ${BD}`, background:"rgba(0,0,0,0.03)",
-              display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer" }}>
-              <Bell size={9} color={INK3} />
-            </div>
-            <div style={{ width:22, height:22, borderRadius:"50%", background:"linear-gradient(135deg,#667eea,#764ba2)",
-              display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, fontWeight:900, color:"#fff" }}>K</div>
+            <div className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-black text-white"
+              style={{ background:"linear-gradient(135deg,#667eea,#764ba2)" }}>K</div>
           </div>
         </div>
 
-        {/* Body */}
-        <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
+        {/* Tab strip */}
+        <div className="flex border-b border-border/50 bg-secondary/30 overflow-x-auto">
+          {TABS.map(t=>{
+            const active = tab===t;
+            return (
+              <button key={t} onClick={()=>setTab(t)}
+                className={`relative flex-shrink-0 flex items-center gap-1.5 px-3 py-2 text-[9.5px] font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap
+                  ${active ? "text-foreground bg-white border-b-2 border-[var(--accent-blue)]" : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"}`}>
+                <span className={active ? "text-[var(--accent-blue)]" : ""}>{TAB_ICONS[t]}</span>
+                {t}
+              </button>
+            );
+          })}
+        </div>
 
-          {/* Left sidebar */}
-          <div style={{ width:120, flexShrink:0, borderRight:`1px solid ${BD}`, background:"rgba(0,0,0,0.015)",
-            display:"flex", flexDirection:"column", padding:"8px 6px", gap:2 }}>
-            <div style={{ padding:"0 6px 4px", fontSize:7.5, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.15em", color:INK3 }}>Workspace</div>
+        {/* View body */}
+        <div className="flex" style={{ height:272 }}>
+
+          {/* Sidebar */}
+          <div className="hidden sm:flex w-32 shrink-0 border-r border-border/30 bg-secondary/50 flex-col p-2 gap-0.5">
+            <div className="px-1.5 py-1 text-[7.5px] font-bold tracking-[0.18em] text-muted-foreground uppercase mb-0.5">Modules</div>
             {TABS.map(t=>{
               const active = tab===t;
               return (
                 <button key={t} onClick={()=>setTab(t)}
-                  style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 7px", borderRadius:8, border:"none",
-                    cursor:"pointer", fontSize:9, fontWeight: active ? 700 : 500, textAlign:"left", width:"100%",
-                    color: active ? BLUE : INK2, background: active ? BL_S : "transparent",
-                    transition:"all 0.15s" }}
-                  onMouseEnter={e=>{ if(!active)(e.currentTarget as HTMLElement).style.background="rgba(0,0,0,0.03)"; }}
-                  onMouseLeave={e=>{ if(!active)(e.currentTarget as HTMLElement).style.background="transparent"; }}>
-                  <span style={{ color: active ? BLUE : INK3, display:"flex" }}>{TAB_ICONS[t]}</span>
+                  className={`w-full text-left px-2 py-1.5 rounded-md text-[9px] font-medium flex items-center gap-1.5 transition-all duration-150 cursor-pointer
+                    ${active ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "text-muted-foreground hover:bg-border/30 hover:text-foreground"}`}>
+                  <span className={active ? "text-[var(--accent-blue)]" : ""}>{TAB_ICONS[t]}</span>
                   {t}
                 </button>
               );
             })}
-            {/* Live status */}
-            <div style={{ marginTop:"auto", padding:"7px 8px", borderRadius:8, background:EM_S }}>
-              <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:4 }}>
-                <div style={{ width:5, height:5, borderRadius:"50%", background:EM }} />
-                <span style={{ fontSize:8, fontWeight:700, color:EM }}>4 Agents Live</span>
+            <div className="mt-auto pt-2 border-t border-border/30">
+              <div className="px-2 py-1.5 rounded-md bg-[var(--accent-green)]/10 text-[var(--accent-green)] text-[8.5px] font-semibold flex items-center gap-1.5">
+                <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse shrink-0" />
+                4 Agents Live
               </div>
-              <div style={{ fontSize:7.5, color:EM, opacity:0.75 }}>247 accounts · $4.2M pipe</div>
             </div>
           </div>
 
-          {/* Main content */}
-          <div style={{ flex:1, minWidth:0, display:"flex", flexDirection:"column", overflow:"hidden" }}>
-            {/* Sub-header */}
-            <div style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 10px", borderBottom:`1px solid ${BD}`,
-              background:"rgba(255,255,255,0.6)", flexShrink:0 }}>
-              <span style={{ fontSize:9.5, fontWeight:700, color:INK }}>{tab}</span>
-              <div style={{ width:1, height:12, background:BD }} />
-              <span style={{ fontSize:8, color:INK3 }}>
-                {{Revenue:"All systems live",Accounts:"247 tracked",Outreach:"3 active sequences",
-                  Agents:"4 running · 1 queued",Intelligence:"3 calls analyzed",Reports:"Last 30 days"}[tab]}
-              </span>
-              <div style={{ marginLeft:"auto", display:"flex", gap:4 }}>
-                <button style={{ display:"flex", alignItems:"center", gap:3, padding:"3px 8px", borderRadius:6,
-                  border:`1px solid ${BD}`, background:"rgba(0,0,0,0.02)", fontSize:8, color:INK3, cursor:"pointer" }}>
-                  <Filter size={8} /> Filter
-                </button>
-                <button style={{ padding:"3px 8px", borderRadius:6, border:"none",
-                  background:BLUE, fontSize:8, fontWeight:700, color:S, cursor:"pointer" }}>
-                  + New
-                </button>
-              </div>
-            </div>
-
-            {/* View */}
-            <div style={{ flex:1, overflow:"hidden", display:"flex", flexDirection:"column" }}>
-              <AnimatePresence mode="wait">
-                <motion.div key={tab}
-                  initial={{ opacity:0, y:5 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-5 }}
-                  transition={{ duration:0.18, ease:"easeOut" }}
-                  style={{ display:"flex", flexDirection:"column", flex:1, overflow:"hidden" }}>
-                  {views[tab]}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+          {/* Content pane */}
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div key={tab}
+                initial={{ opacity:0, y:5 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-5 }}
+                transition={{ duration:0.18, ease:"easeOut" }}
+                style={{ display:"flex", flexDirection:"column", flex:1, overflow:"hidden" }}>
+                {views[tab]}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Right live feed */}
-          <div style={{ width:148, flexShrink:0, borderLeft:`1px solid ${BD}`, background:"rgba(0,0,0,0.01)", overflow:"hidden" }}>
+          {/* Live feed */}
+          <div className="hidden md:block w-36 shrink-0 border-l border-border/30 overflow-hidden bg-secondary/20">
             <LiveFeed />
           </div>
         </div>
 
         {/* Status bar */}
-        <div style={{ display:"flex", alignItems:"center", gap:10, padding:"5px 12px", borderTop:`1px solid ${BD}`,
-          background:"rgba(0,0,0,0.018)", flexShrink:0 }}>
-          {[{c:BLUE,l:"Outbound running"},{c:EM,l:"Content drafting"},{c:PURP,l:"247 accounts watched"}].map(s=>(
-            <div key={s.l} style={{ display:"flex", alignItems:"center", gap:4, flexShrink:0 }}>
-              <div style={{ width:5, height:5, borderRadius:"50%", background:s.c }} />
-              <span style={{ fontSize:8, color:INK3 }}>{s.l}</span>
-            </div>
-          ))}
-          <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:4 }}>
-            <ArrowUpRight size={9} color={EM} />
-            <span style={{ fontSize:8, fontWeight:700, color:EM }}>All systems nominal</span>
-            <span style={{ fontSize:8, color:INK3, marginLeft:6 }}>Sync in 58s</span>
+        <div className="px-3 py-1.5 border-t border-border/40 bg-secondary/60 flex items-center gap-3 overflow-hidden">
+          <div className="flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
+            <div className="w-1 h-1 rounded-full bg-[var(--accent-blue)] animate-pulse" />Outbound running
           </div>
+          <div className="hidden sm:flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
+            <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse" />Content drafting
+          </div>
+          <div className="hidden sm:flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
+            <div className="w-1 h-1 rounded-full bg-purple-400 animate-pulse" />247 accounts watched
+          </div>
+          <div className="ml-auto text-[8.5px] text-muted-foreground/50 shrink-0">Sync in 58s</div>
         </div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-10 pointer-events-none rounded-b-2xl"
-        style={{ background:"linear-gradient(to bottom,transparent,rgba(244,245,249,0.6))" }} />
     </motion.div>
   );
 }
