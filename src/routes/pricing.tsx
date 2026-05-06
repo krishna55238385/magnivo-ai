@@ -13,6 +13,8 @@ export const Route = createFileRoute("/pricing")({
       { property: "og:title", content: "Pricing — Magnivo.ai" },
       { property: "og:description", content: "Scoped to your GTM stage. No long-term contracts." },
       { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { property: "og:image:alt", content: "Magnivo.ai Pricing — GTM plans for B2B teams" },
+      { property: "og:url", content: "https://magnivo.ai/pricing" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
@@ -81,9 +83,85 @@ function FAQ({ items }: { items: { q: string; a: string }[] }) {
   );
 }
 
+const pricingLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://magnivo.ai/pricing#webpage",
+      url: "https://magnivo.ai/pricing",
+      name: "Pricing — Magnivo.ai",
+      description: "Magnivo.ai pricing scoped to your GTM stage. No long-term contracts. Free 30-minute GTM audit available.",
+      isPartOf: { "@id": "https://magnivo.ai/#website" },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://magnivo.ai/" },
+          { "@type": "ListItem", position: 2, name: "Pricing", item: "https://magnivo.ai/pricing" },
+        ],
+      },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://magnivo.ai/pricing#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How does Magnivo pricing work?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Pricing is scoped based on your GTM stage, target market, and which phases you need. Book a free audit and we'll give you a clear number within 24 hours.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is there a minimum contract length for Magnivo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No long-term contracts for founding clients. Magnivo works on a 90-day initial engagement with a 30-day notice period after that.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I start with one Magnivo service and expand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Most clients start with Starter (outbound + SEO) and expand to Growth once they see pipeline moving.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is there a free trial for Magnivo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Magnivo offers a free 30-minute GTM audit instead — you see exactly what we'd do for your business before committing anything.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How quickly can I get started with Magnivo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Onboarding is completed within 10 business days of signing. Your first agent results appear in week 2.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Where does the Magnivo team operate?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Magnivo operates as a globally distributed team, working async-first with structured weekly touchpoints — so your engagement never depends on a single timezone or a single person.",
+          },
+        },
+      ],
+    },
+  ],
+});
+
 function PricingPage() {
   return (
     <SiteLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: pricingLd }} />
       {/* HERO SECTION */}
       <PageHero
         title="A Growth Engine Built Around Your Goals"

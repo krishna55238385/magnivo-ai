@@ -27,7 +27,10 @@ export const Route = createFileRoute("/resources/$slug")({
           { name: "description", content: loaderData.resource.description },
           { property: "og:title", content: loaderData.resource.title },
           { property: "og:description", content: loaderData.resource.description },
+          { property: "og:type", content: "article" },
           { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+          { property: "og:image:alt", content: loaderData.resource.title },
+          { property: "og:url", content: `https://magnivo.ai/resources/${loaderData.resource.slug}` },
           { name: "twitter:card", content: "summary_large_image" },
           { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
         ]
@@ -59,12 +62,64 @@ const TYPE_ICONS = {
   Glossary: FileText,
 };
 
+const SCHEMA_TYPE_MAP: Record<string, string> = {
+  Blog: "BlogPosting",
+  Playbook: "HowTo",
+  Guide: "Article",
+  "Case Study": "Article",
+  Benchmark: "Article",
+  Glossary: "DefinedTermSet",
+};
+
 function ResourceDetail() {
   const { resource } = Route.useLoaderData();
   const Icon = TYPE_ICONS[resource.type] || FileText;
+  const schemaType = SCHEMA_TYPE_MAP[resource.type] ?? "Article";
+  const resourceLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": schemaType,
+        "@id": `https://magnivo.ai/resources/${resource.slug}#article`,
+        headline: resource.title,
+        name: resource.title,
+        description: resource.description,
+        url: `https://magnivo.ai/resources/${resource.slug}`,
+        image: "https://magnivo.ai/og-image.png",
+        author: {
+          "@type": "Organization",
+          "@id": "https://magnivo.ai/#organization",
+          name: "Magnivo.ai",
+        },
+        publisher: { "@id": "https://magnivo.ai/#organization" },
+        datePublished: "2025-04-01",
+        dateModified: "2025-05-01",
+        inLanguage: "en",
+        isPartOf: { "@id": "https://magnivo.ai/#website" },
+        about: { "@id": "https://magnivo.ai/#software" },
+        keywords: "AI GTM, B2B sales automation, revenue intelligence, RevOps, AI agents",
+      },
+      {
+        "@type": "WebPage",
+        url: `https://magnivo.ai/resources/${resource.slug}`,
+        name: `${resource.title} — Magnivo.ai`,
+        description: resource.description,
+        isPartOf: { "@id": "https://magnivo.ai/#website" },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://magnivo.ai/" },
+            { "@type": "ListItem", position: 2, name: "Resources", item: "https://magnivo.ai/resources" },
+            { "@type": "ListItem", position: 3, name: resource.title, item: `https://magnivo.ai/resources/${resource.slug}` },
+          ],
+        },
+      },
+    ],
+  });
 
   return (
     <SiteLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: resourceLd }} />
       <article className="container-x py-16 sm:py-24">
         <FadeIn>
           <Link

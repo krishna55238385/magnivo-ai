@@ -76,19 +76,175 @@ export const Route = createFileRoute("/")({
 
 const softwareAppLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Magnivo.ai",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web",
-  url: "https://magnivo.ai",
-  description:
-    "The AI GTM Operating System for B2B Revenue Teams. Unifies data, intelligence, and autonomous execution into one compounding revenue engine.",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-    description: "Free GTM audit available",
-  },
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://magnivo.ai/#software",
+      name: "Magnivo.ai",
+      applicationCategory: "BusinessApplication",
+      applicationSubCategory: "Sales Automation, Revenue Intelligence, GTM Automation",
+      operatingSystem: "Web",
+      url: "https://magnivo.ai",
+      description:
+        "Magnivo.ai is an AI GTM Operating System that unifies data, intelligence, and autonomous execution into one compounding B2B revenue engine. Purpose-built for B2B teams at $500K–$5M ARR.",
+      featureList: [
+        "AI-powered account intelligence and ICP scoring",
+        "Autonomous multi-channel outreach sequences",
+        "Real-time pipeline management and deal scoring",
+        "Account-Based Marketing (ABM) orchestration",
+        "AI agent builder with no-code visual designer",
+        "Revenue intelligence and conversation analysis",
+        "Retention automation and churn prevention",
+        "Answer Engine Optimization (AEO) and GEO",
+      ],
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        description: "Free 30-minute GTM audit — no commitment required",
+        url: "https://magnivo.ai/contact",
+      },
+      publisher: { "@id": "https://magnivo.ai/#organization" },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://magnivo.ai/#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What do I get from the free GTM audit?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You get a practical diagnosis of your current revenue motion: where pipeline is leaking, which workflows should be automated first, and what a focused 10-day implementation sprint would look like.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How is Magnivo different from 6sense, Demandbase, or Terminus?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Those platforms give you data and signals. Magnivo gives you data, signals, AND the execution layer that acts on them — plus the strategic consulting to make sure you're acting on the right things. It's the difference between intelligence and outcomes.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do you ensure AI agents don't hallucinate or damage our brand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Brand safety is our priority. Our agents run on Deterministic AI architectures — combining LLMs with strict brand guardrails, verified data sources, and human-in-the-loop triggers for high-stakes interactions. Nothing goes out without meeting your pre-defined rules.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is this a platform or a solution?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Both. The platform gives your team live intelligence and visibility. The execution layer runs your growth motion using AI agents. The strategy layer ensures the thinking behind it is right. Most clients use all three.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What does onboarding look like?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Onboarding is completed within 10 business days. Day 1 we define your ICP and audit your current GTM. Week 2 your system goes live. Week 3 you see first results.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is AEO and why does it matter now?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Answer Engine Optimization (AEO) ensures your brand appears when buyers ask ChatGPT, Perplexity, or Gemini for recommendations in your category. It is the channel your competitors haven't figured out yet — and where your next customer is already looking.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What size companies do you work with?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Magnivo works best with B2B companies between $500K and $5M ARR — post-PMF, with a defined ICP, ready to build a repeatable revenue system.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do you handle trust and data access?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "We start with the least access needed for the audit, then define permissions before implementation. Agent actions are scoped, reviewed, and tied to measurable workflows instead of running as a black box.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is this just another agency pitch?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. The audit is designed to be useful even if we never work together. We focus on the operating system behind your GTM: data, signals, workflows, agents, reporting, and human ownership.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Where does your team operate?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Magnivo is a globally distributed team operating async-first with structured weekly touchpoints. Your engagement never depends on a single timezone or a single person.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://magnivo.ai/#howto",
+      name: "How Magnivo.ai Runs Your B2B Revenue Motion",
+      description:
+        "A step-by-step overview of how Magnivo's AI GTM Operating System covers every stage of the revenue lifecycle — from first signal to retained customer.",
+      totalTime: "P10D",
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Acquire — Find & Engage the Right Accounts",
+          text: "Magnivo identifies high-intent accounts using ICP Analysis, TAM Mapping, and Buying Signal Detection. It then launches coordinated multi-channel outbound across email, LinkedIn, and paid channels before your competitors even know these accounts exist.",
+          url: "https://magnivo.ai/#acquire",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Engage — Turn Attention Into Conversations",
+          text: "Every reply is handled, every signal acted on. Magnivo manages the full engagement layer with personalized sequences, smart follow-ups, omnichannel orchestration, and automated meeting booking.",
+          url: "https://magnivo.ai/#engage",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Convert — Close Deals Predictably",
+          text: "No deal goes cold. Magnivo manages the full conversion layer with AI Deal Scoring, Automated Proposals, Pipeline Management, and CRM Sync — from qualified opportunity to signed contract.",
+          url: "https://magnivo.ai/#convert",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Retain & Compound — Grow Revenue From Every Customer",
+          text: "The system learns from every interaction. Health Score Monitoring, Churn Prevention, Expansion Opportunities, and Revenue Attribution compound results over time — CAC drops, revenue grows systematically.",
+          url: "https://magnivo.ai/#retain",
+        },
+      ],
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://magnivo.ai/#webpage",
+      url: "https://magnivo.ai/",
+      name: "Magnivo AI — The AI Brain Behind Your GTM OS",
+      description:
+        "Magnivo runs your entire B2B revenue motion — outreach, pipeline, and retention — through one AI-powered GTM operating system built for B2B teams.",
+      isPartOf: { "@id": "https://magnivo.ai/#website" },
+      about: { "@id": "https://magnivo.ai/#software" },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://magnivo.ai/" }],
+      },
+    },
+  ],
 });
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];

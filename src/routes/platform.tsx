@@ -41,6 +41,8 @@ export const Route = createFileRoute("/platform")({
         content: "One platform. Data, intelligence, and autonomous execution unified.",
       },
       { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { property: "og:image:alt", content: "Magnivo.ai GTM Operating System Platform" },
+      { property: "og:url", content: "https://magnivo.ai/platform" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
     ],
@@ -152,6 +154,49 @@ function PlatformPage() {
 
   return (
     <SiteLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebPage",
+                "@id": "https://magnivo.ai/platform#webpage",
+                url: "https://magnivo.ai/platform",
+                name: "The GTM Operating System — Magnivo.ai",
+                description:
+                  "One platform that unifies data, intelligence, and autonomous execution into a compounding B2B revenue engine.",
+                isPartOf: { "@id": "https://magnivo.ai/#website" },
+                breadcrumb: {
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Home", item: "https://magnivo.ai/" },
+                    { "@type": "ListItem", position: 2, name: "Platform", item: "https://magnivo.ai/platform" },
+                  ],
+                },
+              },
+              {
+                "@type": "SoftwareApplication",
+                name: "Magnivo GTM OS",
+                applicationCategory: "BusinessApplication",
+                operatingSystem: "Web",
+                url: "https://magnivo.ai/platform",
+                description:
+                  "The Magnivo GTM Operating System unifies your data layer, intelligence layer, and autonomous execution layer with 52 pre-built revenue agents.",
+                featureList: [
+                  "Unified data layer — CRM, intent signals, and enrichment",
+                  "AI intelligence layer for account scoring and deal prediction",
+                  "Autonomous execution layer with 52 pre-built revenue agents",
+                  "Real-time pipeline visibility and forecast accuracy",
+                  "Human-in-the-loop controls and brand guardrails",
+                ],
+                publisher: { "@id": "https://magnivo.ai/#organization" },
+              },
+            ],
+          }),
+        }}
+      />
       {/* Scroll progress bar */}
       <div className="fixed top-0 inset-x-0 h-[2px] z-[60] bg-transparent">
         <div

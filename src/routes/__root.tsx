@@ -36,10 +36,18 @@ export const Route = createRootRoute({
           "Magnivo turns scattered tools, data, and manual outreach into one autonomous system for pipeline, conversion, and retention. Built for B2B revenue teams.",
       },
       { name: "author", content: "Magnivo.ai" },
+      { name: "robots", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
+      { name: "theme-color", content: "#1B3A2D" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Magnivo.ai" },
       { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+      { property: "og:image:alt", content: "Magnivo.ai — AI GTM Operating System" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@magnivo_ai" },
       { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
+      { name: "twitter:image:alt", content: "Magnivo.ai — AI GTM Operating System" },
       {
         property: "og:title",
         content: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams",
@@ -100,17 +108,64 @@ function RootShell({ children }: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Magnivo.ai",
-              url: "https://magnivo.ai",
-              logo: "https://magnivo.ai/logo.png",
-              description: "The AI GTM Operating System for B2B Revenue Teams",
-              sameAs: [],
-              contactPoint: {
-                "@type": "ContactPoint",
-                contactType: "sales",
-                url: "https://magnivo.ai/contact",
-              },
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://magnivo.ai/#organization",
+                  name: "Magnivo.ai",
+                  alternateName: "Magnivo",
+                  url: "https://magnivo.ai",
+                  logo: {
+                    "@type": "ImageObject",
+                    url: "https://magnivo.ai/logo.png",
+                    width: 512,
+                    height: 512,
+                  },
+                  description:
+                    "Magnivo.ai is the AI GTM Operating System for B2B revenue teams at $500K–$5M ARR. It unifies pipeline intelligence, autonomous outreach, and retention into one compounding revenue engine.",
+                  foundingDate: "2024",
+                  areaServed: "Worldwide",
+                  knowsAbout: [
+                    "B2B GTM Strategy",
+                    "Revenue Operations",
+                    "AI Sales Automation",
+                    "Account-Based Marketing",
+                    "Answer Engine Optimization",
+                    "Generative Engine Optimization",
+                  ],
+                  sameAs: [
+                    "https://www.linkedin.com/company/magnivo-ai",
+                    "https://twitter.com/magnivo_ai",
+                  ],
+                  contactPoint: [
+                    {
+                      "@type": "ContactPoint",
+                      contactType: "sales",
+                      url: "https://magnivo.ai/contact",
+                      availableLanguage: "English",
+                    },
+                    {
+                      "@type": "ContactPoint",
+                      contactType: "customer support",
+                      url: "https://magnivo.ai/contact",
+                      availableLanguage: "English",
+                    },
+                  ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://magnivo.ai/#website",
+                  url: "https://magnivo.ai",
+                  name: "Magnivo.ai",
+                  description: "The AI GTM Operating System for B2B Revenue Teams",
+                  publisher: { "@id": "https://magnivo.ai/#organization" },
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: { "@type": "EntryPoint", urlTemplate: "https://magnivo.ai/?s={search_term_string}" },
+                    "query-input": "required name=search_term_string",
+                  },
+                },
+              ],
             }),
           }}
         />

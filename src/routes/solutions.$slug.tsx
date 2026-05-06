@@ -21,6 +21,8 @@ export const Route = createFileRoute("/solutions/$slug")({
           },
           { property: "og:description", content: loaderData.solution.description },
           { property: "og:image", content: "https://magnivo.ai/og-image.png" },
+          { property: "og:image:alt", content: `${loaderData.solution.name} — Magnivo.ai Solutions` },
+          { property: "og:url", content: `https://magnivo.ai/solutions/${loaderData.solution.slug}` },
           { name: "twitter:card", content: "summary_large_image" },
           { name: "twitter:image", content: "https://magnivo.ai/og-image.png" },
         ]
@@ -46,8 +48,50 @@ export const Route = createFileRoute("/solutions/$slug")({
 function SolutionDetail() {
   const { solution } = Route.useLoaderData();
   const Icon = solution.icon;
+  const solutionLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": `https://magnivo.ai/solutions/${solution.slug}#service`,
+        name: solution.name,
+        serviceType: solution.model,
+        description: solution.description,
+        url: `https://magnivo.ai/solutions/${solution.slug}`,
+        provider: { "@id": "https://magnivo.ai/#organization" },
+        areaServed: "Worldwide",
+        audience: {
+          "@type": "Audience",
+          audienceType: "B2B Revenue Teams, GTM Leaders, Founders",
+        },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          description: "Free 30-minute GTM audit to scope the solution",
+          url: "https://magnivo.ai/contact",
+        },
+      },
+      {
+        "@type": "WebPage",
+        url: `https://magnivo.ai/solutions/${solution.slug}`,
+        name: `${solution.name} — Magnivo.ai Solutions`,
+        description: solution.description,
+        isPartOf: { "@id": "https://magnivo.ai/#website" },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://magnivo.ai/" },
+            { "@type": "ListItem", position: 2, name: "Solutions", item: "https://magnivo.ai/solutions" },
+            { "@type": "ListItem", position: 3, name: solution.name, item: `https://magnivo.ai/solutions/${solution.slug}` },
+          ],
+        },
+      },
+    ],
+  });
   return (
     <SiteLayout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: solutionLd }} />
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 dot-grid opacity-60" aria-hidden />
         <div className="absolute inset-0 mesh-hero" aria-hidden />
