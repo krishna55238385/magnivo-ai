@@ -2,16 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, animate, type Variants } from "framer-motion";
 import {
   Bell, Search, TrendingUp, Target, Zap, BarChart2,
-  RefreshCw, Radio, Filter,
+  RefreshCw, Radio, Filter, Users, Settings, Handshake,
 } from "lucide-react";
 
 /* ─── Design tokens ──────────────────────────────────────────── */
-const S  = "#ffffff";
-const BG = "#f4f5f9";
-const BD = "rgba(0,0,0,0.07)";
+const S  = "#fefcf7";
+const BG = "#f3ede0";
+const BD = "rgba(160,128,76,0.13)";
 const INK  = "#0d1117";
 const INK2 = "#4b5563";
-const INK3 = "#9ca3af";
+const INK3 = "#9c8e7a";
 const EM    = "#10b981";
 const EM_S  = "rgba(16,185,129,0.09)";
 const BLUE  = "#3b82f6";
@@ -664,33 +664,269 @@ function LiveFeed({ compact = false }: { compact?: boolean }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   VIEW: Deals
+═══════════════════════════════════════════════════════════════ */
+function ViewDeals() {
+  const [drag, setDrag] = useState<number|null>(null);
+  const cols = [
+    { label:"Negotiation", color:AMB, deals:[
+      { name:"Acme Corp",    val:"$84K",  days:3,  fit:"green" as const },
+      { name:"TechFlow Inc", val:"$52K",  days:7,  fit:"blue" as const  },
+      { name:"Hexade Labs",  val:"$31K",  days:12, fit:"green" as const },
+    ]},
+    { label:"Proposal Sent", color:BLUE, deals:[
+      { name:"Nordex Group", val:"$120K", days:2,  fit:"blue" as const  },
+      { name:"Vertex AI Co", val:"$67K",  days:5,  fit:"muted" as const },
+    ]},
+    { label:"Closed Won", color:EM, deals:[
+      { name:"Stripe Ent.",  val:"$210K", days:0,  fit:"green" as const },
+      { name:"Linear Inc.",  val:"$95K",  days:0,  fit:"green" as const },
+    ]},
+  ];
+  const fitColor: Record<string,string> = { green:EM, blue:BLUE, muted:INK3 };
+  return (
+    <div style={{ display:"flex", flex:1, overflow:"hidden", gap:0 }}>
+      {cols.map((col, ci) => (
+        <div key={col.label} style={{ flex:1, minWidth:0, borderRight: ci<2 ? `1px solid ${BD}` : "none", display:"flex", flexDirection:"column" }}>
+          <div style={{ padding:"6px 10px 5px", borderBottom:`1px solid ${BD}`, display:"flex", alignItems:"center", gap:5 }}>
+            <div style={{ width:6, height:6, borderRadius:"50%", background:col.color, flexShrink:0 }} />
+            <span style={{ fontSize:8, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.1em", color:INK2, flex:1 }}>{col.label}</span>
+            <span style={{ fontSize:8, fontWeight:700, color:col.color }}>{col.deals.length}</span>
+          </div>
+          <div style={{ flex:1, overflow:"hidden", padding:"6px 6px", display:"flex", flexDirection:"column", gap:4 }}>
+            {col.deals.map((d, di) => (
+              <motion.div key={d.name}
+                initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }} transition={{ delay:ci*0.05+di*0.04 }}
+                whileHover={{ y:-1, boxShadow:"0 3px 10px rgba(0,0,0,0.08)" }}
+                style={{ padding:"7px 8px", borderRadius:8, border:`1px solid ${BD}`,
+                  background:"rgba(255,255,255,0.7)", cursor:"pointer",
+                  boxShadow:"0 1px 3px rgba(0,0,0,0.04)" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:3 }}>
+                  <div style={{ width:18, height:18, borderRadius:5, background:`${fitColor[d.fit]}18`,
+                    display:"flex", alignItems:"center", justifyContent:"center", fontSize:7.5, fontWeight:900,
+                    color:fitColor[d.fit], flexShrink:0 }}>{d.name[0]}</div>
+                  <span style={{ fontSize:9, fontWeight:600, color:INK, flex:1, lineHeight:1 }}>{d.name}</span>
+                </div>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+                  <span style={{ fontSize:9.5, fontWeight:800, color:col.color }}>{d.val}</span>
+                  <span style={{ fontSize:7, color:INK3 }}>{d.days === 0 ? "✓ Won" : `${d.days}d ago`}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEW: Contacts
+═══════════════════════════════════════════════════════════════ */
+function ViewContacts() {
+  const [search, setSearchActive] = useState(false);
+  const contacts = [
+    { name:"Sarah Chen",      title:"CRO",         co:"Acme Corp",    score:94, tag:"Champion",  tc:EM   },
+    { name:"Jake Morrison",   title:"VP Sales",     co:"TechFlow Inc", score:87, tag:"Decision",  tc:BLUE },
+    { name:"Priya Nair",      title:"Head of Eng",  co:"Nordex Group", score:72, tag:"Influencer",tc:PURP },
+    { name:"Tom Brandt",      title:"CEO",          co:"Hexade Labs",  score:81, tag:"Champion",  tc:EM   },
+    { name:"Aiko Tanaka",     title:"VP Marketing", co:"Vertex AI Co", score:58, tag:"Dormant",   tc:INK3 },
+  ];
+  const initials = (n:string) => n.split(" ").map(p=>p[0]).join("");
+  const avatarColors = [BLUE,EM,PURP,AMB,"#ec4899"];
+  return (
+    <div style={{ display:"flex", flexDirection:"column", flex:1, overflow:"hidden" }}>
+      <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px", borderBottom:`1px solid ${BD}`, background:"rgba(0,0,0,0.01)" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:4, padding:"3px 8px", borderRadius:6, border:`1px solid ${BD}`,
+          background:"rgba(255,255,255,0.7)", flex:1, maxWidth:180, fontSize:8.5, color:INK3 }}>
+          <Search size={8} /> Search contacts…
+        </div>
+        <span style={{ marginLeft:"auto", fontSize:8, color:INK3 }}>{contacts.length} contacts</span>
+      </div>
+      <div style={{ display:"grid", gridTemplateColumns:"2fr 80px 70px 60px", gap:6, padding:"4px 10px",
+        borderBottom:`1px solid rgba(0,0,0,0.04)`, background:"rgba(0,0,0,0.01)" }}>
+        {["Contact","Company","Score","Tag"].map(h=>(
+          <div key={h} style={{ fontSize:7.5, fontWeight:700, textTransform:"uppercase", letterSpacing:"0.1em", color:INK3 }}>{h}</div>
+        ))}
+      </div>
+      <div style={{ flex:1, overflow:"hidden", padding:"4px 6px", display:"flex", flexDirection:"column", gap:2 }}>
+        {contacts.map((c, i) => (
+          <motion.div key={c.name}
+            initial={{ opacity:0, x:-4 }} animate={{ opacity:1, x:0 }} transition={{ delay:i*0.04 }}
+            whileHover={{ background:"rgba(0,0,0,0.022)" }}
+            style={{ display:"grid", gridTemplateColumns:"2fr 80px 70px 60px", gap:6, alignItems:"center",
+              padding:"5px 6px", borderRadius:7, cursor:"pointer", border:`1px solid transparent` }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+              <div style={{ width:22, height:22, borderRadius:"50%", background:`${avatarColors[i%5]}22`,
+                display:"flex", alignItems:"center", justifyContent:"center", fontSize:7.5, fontWeight:800,
+                color:avatarColors[i%5], flexShrink:0 }}>{initials(c.name)}</div>
+              <div>
+                <div style={{ fontSize:9.5, fontWeight:600, color:INK, lineHeight:1 }}>{c.name}</div>
+                <div style={{ fontSize:7.5, color:INK3 }}>{c.title}</div>
+              </div>
+            </div>
+            <span style={{ fontSize:8.5, color:INK2, fontWeight:500 }}>{c.co}</span>
+            <div style={{ display:"flex", alignItems:"center", gap:4 }}>
+              <Ring pct={c.score} color={c.score>80?EM:c.score>65?BLUE:INK3} size={20} />
+              <span style={{ fontSize:8, fontWeight:700, color:INK2 }}>{c.score}</span>
+            </div>
+            <span style={{ fontSize:7.5, fontWeight:700, padding:"2px 5px", borderRadius:99,
+              background:`${c.tc}18`, color:c.tc }}>{c.tag}</span>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEW: Settings
+═══════════════════════════════════════════════════════════════ */
+function ViewSettings() {
+  const [active, setActive] = useState<"workspace"|"integrations"|"notifications">("workspace");
+  const [toggled, setToggled] = useState({ ai:true, signals:true, autoSync:false, digest:true });
+  const sections = [
+    { id:"workspace" as const, label:"Workspace" },
+    { id:"integrations" as const, label:"Integrations" },
+    { id:"notifications" as const, label:"Notifications" },
+  ];
+  const integrations = [
+    { name:"Salesforce",  status:"Connected", color:BLUE  },
+    { name:"HubSpot",     status:"Connected", color:AMB   },
+    { name:"Slack",       status:"Connected", color:PURP  },
+    { name:"LinkedIn",    status:"Pending",   color:INK3  },
+  ];
+  return (
+    <div style={{ display:"flex", flex:1, overflow:"hidden" }}>
+      <div style={{ width:120, flexShrink:0, borderRight:`1px solid ${BD}`, display:"flex", flexDirection:"column", padding:"8px 0" }}>
+        {sections.map(s => (
+          <button key={s.id} onClick={()=>setActive(s.id)}
+            style={{ textAlign:"left", padding:"6px 12px", fontSize:9, fontWeight: active===s.id ? 700 : 500,
+              color: active===s.id ? BLUE : INK2, background: active===s.id ? BL_S : "transparent",
+              borderLeft: active===s.id ? `2px solid ${BLUE}` : "2px solid transparent",
+              border:"none", cursor:"pointer", transition:"all 0.12s" }}>{s.label}</button>
+        ))}
+      </div>
+      <div style={{ flex:1, minWidth:0, padding:"10px 12px", display:"flex", flexDirection:"column", gap:8, overflow:"hidden" }}>
+        {active === "workspace" && (
+          <>
+            <div style={{ fontSize:9, fontWeight:700, color:INK, marginBottom:2 }}>Workspace Settings</div>
+            {[
+              { key:"ai" as const,       label:"AI Assist",          sub:"Auto-generate outreach copy" },
+              { key:"signals" as const,  label:"Signal Detection",   sub:"Real-time intent monitoring" },
+              { key:"autoSync" as const, label:"Auto CRM Sync",      sub:"Push activity to Salesforce" },
+              { key:"digest" as const,   label:"Daily Digest Email", sub:"Morning summary at 8am" },
+            ].map(item => (
+              <div key={item.key} style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+                padding:"6px 8px", borderRadius:8, border:`1px solid ${BD}`, background:"rgba(0,0,0,0.015)" }}>
+                <div>
+                  <div style={{ fontSize:9, fontWeight:600, color:INK }}>{item.label}</div>
+                  <div style={{ fontSize:7.5, color:INK3 }}>{item.sub}</div>
+                </div>
+                <motion.div onClick={() => setToggled(p=>({...p,[item.key]:!p[item.key]}))}
+                  animate={{ backgroundColor: toggled[item.key] ? EM : "rgba(0,0,0,0.12)" }}
+                  style={{ width:26, height:14, borderRadius:99, cursor:"pointer", padding:2, display:"flex", alignItems:"center",
+                    justifyContent: toggled[item.key] ? "flex-end" : "flex-start" }}>
+                  <motion.div animate={{ x: 0 }} style={{ width:10, height:10, borderRadius:"50%", background:"#fff",
+                    boxShadow:"0 1px 2px rgba(0,0,0,0.2)" }} />
+                </motion.div>
+              </div>
+            ))}
+          </>
+        )}
+        {active === "integrations" && (
+          <>
+            <div style={{ fontSize:9, fontWeight:700, color:INK, marginBottom:2 }}>Connected Apps</div>
+            {integrations.map((int, i) => (
+              <motion.div key={int.name} initial={{ opacity:0, y:3 }} animate={{ opacity:1, y:0 }} transition={{ delay:i*0.05 }}
+                style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 8px", borderRadius:8, border:`1px solid ${BD}`, background:"rgba(0,0,0,0.015)" }}>
+                <div style={{ width:22, height:22, borderRadius:6, background:`${int.color}18`,
+                  display:"flex", alignItems:"center", justifyContent:"center", fontSize:7.5, fontWeight:900, color:int.color }}>{int.name[0]}</div>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:9, fontWeight:600, color:INK }}>{int.name}</div>
+                  <div style={{ fontSize:7.5, color: int.status==="Connected" ? EM : INK3 }}>{int.status}</div>
+                </div>
+                <button style={{ fontSize:7.5, fontWeight:600, padding:"2px 7px", borderRadius:6, cursor:"pointer",
+                  background: int.status==="Connected" ? "rgba(0,0,0,0.05)" : BLUE,
+                  color: int.status==="Connected" ? INK3 : "#fff", border:"none" }}>
+                  {int.status==="Connected" ? "Manage" : "Connect"}
+                </button>
+              </motion.div>
+            ))}
+          </>
+        )}
+        {active === "notifications" && (
+          <>
+            <div style={{ fontSize:9, fontWeight:700, color:INK, marginBottom:2 }}>Notification Preferences</div>
+            {[
+              { label:"High-intent signals",    sub:"Alert when ICP score > 85" },
+              { label:"Meeting booked",          sub:"Instant push + email" },
+              { label:"Deal stage change",       sub:"Slack + in-app" },
+              { label:"Agent task complete",     sub:"In-app only" },
+            ].map((n, i) => (
+              <div key={i} style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
+                padding:"6px 8px", borderRadius:8, border:`1px solid ${BD}`, background:"rgba(0,0,0,0.015)" }}>
+                <div>
+                  <div style={{ fontSize:9, fontWeight:600, color:INK }}>{n.label}</div>
+                  <div style={{ fontSize:7.5, color:INK3 }}>{n.sub}</div>
+                </div>
+                <span style={{ fontSize:7, fontWeight:700, padding:"2px 5px", borderRadius:99, background:EM_S, color:EM }}>On</span>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    SIDEBAR NAV
 ═══════════════════════════════════════════════════════════════ */
-type Tab = "Revenue"|"Accounts"|"Outreach"|"Agents"|"Intelligence"|"Reports";
-const TABS: Tab[] = ["Revenue","Accounts","Outreach","Agents","Intelligence","Reports"];
+type Tab = "Revenue"|"Accounts"|"Outreach"|"Agents"|"Intelligence"|"Reports"|"Deals"|"Contacts"|"Settings";
+const TABS: Tab[] = ["Revenue","Accounts","Outreach","Agents","Intelligence","Reports","Deals","Contacts","Settings"];
 const TAB_ICONS: Record<Tab, React.ReactNode> = {
   Revenue: <TrendingUp size={10}/>, Accounts: <Target size={10}/>, Outreach: <Zap size={10}/>,
   Agents: <RefreshCw size={10}/>, Intelligence: <Radio size={10}/>, Reports: <BarChart2 size={10}/>,
+  Deals: <Handshake size={10}/>, Contacts: <Users size={10}/>, Settings: <Settings size={10}/>,
 };
 const TAB_URL: Record<Tab,string> = {
-  Revenue:"revenue", Accounts:"accounts", Outreach:"outreach", Agents:"agents", Intelligence:"intelligence", Reports:"reports",
+  Revenue:"revenue", Accounts:"accounts", Outreach:"outreach", Agents:"agents", Intelligence:"intelligence",
+  Reports:"reports", Deals:"deals", Contacts:"contacts", Settings:"settings",
 };
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN EXPORT
 ═══════════════════════════════════════════════════════════════ */
+
+/* Ivory palette — local constants */
+const IV1 = "#fefcf7";   /* main content surface */
+const IV2 = "#f7f2e8";   /* chrome / sidebar light */
+const IV3 = "#ede7d9";   /* chrome / sidebar mid  */
+const IV4 = "#e6dece";   /* status bar            */
+const IVB = "rgba(160,128,76,0.12)"; /* warm border */
+
+const TAB_BADGES: Partial<Record<Tab, string>> = {
+  Accounts: "247", Agents: "4", Outreach: "3",
+};
+
 export function HomeDashboard() {
-  const [tab, setTab] = useState<Tab>("Revenue");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(containerRef, { once: true, margin: "-80px" });
+  const [tab, setTab]           = useState<Tab>("Revenue");
+  const [collapsed, setCollapsed] = useState(false);
+  const [hovered, setHovered]   = useState<Tab | null>(null);
+  const containerRef            = useRef<HTMLDivElement>(null);
+  const inView                  = useInView(containerRef, { once: true, margin: "-80px" });
 
   const views: Record<Tab, React.ReactNode> = {
-    Revenue: <ViewRevenue />,
-    Accounts: <ViewAccounts />,
-    Outreach: <ViewOutreach />,
-    Agents: <ViewAgents />,
+    Revenue:      <ViewRevenue />,
+    Accounts:     <ViewAccounts />,
+    Outreach:     <ViewOutreach />,
+    Agents:       <ViewAgents />,
     Intelligence: <ViewIntelligence />,
-    Reports: <ViewReports />,
+    Reports:      <ViewReports />,
+    Deals:        <ViewDeals />,
+    Contacts:     <ViewContacts />,
+    Settings:     <ViewSettings />,
   };
 
   return (
@@ -702,82 +938,183 @@ export function HomeDashboard() {
       aria-hidden
       style={{ fontFamily: FF }}
     >
-      {/* Ambient glow */}
+      {/* Ambient glow — warm amber/green for ivory */}
       <div className="absolute -inset-10 rounded-3xl pointer-events-none"
-        style={{ background:"radial-gradient(ellipse at 50% 50%,rgba(59,130,246,0.07),rgba(16,185,129,0.05),transparent 68%)", filter:"blur(40px)" }} />
+        style={{ background:"radial-gradient(ellipse at 55% 45%,rgba(245,158,11,0.08),rgba(16,185,129,0.05),transparent 68%)", filter:"blur(52px)" }} />
 
-      {/* Shell — matches platform DashboardUI */}
-      <div className="w-full rounded-xl border border-border bg-white overflow-hidden select-none"
-        style={{ boxShadow:"0 2px 4px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.06),0 24px 48px rgba(0,0,0,0.06)" }}>
+      {/* Shell */}
+      <div className="w-full rounded-2xl overflow-hidden select-none"
+        style={{
+          background: IV1,
+          border: `1px solid ${IVB}`,
+          boxShadow: "0 1px 2px rgba(80,60,20,0.04),0 4px 12px rgba(80,60,20,0.05),0 16px 40px rgba(80,60,20,0.07),0 40px 80px rgba(80,60,20,0.05)",
+        }}>
 
-        {/* Chrome bar */}
-        <div className="flex items-center gap-3 px-3 py-2 border-b border-border/50 bg-secondary">
+        {/* ── Chrome bar ────────────────────────────────────────── */}
+        <div className="flex items-center gap-3 px-3 py-2"
+          style={{ background:`linear-gradient(180deg,${IV2} 0%,${IV3} 100%)`, borderBottom:`1px solid ${IVB}` }}>
           <div className="flex gap-1.5 shrink-0">
             {["#ff5f57","#febc2e","#28c840"].map((c,i)=>(
-              <div key={i} style={{ background:c }} className="w-2.5 h-2.5 rounded-full" />
+              <div key={i} style={{ background:c, boxShadow:`0 0 0 0.5px ${c}99` }} className="w-2.5 h-2.5 rounded-full" />
             ))}
           </div>
           <div className="flex-1 flex justify-center min-w-0">
-            <div className="bg-white border border-border/60 rounded px-2 py-0.5 text-[9px] text-muted-foreground font-medium flex items-center gap-1.5 max-w-[220px] overflow-hidden transition-all duration-200">
-              <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse shrink-0" />
+            <div className="rounded-md px-2.5 py-1 text-[9px] font-medium flex items-center gap-1.5 max-w-[230px] overflow-hidden"
+              style={{ background:IV1, border:`1px solid ${IVB}`, color:INK3, boxShadow:"0 1px 3px rgba(80,60,20,0.05),inset 0 1px 0 rgba(255,255,255,0.55)" }}>
+              <div style={{ width:6, height:6, borderRadius:"50%", background:EM, flexShrink:0 }} className="animate-pulse" />
               <span className="truncate">app.magnivo.ai/{TAB_URL[tab]}</span>
             </div>
           </div>
           <div className="flex items-center gap-1 shrink-0">
-            <div className="w-4 h-4 rounded flex items-center justify-center bg-border/30 cursor-pointer hover:bg-border/60 transition-colors">
-              <Bell size={8} className="text-muted-foreground" />
-            </div>
-            <div className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-black text-white"
-              style={{ background:"linear-gradient(135deg,#667eea,#764ba2)" }}>K</div>
+            {[<Search size={8}/>, null].map((icon, i) =>
+              icon ? (
+                <motion.button key={i} whileHover={{ background: IV4 }}
+                  className="w-5 h-5 rounded-md flex items-center justify-center cursor-pointer"
+                  style={{ color:INK3 }}>{icon}</motion.button>
+              ) : null
+            )}
+            <motion.button whileHover={{ background: IV4 }}
+              className="w-5 h-5 rounded-md flex items-center justify-center cursor-pointer relative"
+              style={{ color:INK3 }}>
+              <Bell size={8} />
+              <div className="absolute top-0.5 right-0.5 w-1.5 h-1.5 rounded-full"
+                style={{ background:EM, border:`1px solid ${IV3}` }} />
+            </motion.button>
+            <div className="w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-black text-white ml-0.5 cursor-pointer"
+              style={{ background:"linear-gradient(135deg,#667eea,#764ba2)", boxShadow:"0 1px 4px rgba(102,126,234,0.4)" }}>K</div>
           </div>
         </div>
 
-        {/* Tab strip */}
-        <div className="flex border-b border-border/50 bg-secondary/30 overflow-x-auto">
-          {TABS.map(t=>{
-            const active = tab===t;
-            return (
-              <button key={t} onClick={()=>setTab(t)}
-                className={`relative flex-shrink-0 flex items-center gap-1.5 px-3 py-2 text-[9.5px] font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap
-                  ${active ? "text-foreground bg-white border-b-2 border-[var(--accent-blue)]" : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"}`}>
-                <span className={active ? "text-[var(--accent-blue)]" : ""}>{TAB_ICONS[t]}</span>
-                {t}
-              </button>
-            );
-          })}
-        </div>
+        {/* ── Body ──────────────────────────────────────────────── */}
+        <div className="flex" style={{ height:308 }}>
 
-        {/* View body */}
-        <div className="flex" style={{ height:272 }}>
+          {/* Sidebar — collapsible primary navigation */}
+          <motion.div
+            animate={{ width: collapsed ? 44 : 130 }}
+            transition={{ type:"spring", stiffness:280, damping:28 }}
+            className="shrink-0 flex flex-col overflow-hidden"
+            style={{ background:`linear-gradient(180deg,${IV2} 0%,${IV3} 100%)`, borderRight:`1px solid ${IVB}` }}>
 
-          {/* Sidebar */}
-          <div className="hidden sm:flex w-32 shrink-0 border-r border-border/30 bg-secondary/50 flex-col p-2 gap-0.5">
-            <div className="px-1.5 py-1 text-[7.5px] font-bold tracking-[0.18em] text-muted-foreground uppercase mb-0.5">Modules</div>
-            {TABS.map(t=>{
-              const active = tab===t;
-              return (
-                <button key={t} onClick={()=>setTab(t)}
-                  className={`w-full text-left px-2 py-1.5 rounded-md text-[9px] font-medium flex items-center gap-1.5 transition-all duration-150 cursor-pointer
-                    ${active ? "bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]" : "text-muted-foreground hover:bg-border/30 hover:text-foreground"}`}>
-                  <span className={active ? "text-[var(--accent-blue)]" : ""}>{TAB_ICONS[t]}</span>
-                  {t}
-                </button>
-              );
-            })}
-            <div className="mt-auto pt-2 border-t border-border/30">
-              <div className="px-2 py-1.5 rounded-md bg-[var(--accent-green)]/10 text-[var(--accent-green)] text-[8.5px] font-semibold flex items-center gap-1.5">
-                <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse shrink-0" />
-                4 Agents Live
-              </div>
+            {/* Logo row */}
+            <div className="flex items-center px-2.5 pt-3 pb-2.5"
+              style={{ borderBottom:`1px solid ${IVB}`, gap: collapsed ? 0 : 7, justifyContent: collapsed ? "center" : "flex-start" }}>
+              <div className="w-5 h-5 rounded-md flex items-center justify-center text-[8px] font-black text-white shrink-0"
+                style={{ background:"linear-gradient(135deg,#3b82f6,#8b5cf6)", boxShadow:"0 1px 4px rgba(59,130,246,0.38)" }}>M</div>
+              {!collapsed && (
+                <>
+                  <span style={{ fontSize:9.5, fontWeight:700, color:INK, letterSpacing:"-0.02em", flex:1 }}>magnivo.ai</span>
+                  <motion.button whileHover={{ background:IV4 }} onClick={() => setCollapsed(true)}
+                    className="w-4 h-4 rounded flex items-center justify-center cursor-pointer shrink-0"
+                    style={{ color:INK3 }}>
+                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                      <path d="M5.5 2L3 4.5L5.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </motion.button>
+                </>
+              )}
             </div>
-          </div>
+
+            {/* Nav items */}
+            <div className="flex flex-col gap-px p-1.5 flex-1 overflow-hidden">
+              {!collapsed && (
+                <div className="px-2 pt-0.5 pb-1" style={{ fontSize:6.5, fontWeight:800, textTransform:"uppercase", letterSpacing:"0.17em", color:INK3 }}>Workspace</div>
+              )}
+              {TABS.map(t => {
+                const active  = tab === t;
+                const isHover = hovered === t && !active;
+                const badge   = TAB_BADGES[t];
+                return (
+                  <motion.button key={t} onClick={() => setTab(t)}
+                    onMouseEnter={() => setHovered(t)}
+                    onMouseLeave={() => setHovered(null)}
+                    whileHover={{ x: active || collapsed ? 0 : 1.5 }}
+                    transition={{ type:"spring", stiffness:420, damping:28 }}
+                    title={collapsed ? t : undefined}
+                    className="w-full rounded-lg text-[9px] font-medium flex items-center cursor-pointer"
+                    style={{
+                      padding: collapsed ? "7px 0" : "6px 8px",
+                      justifyContent: collapsed ? "center" : "flex-start",
+                      gap: 7,
+                      color: active ? BLUE : isHover ? INK : INK2,
+                      background: active
+                        ? `linear-gradient(90deg,rgba(59,130,246,0.13),rgba(59,130,246,0.05))`
+                        : isHover
+                          ? `rgba(160,128,76,0.07)`
+                          : "transparent",
+                      border: active ? "1px solid rgba(59,130,246,0.16)" : "1px solid transparent",
+                      boxShadow: active ? "0 1px 4px rgba(59,130,246,0.08)" : "none",
+                      transition: "color 0.1s, background 0.1s",
+                    }}>
+                    <span style={{ color: active ? BLUE : isHover ? INK2 : INK3, display:"flex", alignItems:"center", flexShrink:0 }}>{TAB_ICONS[t]}</span>
+                    {!collapsed && (
+                      <>
+                        <span style={{ fontWeight: active ? 600 : 500, flex:1, whiteSpace:"nowrap" }}>{t}</span>
+                        {badge && (
+                          <span style={{
+                            fontSize:6.5, fontWeight:700, padding:"1px 4px", borderRadius:99,
+                            background: active ? "rgba(59,130,246,0.14)" : "rgba(160,128,76,0.12)",
+                            color: active ? BLUE : INK3,
+                          }}>{badge}</span>
+                        )}
+                        {active && !badge && (
+                          <div className="ml-auto w-1 h-1 rounded-full shrink-0"
+                            style={{ background:BLUE, boxShadow:`0 0 5px ${BLUE}99` }} />
+                        )}
+                      </>
+                    )}
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* Bottom: agents badge or expand button */}
+            <div className="p-1.5" style={{ borderTop:`1px solid ${IVB}` }}>
+              {collapsed ? (
+                <motion.button whileHover={{ background:IV4 }} onClick={() => setCollapsed(false)}
+                  className="w-full flex justify-center py-1.5 rounded-lg cursor-pointer"
+                  style={{ color:INK3 }}>
+                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+                    <path d="M3.5 2L6 4.5L3.5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </motion.button>
+              ) : (
+                <div className="px-2 py-2 rounded-lg cursor-pointer"
+                  style={{
+                    background:"linear-gradient(135deg,rgba(16,185,129,0.1),rgba(16,185,129,0.04))",
+                    border:"1px solid rgba(16,185,129,0.17)",
+                    boxShadow:"0 1px 3px rgba(16,185,129,0.06)",
+                  }}>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse" style={{ background:EM }} />
+                    <span style={{ fontSize:8, fontWeight:700, color:EM }}>4 Agents Live</span>
+                  </div>
+                  <div style={{ fontSize:7, color:"rgba(16,185,129,0.58)", marginTop:2 }}>3 workflows running</div>
+                </div>
+              )}
+            </div>
+          </motion.div>
 
           {/* Content pane */}
-          <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+          <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ background: IV1 }}>
+            {/* Contextual sub-header */}
+            <div className="flex items-center gap-2 px-3"
+              style={{ height:30, borderBottom:`1px solid ${IVB}`, background:`linear-gradient(180deg,${IV1} 0%,${IV2} 100%)` }}>
+              <div className="flex items-center gap-1.5">
+                <span style={{ color:BLUE, display:"flex", alignItems:"center" }}>{TAB_ICONS[tab]}</span>
+                <span style={{ fontSize:9, fontWeight:700, color:INK, letterSpacing:"-0.01em" }}>{tab}</span>
+              </div>
+              <div className="ml-auto flex items-center gap-2">
+                <span style={{ fontSize:7.5, color:INK3 }}>Updated just now</span>
+                <div style={{ width:1, height:8, background:IVB }} />
+                <button style={{ fontSize:7.5, fontWeight:600, color:BLUE, cursor:"pointer", border:"none", background:"none", padding:0 }}>
+                  Export →
+                </button>
+              </div>
+            </div>
             <AnimatePresence mode="wait">
               <motion.div key={tab}
-                initial={{ opacity:0, y:5 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-5 }}
-                transition={{ duration:0.18, ease:"easeOut" }}
+                initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-4 }}
+                transition={{ duration:0.16, ease:"easeOut" }}
                 style={{ display:"flex", flexDirection:"column", flex:1, overflow:"hidden" }}>
                 {views[tab]}
               </motion.div>
@@ -785,24 +1122,31 @@ export function HomeDashboard() {
           </div>
 
           {/* Live feed */}
-          <div className="hidden md:block w-36 shrink-0 border-l border-border/30 overflow-hidden bg-secondary/20">
+          <div className="hidden md:flex w-[132px] shrink-0 flex-col overflow-hidden"
+            style={{ background:`linear-gradient(180deg,${IV2} 0%,${IV3} 100%)`, borderLeft:`1px solid ${IVB}` }}>
             <LiveFeed />
           </div>
         </div>
 
-        {/* Status bar */}
-        <div className="px-3 py-1.5 border-t border-border/40 bg-secondary/60 flex items-center gap-3 overflow-hidden">
-          <div className="flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
-            <div className="w-1 h-1 rounded-full bg-[var(--accent-blue)] animate-pulse" />Outbound running
+        {/* ── Status bar ────────────────────────────────────────── */}
+        <div className="px-3 py-1.5 flex items-center gap-3 overflow-hidden"
+          style={{ background:`linear-gradient(180deg,${IV3} 0%,${IV4} 100%)`, borderTop:`1px solid ${IVB}` }}>
+          {[
+            { color:"var(--accent-blue)", label:"Outbound running" },
+            { color:"var(--accent-green)", label:"Content drafting" },
+            { color:"#a78bfa", label:"247 accounts watched" },
+          ].map((s, i) => (
+            <div key={i} className={`flex items-center gap-1.5 shrink-0 ${i > 0 ? "hidden sm:flex" : ""}`}>
+              <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background:s.color }} />
+              <span style={{ fontSize:8, color:INK3 }}>{s.label}</span>
+            </div>
+          ))}
+          <div className="ml-auto flex items-center gap-1" style={{ fontSize:7.5, color:"rgba(120,90,40,0.38)" }}>
+            <div className="w-1 h-1 rounded-full bg-current animate-pulse" />
+            Sync in 58s
           </div>
-          <div className="hidden sm:flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
-            <div className="w-1 h-1 rounded-full bg-[var(--accent-green)] animate-pulse" />Content drafting
-          </div>
-          <div className="hidden sm:flex items-center gap-1 text-[8.5px] text-muted-foreground shrink-0">
-            <div className="w-1 h-1 rounded-full bg-purple-400 animate-pulse" />247 accounts watched
-          </div>
-          <div className="ml-auto text-[8.5px] text-muted-foreground/50 shrink-0">Sync in 58s</div>
         </div>
+
       </div>
     </motion.div>
   );

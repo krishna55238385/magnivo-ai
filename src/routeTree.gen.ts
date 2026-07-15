@@ -15,6 +15,7 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as InvestorsRouteImport } from './routes/investors'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as DataSecurityRouteImport } from './routes/data-security'
 import { Route as DashboardImageRouteImport } from './routes/dashboard-image'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -53,6 +54,11 @@ const PlatformRoute = PlatformRouteImport.update({
 const InvestorsRoute = InvestorsRouteImport.update({
   id: '/investors',
   path: '/investors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DataSecurityRoute = DataSecurityRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
   '/data-security': typeof DataSecurityRoute
+  '/faq': typeof FaqRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
   '/data-security': typeof DataSecurityRoute
+  '/faq': typeof FaqRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/dashboard-image': typeof DashboardImageRoute
   '/data-security': typeof DataSecurityRoute
+  '/faq': typeof FaqRoute
   '/investors': typeof InvestorsRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard-image'
     | '/data-security'
+    | '/faq'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard-image'
     | '/data-security'
+    | '/faq'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard-image'
     | '/data-security'
+    | '/faq'
     | '/investors'
     | '/platform'
     | '/pricing'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DashboardImageRoute: typeof DashboardImageRoute
   DataSecurityRoute: typeof DataSecurityRoute
+  FaqRoute: typeof FaqRoute
   InvestorsRoute: typeof InvestorsRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/investors'
       fullPath: '/investors'
       preLoaderRoute: typeof InvestorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/data-security': {
@@ -351,6 +371,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DashboardImageRoute: DashboardImageRoute,
   DataSecurityRoute: DataSecurityRoute,
+  FaqRoute: FaqRoute,
   InvestorsRoute: InvestorsRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,

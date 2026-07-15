@@ -53,6 +53,9 @@ function SmoothScroll() {
 }
 
 const DemoModal = lazy(() => import("./DemoModal").then((m) => ({ default: m.DemoModal })));
+const CookieBanner = lazy(() =>
+  import("./CookieBanner").then((m) => ({ default: m.CookieBanner }))
+);
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [auditOpen, setAuditOpen] = useState(false);
@@ -80,6 +83,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </div>
       <Suspense fallback={null}>
         {auditOpen ? <DemoModal open={auditOpen} onClose={() => setAuditOpen(false)} /> : null}
+      </Suspense>
+      <Suspense fallback={null}>
+        <CookieBanner />
       </Suspense>
     </>
   );

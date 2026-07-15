@@ -235,6 +235,13 @@ export function Header() {
             >
               Platform
             </Link>
+            <Link
+              to="/faq"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 px-2 text-foreground border-b border-border font-medium"
+            >
+              FAQ
+            </Link>
             <div className="flex flex-col gap-2 mt-4">
               <Link
                 to="/platform"
@@ -556,6 +563,14 @@ function ResourcesMega({ setOpen }: { setOpen: (v: MenuKey) => void }) {
                     Investors
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">Join our journey.</div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" onClick={() => setOpen(null)} className="group block">
+                  <div className="text-[15px] font-semibold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
+                    FAQ
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">Common questions, answered.</div>
                 </Link>
               </li>
               <li>

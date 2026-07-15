@@ -51,6 +51,37 @@ export const Route = createFileRoute("/platform")({
   component: PlatformPage,
 });
 
+const FAQS = [
+  {
+    q: "Is Magnivo software, a service, or both?",
+    a: "Both — and that's intentional. The platform gives your team live revenue intelligence and visibility. The service layer executes your growth motion using AI agents. The consulting layer ensures the strategy is right. Most clients use all three together.",
+  },
+  {
+    q: "How is Magnivo different from Apollo, 6sense, or Outreach?",
+    a: "Those tools are excellent at one thing. Apollo finds contacts. 6sense gives signals. Outreach sends emails. Magnivo connects all three into one system that acts on intelligence automatically — without your team playing middleware between them. It's the difference between having tools and having a system.",
+  },
+  {
+    q: "How long until we see results?",
+    a: "Most clients book their first AI-sourced meeting within 2 weeks of going live. Pipeline builds materially over 60–90 days as the system learns your ICP and optimises outreach timing. You will see activity and signals in week one.",
+  },
+  {
+    q: "Do we need a technical team to implement this?",
+    a: "No. We handle the full implementation. Day 1 we audit and define your ICP. Week 2 the system goes live. Your team needs to be available for 2–3 hours in week one — that's it. We've designed this to require zero internal engineering.",
+  },
+  {
+    q: "What happens if we don't see results?",
+    a: "We don't hide behind contracts. If you're not seeing pipeline movement in the first 30 days, we dig in together and fix it. We have a clear escalation process and a dedicated success team. We've never lost a client to 'it didn't work.'",
+  },
+  {
+    q: "How do you handle our data and security?",
+    a: "All data is encrypted in transit and at rest. We operate with the least access needed — agents are scoped, auditable, and tied to specific workflows. We sign MSAs and data processing agreements with every client before any system access is granted.",
+  },
+  {
+    q: "What size company is this built for?",
+    a: "Ideal fit is B2B companies at $500K–$10M ARR. You need to have found product-market fit, have a defined ICP, and be willing to invest in a system rather than just a campaign. If you're pre-revenue, we're probably not the right fit yet.",
+  },
+];
+
 const DemoModal = lazy(() =>
   import("@/components/DemoModal").then((m) => ({ default: m.DemoModal })),
 );
@@ -192,6 +223,18 @@ function PlatformPage() {
                   "Human-in-the-loop controls and brand guardrails",
                 ],
                 publisher: { "@id": "https://magnivo.ai/#organization" },
+              },
+              {
+                "@type": "FAQPage",
+                "@id": "https://magnivo.ai/platform#faq",
+                mainEntity: FAQS.map((faq) => ({
+                  "@type": "Question",
+                  name: faq.q,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: faq.a,
+                  },
+                })),
               },
             ],
           }),
@@ -2179,37 +2222,6 @@ function PersonasSection() {
 
 // ─── 14. FAQ ─────────────────────────────────────────────────────────────────
 
-const FAQS = [
-  {
-    q: "Is Magnivo software, a service, or both?",
-    a: "Both — and that's intentional. The platform gives your team live revenue intelligence and visibility. The service layer executes your growth motion using AI agents. The consulting layer ensures the strategy is right. Most clients use all three together.",
-  },
-  {
-    q: "How is Magnivo different from Apollo, 6sense, or Outreach?",
-    a: "Those tools are excellent at one thing. Apollo finds contacts. 6sense gives signals. Outreach sends emails. Magnivo connects all three into one system that acts on intelligence automatically — without your team playing middleware between them. It's the difference between having tools and having a system.",
-  },
-  {
-    q: "How long until we see results?",
-    a: "Most clients book their first AI-sourced meeting within 2 weeks of going live. Pipeline builds materially over 60–90 days as the system learns your ICP and optimises outreach timing. You will see activity and signals in week one.",
-  },
-  {
-    q: "Do we need a technical team to implement this?",
-    a: "No. We handle the full implementation. Day 1 we audit and define your ICP. Week 2 the system goes live. Your team needs to be available for 2–3 hours in week one — that's it. We've designed this to require zero internal engineering.",
-  },
-  {
-    q: "What happens if we don't see results?",
-    a: "We don't hide behind contracts. If you're not seeing pipeline movement in the first 30 days, we dig in together and fix it. We have a clear escalation process and a dedicated success team. We've never lost a client to 'it didn't work.'",
-  },
-  {
-    q: "How do you handle our data and security?",
-    a: "All data is encrypted in transit and at rest. We operate with the least access needed — agents are scoped, auditable, and tied to specific workflows. We sign MSAs and data processing agreements with every client before any system access is granted.",
-  },
-  {
-    q: "What size company is this built for?",
-    a: "Ideal fit is B2B companies at $500K–$10M ARR. You need to have found product-market fit, have a defined ICP, and be willing to invest in a system rather than just a campaign. If you're pre-revenue, we're probably not the right fit yet.",
-  },
-];
-
 function FaqSection() {
   const [open, setOpen] = useState<number | null>(null);
   return (
@@ -2240,9 +2252,9 @@ function FaqSection() {
                     className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left"
                     aria-expanded={isOpen}
                   >
-                    <span className="text-sm sm:text-base font-semibold text-foreground leading-snug">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug">
                       {faq.q}
-                    </span>
+                    </h3>
                     <span className="h-7 w-7 rounded-md border border-border flex items-center justify-center text-foreground/40 shrink-0 bg-secondary">
                       {isOpen ? <Minus size={14} /> : <Plus size={14} />}
                     </span>

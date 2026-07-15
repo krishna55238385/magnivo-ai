@@ -25,7 +25,7 @@ export function TrustSnapshot({ onAudit }: { onAudit: () => void }) {
   ];
 
   return (
-    <section className="container-x relative -mt-4 sm:-mt-8 z-10">
+    <section className="container-x relative mt-8 sm:mt-12 z-10">
       <div className="premium-card overflow-hidden border-border/60 bg-card/80">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr]">
           <div className="border-b lg:border-b-0 lg:border-r border-border/60 p-5 sm:p-7">

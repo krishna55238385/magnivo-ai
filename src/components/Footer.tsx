@@ -48,6 +48,7 @@ export function Footer() {
           <Link to="/platform">Platform</Link>
           <Link to="/pricing">Pricing</Link>
           <Link to="/investors">Investors</Link>
+          <Link to="/faq">FAQ</Link>
           <Link to="/contact">Contact</Link>
         </FooterCol>
 

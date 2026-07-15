@@ -15,8 +15,9 @@ import {
   Briefcase,
   Store,
   BarChart2,
+  Star,
 } from "lucide-react";
-import { useState, lazy, Suspense, useRef } from "react";
+import { useState, useEffect, lazy, Suspense, useRef } from "react";
 import {
   motion,
   useMotionValue,
@@ -77,6 +78,49 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+const faqs = [
+  {
+    q: "What do I get from the free GTM audit?",
+    a: "You get a practical diagnosis of your current revenue motion: where pipeline is leaking, which workflows should be automated first, and what a focused 10-day implementation sprint would look like.",
+  },
+  {
+    q: "Is this just another agency pitch?",
+    a: "No. The audit is designed to be useful even if we never work together. We focus on the operating system behind your GTM: data, signals, workflows, agents, reporting, and human ownership.",
+  },
+  {
+    q: "How is Magnivo different from 6sense, Demandbase, or Terminus?",
+    a: "Those platforms give you data and signals. Magnivo gives you data, signals, AND the execution layer that acts on them — plus the strategic consulting to make sure you're acting on the right things. It's the difference between intelligence and outcomes.",
+  },
+  {
+    q: "How do you ensure AI agents don't hallucinate or damage our brand?",
+    a: "Brand safety is our priority. Our agents run on 'Deterministic AI' architectures — combining LLMs with strict brand guardrails, verified data sources, and human-in-the-loop triggers for high-stakes interactions. Nothing goes out without meeting your pre-defined rules.",
+  },
+  {
+    q: "Is this a platform or a solution?",
+    a: "Both — and that's the point. The platform gives your team live intelligence and visibility. The execution layer runs your growth motion using AI agents. The strategy layer ensures the thinking behind it is right. Most clients use all three.",
+  },
+  {
+    q: "What does onboarding look like?",
+    a: "We complete onboarding within 10 business days. Day 1 we define your ICP and audit your current GTM. Week 2 your system goes live. Week 3 you see first results.",
+  },
+  {
+    q: "What is AEO and why does it matter now?",
+    a: "Answer Engine Optimization ensures your brand appears when buyers ask ChatGPT, Perplexity, or Gemini for recommendations in your category. It's the channel your competitors haven't figured out yet — and where your next customer is already looking.",
+  },
+  {
+    q: "Where does your team operate?",
+    a: "Magnivo is a globally distributed team operating async-first with structured weekly touchpoints. Your engagement never depends on a single timezone or a single person.",
+  },
+  {
+    q: "How do you handle trust and data access?",
+    a: "We start with the least access needed for the audit, then define permissions before implementation. Agent actions are scoped, reviewed, and tied to measurable workflows instead of running as a black box.",
+  },
+  {
+    q: "What size companies do you work with?",
+    a: "We work best with B2B companies between $500K and $5M ARR — post-PMF, with a defined ICP, ready to build a repeatable revenue system.",
+  },
+];
+
 const softwareAppLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
@@ -112,88 +156,14 @@ const softwareAppLd = JSON.stringify({
     {
       "@type": "FAQPage",
       "@id": "https://magnivo.ai/#faq",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What do I get from the free GTM audit?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You get a practical diagnosis of your current revenue motion: where pipeline is leaking, which workflows should be automated first, and what a focused 10-day implementation sprint would look like.",
-          },
+      mainEntity: faqs.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: it.a,
         },
-        {
-          "@type": "Question",
-          name: "How is Magnivo different from 6sense, Demandbase, or Terminus?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Those platforms give you data and signals. Magnivo gives you data, signals, AND the execution layer that acts on them — plus the strategic consulting to make sure you're acting on the right things. It's the difference between intelligence and outcomes.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How do you ensure AI agents don't hallucinate or damage our brand?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Brand safety is our priority. Our agents run on Deterministic AI architectures — combining LLMs with strict brand guardrails, verified data sources, and human-in-the-loop triggers for high-stakes interactions. Nothing goes out without meeting your pre-defined rules.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is this a platform or a solution?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Both. The platform gives your team live intelligence and visibility. The execution layer runs your growth motion using AI agents. The strategy layer ensures the thinking behind it is right. Most clients use all three.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What does onboarding look like?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Onboarding is completed within 10 business days. Day 1 we define your ICP and audit your current GTM. Week 2 your system goes live. Week 3 you see first results.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What is AEO and why does it matter now?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Answer Engine Optimization (AEO) ensures your brand appears when buyers ask ChatGPT, Perplexity, or Gemini for recommendations in your category. It is the channel your competitors haven't figured out yet — and where your next customer is already looking.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What size companies do you work with?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Magnivo works best with B2B companies between $500K and $5M ARR — post-PMF, with a defined ICP, ready to build a repeatable revenue system.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How do you handle trust and data access?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "We start with the least access needed for the audit, then define permissions before implementation. Agent actions are scoped, reviewed, and tied to measurable workflows instead of running as a black box.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is this just another agency pitch?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. The audit is designed to be useful even if we never work together. We focus on the operating system behind your GTM: data, signals, workflows, agents, reporting, and human ownership.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Where does your team operate?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Magnivo is a globally distributed team operating async-first with structured weekly touchpoints. Your engagement never depends on a single timezone or a single person.",
-          },
-        },
-      ],
+      })),
     },
     {
       "@type": "HowTo",
@@ -395,135 +365,441 @@ export const staggerItem = {
   },
 };
 
+const LIVE_SIGNALS = [
+  "High-intent signal: Acme Corp visited pricing 3×",
+  "Agent booked meeting — TechFlow CRO",
+  "Deal moved → Proposal: Stripe Ent. ($210K)",
+  "247 accounts monitored in real-time",
+  "New ICP match: Hexade Labs (score 94)",
+  "Outbound sequence live — 48 prospects",
+];
+
+function LiveSignalTicker() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % LIVE_SIGNALS.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="overflow-hidden px-3 py-1.5" style={{ minWidth: 0, maxWidth: 340 }}>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={idx}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          className="block text-[10px] font-semibold text-foreground/80 whitespace-nowrap"
+        >
+          {LIVE_SIGNALS[idx]}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function HomePage() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   return (
     <SiteLayout>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: softwareAppLd }} />
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden min-h-[calc(100svh-3.5rem)] sm:min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-10 sm:pt-14 md:pt-20 pb-10 sm:pb-14 md:pb-20">
+
+      {/* ─── HERO ──────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden flex flex-col">
+
+        <style>{`
+          .h2-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-weight: 700;
+            background: linear-gradient(
+              115deg,
+              var(--accent-gold)   0%,
+              #e0aa52             28%,
+              var(--brand-emerald) 58%,
+              #2a5c40             78%,
+              var(--accent-gold)  100%
+            );
+            background-size: 220% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer-text 7s linear infinite;
+          }
+          .hero-stat-val {
+            font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+          }
+          .hero-dash-stage {
+            position: relative;
+          }
+          .hero-dash-stage::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            top: -60px;
+            background: linear-gradient(
+              to bottom,
+              var(--background) 0%,
+              transparent 40%
+            );
+            pointer-events: none;
+            z-index: 2;
+          }
+          @keyframes live-float-slow-kf {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-9px); }
+          }
+          @keyframes live-float-medium-kf {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+          }
+          .live-float-slow { animation: live-float-slow-kf 6.5s ease-in-out infinite; }
+          .live-float-medium { animation: live-float-medium-kf 4.5s ease-in-out infinite; }
+          .live-float-medium-delay { animation: live-float-medium-kf 5s ease-in-out 1.2s infinite; }
+
+          /* ── Premium hero background ── */
+          .hero-spotlight {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background:
+              radial-gradient(58% 52% at 26% 40%, color-mix(in oklab, var(--accent-gold) 9%, transparent), transparent 70%),
+              radial-gradient(50% 50% at 80% 38%, color-mix(in oklab, var(--brand-emerald) 10%, transparent), transparent 72%);
+          }
+          .hero-grid {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-image:
+              linear-gradient(to right, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px),
+              linear-gradient(to bottom, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px);
+            background-size: 66px 66px;
+            -webkit-mask-image: radial-gradient(72% 62% at 48% 38%, black, transparent 80%);
+            mask-image: radial-gradient(72% 62% at 48% 38%, black, transparent 80%);
+            opacity: 0.45;
+          }
+          .hero-beam {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: min(720px, 80%); height: 1px; z-index: 1;
+            background: linear-gradient(to right, transparent, color-mix(in oklab, var(--accent-gold) 55%, transparent), transparent);
+          }
+
+          /* ── Premium eyebrow pill ── */
+          .premium-pill {
+            position: relative; isolation: isolate; border: 1px solid transparent;
+            background:
+              linear-gradient(var(--card), var(--card)) padding-box,
+              linear-gradient(120deg,
+                color-mix(in oklab, var(--accent-gold) 60%, transparent),
+                color-mix(in oklab, var(--brand-emerald) 45%, transparent),
+                color-mix(in oklab, var(--accent-gold) 60%, transparent)) border-box;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 10px 26px rgba(27,58,45,0.06);
+            overflow: hidden;
+          }
+          .premium-pill::after {
+            content: ''; position: absolute; inset: 0; z-index: -1;
+            background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.6) 48%, transparent 64%);
+            transform: translateX(-130%);
+            animation: pill-sheen 6s ease-in-out 1.4s infinite;
+          }
+          @keyframes pill-sheen {
+            0%, 100% { transform: translateX(-130%); }
+            58%, 74% { transform: translateX(130%); }
+          }
+
+          /* ── Headline underline flourish ── */
+          .headline-underline { position: relative; display: inline-block; }
+          .headline-underline::after {
+            content: ''; position: absolute; left: 0; right: 0.06em; bottom: -0.16em; height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--brand-emerald) 70%, transparent);
+            transform: scaleX(0); transform-origin: left;
+            animation: underline-grow 1.1s cubic-bezier(0.16,1,0.3,1) 1.2s forwards;
+          }
+          @keyframes underline-grow { to { transform: scaleX(1); } }
+
+          /* ── Right panel premium ── */
+          .glass-card {
+            background: color-mix(in oklab, var(--card) 84%, transparent);
+            -webkit-backdrop-filter: blur(14px) saturate(1.25);
+            backdrop-filter: blur(14px) saturate(1.25);
+          }
+          .ring-glow {
+            position: absolute; width: 540px; height: 540px; border-radius: 9999px; z-index: 0;
+            background: conic-gradient(from 0deg,
+              color-mix(in oklab, var(--accent-gold) 24%, transparent),
+              color-mix(in oklab, var(--brand-emerald) 22%, transparent),
+              color-mix(in oklab, var(--accent-gold) 24%, transparent));
+            filter: blur(64px); opacity: 0.42;
+            animation: ring-spin 28s linear infinite; pointer-events: none;
+          }
+          @keyframes ring-spin { to { transform: rotate(360deg); } }
+          .scan-wrap { position: relative; }
+          .scan-wrap::before {
+            content: ''; position: absolute; left: 0; right: 0; top: 0; height: 42%; z-index: 6;
+            background: linear-gradient(to bottom, color-mix(in oklab, var(--brand-emerald) 14%, transparent), transparent);
+            transform: translateY(-100%);
+            animation: scan-move 5s ease-in-out 1s infinite; pointer-events: none;
+          }
+          @keyframes scan-move {
+            0% { transform: translateY(-100%); opacity: 0; }
+            18% { opacity: 1; }
+            82% { opacity: 1; }
+            100% { transform: translateY(280%); opacity: 0; }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .premium-pill::after, .headline-underline::after, .ring-glow, .scan-wrap::before,
+            .live-float-slow, .live-float-medium, .live-float-medium-delay { animation: none; }
+            .headline-underline::after { transform: scaleX(1); }
+          }
+        `}</style>
+
+        {/* Layered premium backdrop */}
+        <div className="hero-spotlight" aria-hidden />
+        <div className="hero-grid" aria-hidden />
         <div className="aurora" aria-hidden />
-        <div className="absolute inset-0 dot-grid opacity-35" aria-hidden />
-        <div className="absolute inset-0 mesh-hero" aria-hidden />
         <div className="noise" aria-hidden />
 
-        {/* Spotlights */}
-        <div
-          className="absolute -top-44 left-1/2 -translate-x-1/2 w-[min(1100px,150vw)] h-[560px] sm:h-[640px] pointer-events-none"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(ellipse at center top, color-mix(in oklab, var(--accent-blue) 30%, transparent), transparent 62%)",
-            filter: "blur(26px)",
-          }}
-        />
-        <div
-          className="absolute -bottom-44 -left-32 w-[min(720px,130vw)] h-[440px] sm:h-[520px] pointer-events-none"
-          aria-hidden
-          style={{
-            background:
-              "radial-gradient(ellipse at left bottom, color-mix(in oklab, var(--accent-green) 25%, transparent), transparent 65%)",
-            filter: "blur(34px)",
-          }}
-        />
+        {/* ── Above-fold — split layout ────────────────────── */}
+        <div className="relative min-h-[calc(100svh-3.5rem)] sm:min-h-[calc(100svh-4rem)] flex items-center">
 
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-blue)]/60 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/40 to-transparent" />
+          {/* hairline top + accent beam */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border/80 to-transparent" />
+          <div className="hero-beam" aria-hidden />
 
-        <div className="hidden md:block absolute top-32 left-10 h-2 w-2 rounded-full bg-[var(--accent-blue)] float-y" />
-        <div className="hidden md:block absolute top-60 right-16 h-1.5 w-1.5 rounded-full bg-[var(--accent-green)] float-y-delay" />
-        <div className="hidden md:block absolute bottom-40 left-1/4 h-1 w-1 rounded-full bg-foreground/60 float-y" />
+          <div className="container-x w-full py-10 sm:py-14 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-10 lg:gap-16 items-center">
 
-        <div className="container-x relative w-full">
-          {/* Eyebrow */}
-          <motion.div
-            className="flex justify-center mb-6 sm:mb-8"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease }}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-gold)] animate-pulse" />
-              The AI GTM Operating System
-            </span>
-          </motion.div>
+              {/* ── LEFT: Text content ──────────────────────── */}
+              <div className="flex flex-col items-start text-left">
 
-          {/* Headline — word-by-word reveal */}
-          <h1 className="text-center text-4xl leading-[1.02] sm:text-5xl md:text-7xl lg:text-[5.5rem] font-bold mx-auto max-w-6xl">
-            <WordReveal text="The AI Brain Behind" className="block text-foreground" delay={0.1} />
-            <WordReveal
-              text="Your GTM OS."
-              className="block mt-1 md:mt-2"
-              delay={0.38}
-            />
-          </h1>
-          <style>{`.word-green span{color:#1B3A2D}`}</style>
-          <motion.p
-            className="mt-6 sm:mt-8 md:mt-9 text-center text-base sm:text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed px-1 sm:px-2 font-medium"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.72, ease }}
-          >
-            Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention —
-            through one intelligent system built for B2B growth.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            className="mt-7 sm:mt-9 md:mt-10 flex justify-center flex-wrap gap-4 sm:gap-5 px-1 sm:px-2 items-center"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9, ease }}
-          >
-            <MagneticButton
-              onClick={() => setDemoOpen(true)}
-              className="btn-primary w-full sm:w-auto justify-center text-base sm:text-lg px-7 sm:px-9 py-3.5"
-              data-cursor-text="Audit"
-            >
-              Book a Free GTM Audit <ArrowRight size={16} />
-            </MagneticButton>
-            <a
-              href="#ten-day-plan"
-              className="btn-text-link w-full sm:w-auto justify-center text-base sm:text-lg"
-            >
-              See the 10‑Day Plan <ArrowRight size={15} />
-            </a>
-          </motion.div>
-
-          {/* Trust badges — stagger in */}
-          <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.08, delayChildren: 1.05 } },
-            }}
-          >
-            {["No pitch", "30-min GTM audit", "Revenue blueprint", "Limited founding spots"].map(
-              (item) => (
-                <motion.span
-                  key={item}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.88 },
-                    visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "backOut" } },
-                  }}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3.5 py-1.5 shadow-sm"
+                {/* Eyebrow */}
+                <motion.div
+                  className="flex mb-6"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, ease }}
                 >
-                  <Check size={13} style={{ color: "#1B3A2D" }} />
-                  {item}
-                </motion.span>
-              ),
-            )}
-          </motion.div>
+                  <span className="premium-pill inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10.5px] font-semibold tracking-[0.2em] uppercase text-foreground/70">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-70" style={{ background: "var(--accent-gold)" }} />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: "var(--accent-gold)" }} />
+                    </span>
+                    The AI GTM Operating System
+                  </span>
+                </motion.div>
 
-          <FadeIn delay={0.2} className="mt-8 sm:mt-12 md:mt-16">
-            <Suspense fallback={null}>
-              <HomeDashboard />
-            </Suspense>
+                {/* Headline */}
+                <div className="mb-5">
+                  <WordReveal
+                    text="The AI Brain Behind"
+                    className="block font-bold text-foreground tracking-[-0.03em] leading-[1.02] text-[2.8rem] sm:text-[3.5rem] lg:text-[4.2rem]"
+                    delay={0.12}
+                  />
+                  <motion.span
+                    className="h2-serif block leading-[1.05] mt-1 text-[3.1rem] sm:text-[3.9rem] lg:text-[4.6rem]"
+                    initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.9, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <span className="headline-underline">Your GTM OS.</span>
+                  </motion.span>
+                </div>
+
+                {/* Sub-copy */}
+                <motion.p
+                  className="text-[15px] sm:text-[1.05rem] font-medium leading-[1.7] mb-7 max-w-[28rem]"
+                  style={{ color: "color-mix(in oklab, var(--foreground) 52%, transparent)" }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: 0.7, ease }}
+                >
+                  Magnivo runs your entire revenue motion — signals, outreach, pipeline, and retention — through one intelligent system built for B2B growth.
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                  className="flex flex-wrap gap-3 sm:gap-4 items-center mb-8"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.88, ease }}
+                >
+                  <MagneticButton
+                    onClick={() => setDemoOpen(true)}
+                    className="btn-primary text-[15px] sm:text-base px-8 sm:px-10 py-3.5"
+                    data-cursor-text="Audit"
+                  >
+                    Book a Free GTM Audit <ArrowRight size={15} />
+                  </MagneticButton>
+                  <a href="#ten-day-plan" className="btn-text-link text-[15px] sm:text-base">
+                    See the 10-Day Plan <ArrowRight size={14} />
+                  </a>
+                </motion.div>
+
+                {/* Trust micro-row */}
+                <motion.div
+                  className="flex items-center gap-3.5 mb-8"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.98, ease }}
+                >
+                  <div className="flex -space-x-2.5">
+                    {[
+                      { i: "AK", bg: "var(--brand-emerald)" },
+                      { i: "RS", bg: "var(--accent-gold)" },
+                      { i: "MT", bg: "#2a5c40" },
+                      { i: "JL", bg: "#a3741e" },
+                    ].map((a) => (
+                      <span
+                        key={a.i}
+                        className="h-7 w-7 rounded-full border-2 border-background flex items-center justify-center text-[9px] font-bold text-white shadow-sm"
+                        style={{ background: a.bg }}
+                      >
+                        {a.i}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="flex items-center gap-1" style={{ color: "var(--accent-gold)" }}>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} size={11} fill="currentColor" strokeWidth={0} />
+                      ))}
+                    </div>
+                    <span className="text-[11px] font-medium text-muted-foreground">
+                      Trusted by <span className="font-bold text-foreground">40+</span> B2B revenue teams
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Stats row */}
+                <motion.div
+                  className="flex items-stretch divide-x divide-border/50"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.06, ease }}
+                >
+                  {[
+                    { val: "$4.2M", label: "Pipeline added",      color: "var(--brand-emerald)" },
+                    { val: "52",    label: "AI agents deployed",   color: "var(--accent-gold)"   },
+                    { val: "14 d",  label: "To first closed deal", color: "var(--brand-emerald)" },
+                  ].map((s) => (
+                    <div key={s.val} className="group flex flex-col gap-1.5 pr-6 pl-6 first:pl-0 last:pr-0 transition-transform duration-300 hover:-translate-y-0.5">
+                      <span className="flex items-center gap-1.5 hero-stat-val" style={{ color: s.color }}>
+                        <span className="h-1.5 w-1.5 rounded-full opacity-70 transition-opacity group-hover:opacity-100" style={{ background: s.color }} />
+                        {s.val}
+                      </span>
+                      <span className="text-[10.5px] font-medium text-muted-foreground whitespace-nowrap tracking-wide">{s.label}</span>
+                    </div>
+                  ))}
+                </motion.div>
+
+              </div>
+
+              {/* ── RIGHT: Live intelligence panel ──────────── */}
+              <motion.div
+                className="relative hidden lg:flex items-center justify-center"
+                initial={{ opacity: 0, x: 36 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                style={{ minHeight: 420 }}
+              >
+                {/* Conic ring glow */}
+                <div className="ring-glow" aria-hidden />
+                {/* Radial glow */}
+                <div
+                  className="absolute inset-0 rounded-3xl pointer-events-none"
+                  style={{ background: "radial-gradient(ellipse at 55% 45%, color-mix(in oklab, var(--brand-emerald) 10%, transparent) 0%, transparent 68%)" }}
+                />
+                {/* Dot grid */}
+                <div
+                  className="absolute inset-0 opacity-[0.22]"
+                  style={{ backgroundImage: "radial-gradient(circle, var(--border) 1px, transparent 1px)", backgroundSize: "22px 22px" }}
+                />
+
+                {/* Main live card */}
+                <div className="scan-wrap live-float-slow glass-card relative z-10 w-full max-w-[330px] rounded-2xl border border-white/60 shadow-[0_30px_70px_-12px_rgba(27,58,45,0.22),0_8px_24px_rgba(0,0,0,0.06)] overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-border/40 bg-secondary/40">
+                    <div className="flex items-center gap-2">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                      </span>
+                      <span className="text-[11px] font-semibold text-foreground/80 tracking-wide">Live GTM Intelligence</span>
+                    </div>
+                    <span className="text-[9px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">LIVE</span>
+                  </div>
+                  <div className="px-4 py-3 border-b border-border/30 bg-secondary/20">
+                    <div className="text-[9px] font-bold tracking-widest uppercase text-muted-foreground/50 mb-1.5">Signal Activity</div>
+                    <LiveSignalTicker />
+                  </div>
+                  <div className="grid grid-cols-3 divide-x divide-border/40">
+                    {[
+                      { label: "Accounts", val: "247", color: "var(--brand-emerald)" },
+                      { label: "Pipeline", val: "$4.2M", color: "var(--accent-gold)" },
+                      { label: "Agents", val: "52", color: "var(--brand-emerald)" },
+                    ].map((item) => (
+                      <div key={item.label} className="flex flex-col items-center py-3.5 gap-0.5">
+                        <span className="text-sm font-black" style={{ color: item.color }}>{item.val}</span>
+                        <span className="text-[9px] text-muted-foreground font-medium">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Floating: Agent activity */}
+                <div className="live-float-medium absolute top-8 -right-5 z-20 bg-card border border-border/80 rounded-xl px-3.5 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] w-[176px]">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <div className="w-5 h-5 rounded-md flex items-center justify-center text-[10px]" style={{ background: "rgba(27,58,45,0.1)", color: "var(--brand-emerald)" }}>⚡</div>
+                    <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">AI Agent</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-foreground leading-tight">Meeting booked — TechFlow CRO</p>
+                  <span className="text-[9px] text-muted-foreground mt-1 block">2 min ago</span>
+                </div>
+
+                {/* Floating: Deal update */}
+                <div
+                  className="live-float-medium-delay absolute -bottom-4 -left-5 z-20 bg-card rounded-xl px-3.5 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.08)] w-[184px]"
+                  style={{ border: "1px solid color-mix(in oklab, var(--accent-gold) 35%, var(--border))" }}
+                >
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <div className="w-5 h-5 rounded-md flex items-center justify-center text-[10px]" style={{ background: "rgba(196,146,42,0.1)", color: "var(--accent-gold)" }}>💰</div>
+                    <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Deal Update</span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-foreground leading-tight">Stripe Ent. → Proposal</p>
+                  <span className="text-[10px] font-black mt-1 block" style={{ color: "var(--accent-gold)" }}>$210,000</span>
+                </div>
+
+                {/* Floating: ICP score */}
+                <div className="live-float-slow absolute bottom-10 -right-3 z-20 bg-card border border-border/60 rounded-xl px-3.5 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.07)]">
+                  <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider mb-2">ICP Score</div>
+                  <div className="flex items-end gap-1">
+                    <span className="text-xl font-black leading-none" style={{ color: "var(--brand-emerald)" }}>94</span>
+                    <span className="text-[9px] text-muted-foreground mb-0.5">/100</span>
+                  </div>
+                  <div className="mt-2 h-1.5 rounded-full bg-secondary overflow-hidden w-20">
+                    <div className="h-full rounded-full" style={{ width: "94%", background: "var(--brand-emerald)" }} />
+                  </div>
+                  <span className="text-[9px] text-muted-foreground mt-1.5 block">Hexade Labs</span>
+                </div>
+
+              </motion.div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* ── Dashboard — staged below the fold ─────────────── */}
+        <div className="hero-dash-stage pb-0">
+          <FadeIn delay={0.15}>
+            <div className="container-x">
+              <Suspense fallback={null}>
+                <HomeDashboard />
+              </Suspense>
+            </div>
           </FadeIn>
         </div>
+
       </section>
 
       <Suspense fallback={null}>
@@ -1281,6 +1557,16 @@ function HomePage() {
           </div>
         </FadeIn>
         <FAQ items={faqs} />
+        <FadeIn>
+          <div className="mt-10 text-center">
+            <Link
+              to="/faq"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-emerald-400 transition-colors"
+            >
+              Have more questions? View the full FAQ page <ArrowRight size={14} />
+            </Link>
+          </div>
+        </FadeIn>
       </section>
 
       {/* BOTTOM CTA */}
@@ -1317,49 +1603,6 @@ function HomePage() {
   );
 }
 
-const faqs = [
-  {
-    q: "What do I get from the free GTM audit?",
-    a: "You get a practical diagnosis of your current revenue motion: where pipeline is leaking, which workflows should be automated first, and what a focused 10-day implementation sprint would look like.",
-  },
-  {
-    q: "Is this just another agency pitch?",
-    a: "No. The audit is designed to be useful even if we never work together. We focus on the operating system behind your GTM: data, signals, workflows, agents, reporting, and human ownership.",
-  },
-  {
-    q: "How is Magnivo different from 6sense, Demandbase, or Terminus?",
-    a: "Those platforms give you data and signals. Magnivo gives you data, signals, AND the execution layer that acts on them — plus the strategic consulting to make sure you're acting on the right things. It's the difference between intelligence and outcomes.",
-  },
-  {
-    q: "How do you ensure AI agents don't hallucinate or damage our brand?",
-    a: "Brand safety is our priority. Our agents run on 'Deterministic AI' architectures — combining LLMs with strict brand guardrails, verified data sources, and human-in-the-loop triggers for high-stakes interactions. Nothing goes out without meeting your pre-defined rules.",
-  },
-  {
-    q: "Is this a platform or a solution?",
-    a: "Both — and that's the point. The platform gives your team live intelligence and visibility. The execution layer runs your growth motion using AI agents. The strategy layer ensures the thinking behind it is right. Most clients use all three.",
-  },
-  {
-    q: "What does onboarding look like?",
-    a: "We complete onboarding within 10 business days. Day 1 we define your ICP and audit your current GTM. Week 2 your system goes live. Week 3 you see first results.",
-  },
-  {
-    q: "What is AEO and why does it matter now?",
-    a: "Answer Engine Optimization ensures your brand appears when buyers ask ChatGPT, Perplexity, or Gemini for recommendations in your category. It's the channel your competitors haven't figured out yet — and where your next customer is already looking.",
-  },
-  {
-    q: "Where does your team operate?",
-    a: "Magnivo is a globally distributed team operating async-first with structured weekly touchpoints. Your engagement never depends on a single timezone or a single person.",
-  },
-  {
-    q: "How do you handle trust and data access?",
-    a: "We start with the least access needed for the audit, then define permissions before implementation. Agent actions are scoped, reviewed, and tied to measurable workflows instead of running as a black box.",
-  },
-  {
-    q: "What size companies do you work with?",
-    a: "We work best with B2B companies between $500K and $5M ARR — post-PMF, with a defined ICP, ready to build a repeatable revenue system.",
-  },
-];
-
 function FAQ({ items }: { items: { q: string; a: string }[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
@@ -1373,7 +1616,7 @@ function FAQ({ items }: { items: { q: string; a: string }[] }) {
               className="w-full flex items-center justify-between gap-4 sm:gap-6 p-4 sm:p-5 md:p-6 text-left hover:bg-card/40 transition-colors"
               aria-expanded={isOpen}
             >
-              <span className="text-lg font-bold text-foreground">{it.q}</span>
+              <h3 className="text-lg font-bold text-foreground">{it.q}</h3>
               <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-muted-foreground shrink-0 bg-background/50">
                 {isOpen ? <Minus size={16} /> : <Plus size={16} />}
               </span>

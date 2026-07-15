@@ -63,7 +63,7 @@ function FAQ({ items }: { items: { q: string; a: string }[] }) {
               className="w-full flex items-center justify-between gap-6 p-5 text-left"
               aria-expanded={isOpen}
             >
-              <span className="font-medium text-foreground">{it.q}</span>
+              <h3 className="font-medium text-foreground">{it.q}</h3>
               <span className="h-7 w-7 rounded-md border border-border flex items-center justify-center text-muted-foreground shrink-0">
                 {isOpen ? <Minus size={14} /> : <Plus size={14} />}
               </span>
@@ -104,56 +104,14 @@ const pricingLd = JSON.stringify({
     {
       "@type": "FAQPage",
       "@id": "https://magnivo.ai/pricing#faq",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "How does Magnivo pricing work?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Pricing is scoped based on your GTM stage, target market, and which phases you need. Book a free audit and we'll give you a clear number within 24 hours.",
-          },
+      mainEntity: faqs.map((it) => ({
+        "@type": "Question",
+        name: it.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: it.a,
         },
-        {
-          "@type": "Question",
-          name: "Is there a minimum contract length for Magnivo?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No long-term contracts for founding clients. Magnivo works on a 90-day initial engagement with a 30-day notice period after that.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Can I start with one Magnivo service and expand?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Most clients start with Starter (outbound + SEO) and expand to Growth once they see pipeline moving.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Is there a free trial for Magnivo?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Magnivo offers a free 30-minute GTM audit instead — you see exactly what we'd do for your business before committing anything.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How quickly can I get started with Magnivo?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Onboarding is completed within 10 business days of signing. Your first agent results appear in week 2.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Where does the Magnivo team operate?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Magnivo operates as a globally distributed team, working async-first with structured weekly touchpoints — so your engagement never depends on a single timezone or a single person.",
-          },
-        },
-      ],
+      })),
     },
   ],
 });
