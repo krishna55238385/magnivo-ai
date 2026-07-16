@@ -591,7 +591,7 @@ function HomePage() {
                 </motion.div>
 
                 {/* Headline */}
-                <div className="mb-5">
+                <h1 className="mb-5">
                   <WordReveal
                     text="The AI Brain Behind"
                     className="block font-bold text-foreground tracking-[-0.03em] leading-[1.02] text-[2.8rem] sm:text-[3.5rem] lg:text-[4.2rem]"
@@ -605,7 +605,7 @@ function HomePage() {
                   >
                     <span className="headline-underline">Your GTM OS.</span>
                   </motion.span>
-                </div>
+                </h1>
 
                 {/* Sub-copy */}
                 <motion.p

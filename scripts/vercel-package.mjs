@@ -139,6 +139,20 @@ writeFileSync(
     {
       version: 3,
       routes: [
+        // Canonicalize host: www.magnivo.ai -> magnivo.ai (permanent, 308).
+        {
+          src: '/(.*)',
+          has: [{ type: 'host', value: 'www.magnivo.ai' }],
+          headers: { Location: 'https://magnivo.ai/$1' },
+          status: 308,
+        },
+        // Strip trailing slash (permanent, 308), e.g. /platform/ -> /platform.
+        // Excludes the root "/" since it has no path segment to trim.
+        {
+          src: '^/(.+)/$',
+          headers: { Location: '/$1' },
+          status: 308,
+        },
         { handle: 'filesystem' },
         { src: '/(.*)', dest: '/index' },
       ],

@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "tsc --noEmit && vite build",
-    "vercel-build": "vite build && node scripts/vercel-package.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "build": "tsc --noEmit && node scripts/generate-sitemap.mjs && vite build",
+    "vercel-build": "node scripts/generate-sitemap.mjs && vite build && node scripts/vercel-package.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx",
