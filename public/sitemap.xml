@@ -121,6 +121,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://magnivo.ai/resources/hidden-cost-of-manual-lead-research</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://magnivo.ai/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

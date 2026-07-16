@@ -205,6 +205,12 @@ export type Resource = {
 
 export const resources: Resource[] = [
   {
+    slug: "hidden-cost-of-manual-lead-research",
+    type: "Blog",
+    title: "The Hidden Cost of Manual Lead Research: Why GTM Teams Are Losing Millions (and How Magnivo AI Fixes It)",
+    description: "Prospecting research consumes up to 72% of a rep's week. Learn how Magnivo AI replaces tool sprawl and manual research with a unified GTM Operating System.",
+  },
+  {
     slug: "ai-gtm-playbook-2025",
     type: "Guide",
     title: "The 2025 AI GTM Playbook",
