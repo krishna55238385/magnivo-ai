@@ -1,4 +1,4 @@
-# Magnivo.ai — The Autonomous Pipeline Engine
+ # Magnivo.ai — The Autonomous Pipeline Engine
 
 Magnivo.ai is a category-defining AI GTM Operating System built for modern B2B revenue teams. It unifies pipeline intelligence, autonomous execution, and strategic growth into a single compounding system.
 
