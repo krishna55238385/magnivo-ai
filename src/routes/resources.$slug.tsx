@@ -128,6 +128,18 @@ function ResourceDetail() {
           ],
         },
       },
+      ...(resource.faq
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: resource.faq.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            },
+          ]
+        : []),
     ],
   });
 
@@ -189,6 +201,23 @@ function ResourceDetail() {
               ) : resource.content ? (
                 <div className="prose-mockup space-y-6 text-foreground/90 text-lg leading-relaxed">
                   {renderMarkdownLite(resource.content)}
+                  {resource.faq && (
+                    <div className="pt-6">
+                      <h2 className="text-2xl sm:text-3xl font-bold text-foreground pt-4">
+                        FAQ
+                      </h2>
+                      <div className="mt-6 space-y-6">
+                        {resource.faq.map((item) => (
+                          <div key={item.q} className="border-t border-border/50 pt-6">
+                            <div className="font-bold text-foreground">{item.q}</div>
+                            <p className="mt-2 text-base text-muted-foreground leading-relaxed">
+                              {item.a}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="prose-mockup space-y-8 text-foreground/90 text-lg leading-relaxed">
