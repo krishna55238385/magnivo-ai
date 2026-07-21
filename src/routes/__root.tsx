@@ -112,6 +112,7 @@ gtag('js', new Date());
 gtag('config', 'G-4QP1MR3VYZ');`,
           }}
         />
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="eOgpWdSekZ6C14HYo1st9Q" async />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
