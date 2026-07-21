@@ -103,6 +103,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
           rel="icon"
           href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B3A2D'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='700' font-size='20' fill='%23F5F2EC'%3EM%3C/text%3E%3C/svg%3E"
         />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QP1MR3VYZ" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4QP1MR3VYZ');`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
