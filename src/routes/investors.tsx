@@ -30,12 +30,6 @@ export const Route = createFileRoute("/investors")({
 
 function InvestorsPage() {
   const [open, setOpen] = useState(false);
-  const stats = [
-    { v: "120+", l: "Enterprise customers" },
-    { v: "3.2x", l: "Avg pipeline lift" },
-    { v: "$28M", l: "ARR run-rate" },
-    { v: "92%", l: "Net revenue retention" },
-  ];
 
   return (
     <SiteLayout>
@@ -90,27 +84,6 @@ function InvestorsPage() {
             </p>
           </div>
         </FadeIn>
-      </section>
-
-      <section className="container-x py-20">
-        <FadeIn>
-          <div className="label-eyebrow">Traction</div>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">
-            Numbers that compound.
-          </h2>
-        </FadeIn>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {stats.map((s, i) => (
-            <FadeIn key={s.l} delay={i * 0.04}>
-              <div className="surface-card p-7 h-full">
-                <div className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-green)] bg-clip-text text-transparent">
-                  {s.v}
-                </div>
-                <div className="mt-2 text-sm text-muted-foreground">{s.l}</div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
       </section>
 
       <section className="container-x py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
