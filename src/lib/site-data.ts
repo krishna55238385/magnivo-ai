@@ -204,36 +204,51 @@ export type Resource = {
   tags?: string[];
   phase?: "Find" | "Understand" | "Reach";
   faq?: { q: string; a: string }[];
+  category?: string;
 };
+
+export const RESOURCE_CATEGORIES = [
+  "AI GTM Operating System",
+  "Find: Prospecting & Signals",
+  "Understand: Account Intelligence",
+  "Reach: Outreach & Timing",
+  "Sales Motion: Engage & Close",
+  "Case Studies",
+] as const;
 
 export const resources: Resource[] = [
   {
     slug: "hidden-cost-of-manual-lead-research",
     type: "Blog",
+    category: "Reach: Outreach & Timing",
     title: "The Hidden Cost of Manual Lead Research: Why GTM Teams Are Losing Millions (and How Magnivo AI Fixes It)",
     description: "Prospecting research consumes up to 72% of a rep's week. Learn how Magnivo AI replaces tool sprawl and manual research with a unified GTM Operating System.",
   },
   {
     slug: "ai-gtm-playbook-2025",
     type: "Guide",
+    category: "AI GTM Operating System",
     title: "The 2025 AI GTM Playbook",
     description: "How to replace manual SDR functions with autonomous agents.",
   },
   {
     slug: "series-b-saas-pipeline",
     type: "Case Study",
+    category: "Case Studies",
     title: "Doubling pipeline for a Series B SaaS",
     description: "A deep dive into how Magnivo.ai automated outbound for a scaling team.",
   },
   {
     slug: "future-of-revops",
     type: "Blog",
+    category: "AI GTM Operating System",
     title: "The Future of AI-Native RevOps",
     description: "Why the traditional RevOps stack is being replaced by autonomous agents.",
   },
   {
     slug: "agent-governance-guide",
     type: "Playbook",
+    category: "AI GTM Operating System",
     title: "The AI Agent Governance Framework",
     description: "Ensuring safety, reliability, and performance in revenue agents.",
   },
@@ -241,6 +256,7 @@ export const resources: Resource[] = [
     slug: "24-hour-window-timing-vs-targeting",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "The 24-Hour Window: Why Timing Beats Targeting in B2B Sales",
     description:
       "Buying signals decay fast — a signal acted on in week one is worth roughly 2.5x the same signal a month later. Here's why timing beats targeting in B2B GTM.",
@@ -278,6 +294,7 @@ The takeaway: the best way to win more deals isn't a better pitch. It's shrinkin
     slug: "from-vague-icp-to-usable-icp",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "How to Turn \"We Sell to Mid-Market SaaS\" Into an Actual, Usable ICP",
     description:
       "\"Mid-market SaaS\" is a vibe, not an ICP — and vibes don't generate pipeline. Here's how to turn a fuzzy target market into a structured filter every agent can use.",
@@ -311,6 +328,7 @@ The difference between "mid-market SaaS" and a structured ICP profile is the dif
     slug: "why-your-tam-looks-big-on-paper",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "Why Your TAM Looks Big on Paper but Small in Your CRM",
     description:
       "Directory listings, aggregator pages, and duplicate entries can make your CRM 30–40% junk before a rep touches it. Here's how to fix TAM shrinkage at the source.",
@@ -337,6 +355,7 @@ If your TAM looks big on paper but small in your CRM, the problem isn't your mar
     slug: "real-reason-cold-emails-dont-get-opened",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "The Real Reason Half Your Cold Emails Never Get Opened",
     description:
       "It's not your subject line. It's the unverified addresses dragging your whole sending batch into spam — and the -30 point penalty they should carry in your scoring model.",
@@ -365,6 +384,7 @@ An AI GTM operating system treats "is this email real" as a gate, not an afterth
     slug: "math-behind-lead-scoring",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "The Math Behind Lead Scoring: How to Rank Without Guesswork",
     description:
       "\"Gut feel\" is not a scoring model. Here's the exact 0–100 formula — firmographic fit, signal freshness, bounce penalties, and why explainable beats black-box.",
@@ -408,6 +428,7 @@ Firmographic fit tells you if a company could be a customer. Signal freshness te
     slug: "signs-your-account-research-is-broken",
     type: "Blog",
     phase: "Understand",
+    category: "Understand: Account Intelligence",
     title: "5 Signs Your Account Research Process Is Broken",
     description:
       "Every brief looks the same, nobody knows when it was last updated, and it doesn't scale past 20 accounts. Five signs your account research quietly fell apart.",
@@ -444,6 +465,7 @@ The best way to fix broken account research isn't hiring more analysts. It's rem
     slug: "how-to-map-a-buying-committee",
     type: "Blog",
     phase: "Understand",
+    category: "Understand: Account Intelligence",
     title: "How to Map a Buying Committee Without Guessing Who Holds the Budget",
     description:
       "\"I think the VP is the decision-maker\" is a guess dressed up as strategy. Here's how to map buyer, user, and blocker roles — and find the right entry point.",
@@ -476,6 +498,7 @@ You don't need to interrogate your way to the org chart deal by deal. An AI GTM 
     slug: "competitor-battlecards-without-the-rebuild",
     type: "Blog",
     phase: "Understand",
+    category: "Understand: Account Intelligence",
     title: "How to Position Against Competitors Without Building a Battlecard From Scratch",
     description:
       "A battlecard built once in a Google Doc goes stale the moment a competitor ships. Here's how to keep competitive intel — and talk tracks — continuously refreshed.",
@@ -504,6 +527,7 @@ The best way to win competitive deals isn't out-arguing the prospect. It's never
     slug: "weekly-tam-sam-som-without-a-research-team",
     type: "Blog",
     phase: "Understand",
+    category: "Understand: Account Intelligence",
     title: "How to Get a Weekly TAM/SAM/SOM Map Without a Research Team",
     description:
       "TAM/SAM/SOM built once for a fundraise fossilizes fast. Here's how to turn market sizing into a living, weekly-refreshed number instead of a stale board slide.",
@@ -530,6 +554,7 @@ The fix isn't "hire more research analysts to update the slide more often." It's
     slug: "nine-data-sources-one-gtm-brief",
     type: "Blog",
     phase: "Understand",
+    category: "Understand: Account Intelligence",
     title: "How to Turn 9 Scattered Data Sources Into One GTM Brief, Human-Approved",
     description:
       "Account intel, stakeholder maps, competitive cards, market sizing — that's nine browser tabs, not a research process. Here's how synthesis (and human approval) should work.",
@@ -556,6 +581,7 @@ Nine data sources is too many for a person to reliably combine, every single tim
     slug: "founder-writing-cold-emails-at-11pm",
     type: "Blog",
     phase: "Reach",
+    category: "Reach: Outreach & Timing",
     title: "Your Founder Is Writing Cold Emails at 11PM Instead of Building the Product",
     description:
       "A 5-step outreach sequence is a mechanical, repeatable craft once the inputs are already known. Here's why founder-written cold email is a bad use of a founder's night.",
@@ -582,6 +608,7 @@ It's not a hustle. It's a founder doing a job the system should already have aut
     slug: "you-emailed-them-at-2am",
     type: "Blog",
     phase: "Reach",
+    category: "Reach: Outreach & Timing",
     title: "You Emailed Them at 2AM. They Never Opened It. They Never Will.",
     description:
       "Different roles check email at different hours. Sending every prospect the same email at 9AM Tuesday ignores that — and it shows up in your open rates.",
@@ -608,6 +635,7 @@ An autonomous GTM system that plans channel and cadence per lead instead of per 
     slug: "speed-to-lead-competitors-reached-first",
     type: "Blog",
     phase: "Reach",
+    category: "Reach: Outreach & Timing",
     title: "While You Were Copy-Pasting Emails, Three Competitors Already Reached Your Prospect",
     description:
       "72% of a rep's week is manual prospecting research. If competitors have automated the research-to-outreach loop and you haven't, they're not smarter — they're just faster.",
@@ -634,6 +662,7 @@ Message quality matters, but it's not the battlefield most deals are actually lo
     slug: "worst-email-going-out-six-months",
     type: "Blog",
     phase: "Reach",
+    category: "Reach: Outreach & Timing",
     title: "Your Worst Email Has Been Going Out for 6 Months. Nobody Noticed.",
     description:
       "A losing subject line variant can run for months if nobody's watching. Here's why real A/B testing needs a volume threshold and a standing retirement loop.",
@@ -660,6 +689,7 @@ Stop assuming your outreach sequence is fine just because nobody complained abou
     slug: "personalization-that-isnt-copy-paste",
     type: "Blog",
     phase: "Reach",
+    category: "Reach: Outreach & Timing",
     title: "Somewhere Right Now, a Prospect Is Reading Your Email and Thinking \"Copy-Paste.\"",
     description:
       "Merge fields aren't personalization. Here's how to generate 2–3 verifiable angles per lead — trigger, pain, competitive, role — that hold up when a prospect Googles you.",
@@ -690,6 +720,7 @@ The best way to stop sounding like everyone else's cold email is to make sure yo
   {
     slug: "ai-gtm-operating-system",
     type: "Guide",
+    category: "AI GTM Operating System",
     title: "What Is an AI-Native GTM Operating System?",
     description:
       "An AI-native GTM operating system runs the entire go-to-market motion — find, understand, reach, engage, convert, retain — as one coordinated system of specialized agents instead of a stack of disconnected tools.",
@@ -784,6 +815,7 @@ You don't implement eight phases at once. The sequence that works is: define the
   {
     slug: "sales-objection-handling",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "The Objection You Didn't Answer Wasn't the Real One",
     description:
       "Most sales objections are surface statements, not reasons. Classifying the objection type before responding is what separates a deal that continues from one that quietly ends.",
@@ -863,6 +895,7 @@ The teams that handle objections well aren't the ones with better rebuttals. The
   {
     slug: "sales-lead-response-time",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "What Happens in the 30 Minutes After a Prospect Says \"Interested\"",
     description:
       "The window between a prospect replying \"interested\" and your response arriving is one of the highest-leverage moments in the pipeline — and the one most teams have no system for.",
@@ -954,6 +987,7 @@ Most teams discover, on measuring this for the first time, that their median cla
   {
     slug: "how-to-qualify-a-sales-deal",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "Most Deals Don't Die in Negotiation. They Die in Qualification You Skipped.",
     description:
       "A deal that stalls at proposal or contract stage usually failed qualification weeks earlier. Here's the four-part check that catches it, and the rule most teams refuse to enforce.",
@@ -1043,6 +1077,7 @@ If more than a third of them fail that test, your forecast isn't wrong because f
   {
     slug: "sales-proposal-template",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "Your Proposal Template Is Costing You the Deal",
     description:
       "A proposal template speeds up sending and slows down closing. What separates proposals that convert is whether they mirror the buyer's stated problem in the buyer's own words.",
@@ -1130,6 +1165,7 @@ If you can't find it in three of them, you've located the issue, and it isn't yo
   {
     slug: "sales-revenue-forecasting",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "Your Forecast Is a Guess Wearing a Spreadsheet",
     description:
       "Most sales forecasts are gut feel with a spreadsheet wrapped around them. Accurate forecasting requires confidence derived from historical conversion data, an exclusion floor, and tracking how wrong you were last time.",
@@ -1229,6 +1265,7 @@ What good forecasting buys you isn't certainty. It's the ability to distinguish 
   {
     slug: "champion-tracking-sales",
     type: "Blog",
+    category: "Sales Motion: Engage & Close",
     title: "The Best Lead in Your Pipeline Used to Be Your Customer",
     description:
       "When a contact who already trusts you changes jobs, they arrive at the new company as a warm lead with credibility you'd otherwise spend months building. Most teams never notice it happened.",
@@ -1322,6 +1359,7 @@ The compounding effect is the interesting part. Every deal you close, and every 
     slug: "lead-generation-for-msps",
     type: "Blog",
     phase: "Find",
+    category: "Find: Prospecting & Signals",
     title: "Lead Generation for MSPs and IT Consultants: Finding Companies Before They Know They Need You",
     description:
       "MSP buyers rarely go looking for a provider until something breaks. That makes signal-based prospecting — not keyword targeting — the only reliable way to reach them before a competitor does.",
@@ -1413,6 +1451,7 @@ Two triggers watched continuously beats five triggers checked occasionally, beca
   {
     slug: "email-warmup-explained",
     type: "Guide",
+    category: "Reach: Outreach & Timing",
     title: "How Email Warmup Actually Works (And Why Most Teams Skip It)",
     description:
       "Email warmup gradually builds a new mailbox's sending reputation by simulating normal human email behavior before real outreach begins. Skipping it is the most common reason a new domain lands in spam permanently.",
