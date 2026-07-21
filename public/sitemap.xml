@@ -295,6 +295,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://magnivo.ai/blog</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://magnivo.ai/playbooks</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://magnivo.ai/case-studies</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://magnivo.ai/privacy-policy</loc>
     <lastmod>2026-05-05</lastmod>
     <changefreq>yearly</changefreq>

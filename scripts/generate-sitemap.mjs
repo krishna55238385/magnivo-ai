@@ -82,6 +82,10 @@ add("/resources", "weekly", "0.8", ["src/routes/resources.index.tsx", SITE_DATA]
 for (const slug of resourceSlugs)
   add(`/resources/${slug}`, "monthly", "0.7", ["src/routes/resources.$slug.tsx", SITE_DATA]);
 
+add("/blog", "weekly", "0.8", ["src/routes/blog.tsx", SITE_DATA]);
+add("/playbooks", "weekly", "0.7", ["src/routes/playbooks.tsx", SITE_DATA]);
+add("/case-studies", "weekly", "0.7", ["src/routes/case-studies.tsx", SITE_DATA]);
+
 add("/privacy-policy", "yearly", "0.3", ["src/routes/privacy-policy.tsx"]);
 add("/terms", "yearly", "0.3", ["src/routes/terms.tsx"]);
 add("/data-security", "yearly", "0.4", ["src/routes/data-security.tsx"]);

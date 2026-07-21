@@ -10,24 +10,13 @@ import {
   Share2,
   MessageSquare,
   BookOpen,
-  FileText,
   Layout,
-  BarChart3,
   ListTree,
 } from "lucide-react";
 import { products, solutions, resources } from "@/lib/site-data";
 import { MagnivoLogo } from "./MagnivoLogo";
 
 type MenuKey = "products" | "solutions" | "resources" | null;
-
-const RESOURCE_ICONS = {
-  Blog: BookOpen,
-  Playbook: ListTree,
-  Guide: Zap,
-  "Case Study": Layout,
-  Benchmark: BarChart3,
-  Glossary: FileText,
-};
 
 const DemoModal = lazy(() => import("./DemoModal").then((m) => ({ default: m.DemoModal })));
 
@@ -190,28 +179,36 @@ export function Header() {
             </MobileAccordion>
             <MobileAccordion title="Resources">
               <div className="grid grid-cols-1 gap-1 pt-2">
-                {resources.slice(0, 4).map((r) => {
-                  const Icon = RESOURCE_ICONS[r.type] || BookOpen;
-                  return (
-                    <Link
-                      key={r.slug}
-                      to="/resources/$slug"
-                      params={{ slug: r.slug }}
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
-                    >
-                      <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0">
-                        <Icon size={15} />
-                      </span>
-                      <span className="flex-1 min-w-0">
-                        <span className="block text-foreground font-medium">{r.title}</span>
-                        <span className="block text-xs text-muted-foreground truncate">
-                          {r.type}
-                        </span>
-                      </span>
-                    </Link>
-                  );
-                })}
+                <Link
+                  to="/blog"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
+                >
+                  <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0">
+                    <BookOpen size={15} />
+                  </span>
+                  <span className="text-foreground font-medium">Blog</span>
+                </Link>
+                <Link
+                  to="/playbooks"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
+                >
+                  <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0">
+                    <ListTree size={15} />
+                  </span>
+                  <span className="text-foreground font-medium">Playbooks & Guides</span>
+                </Link>
+                <Link
+                  to="/case-studies"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 py-2.5 px-2 rounded-md hover:bg-card"
+                >
+                  <span className="h-8 w-8 rounded-md border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0">
+                    <Layout size={15} />
+                  </span>
+                  <span className="text-foreground font-medium">Case Studies</span>
+                </Link>
                 <Link
                   to="/resources"
                   onClick={() => setMobileOpen(false)}
@@ -535,23 +532,36 @@ function ResourcesMega({ setOpen }: { setOpen: (v: MenuKey) => void }) {
       <div className="col-span-8">
         <div className="grid grid-cols-2 gap-12">
           <div>
-            <div className="label-eyebrow mb-6">Latest Insights</div>
+            <div className="label-eyebrow mb-6">Browse by Type</div>
             <ul className="space-y-6">
-              {resources.slice(2, 5).map((r) => (
-                <li key={r.slug}>
-                  <Link
-                    to="/resources/$slug"
-                    params={{ slug: r.slug }}
-                    onClick={() => setOpen(null)}
-                    className="group block"
-                  >
-                    <div className="text-[15px] font-semibold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
-                      {r.title}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">{r.description}</div>
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link to="/blog" onClick={() => setOpen(null)} className="group block">
+                  <div className="text-[15px] font-semibold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
+                    Blog
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    AI GTM strategy and sales motion, written plainly.
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/playbooks" onClick={() => setOpen(null)} className="group block">
+                  <div className="text-[15px] font-semibold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
+                    Playbooks & Guides
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Step-by-step frameworks, not just opinions.
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/case-studies" onClick={() => setOpen(null)} className="group block">
+                  <div className="text-[15px] font-semibold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
+                    Case Studies
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">Real engagements & outcomes.</div>
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

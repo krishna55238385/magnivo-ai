@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, FileText, Zap, Layout, BarChart3, ListTree } from "lucide-react";
+import { BookOpen, ListTree, Layout, ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { PageHero } from "@/components/PageHero";
 import { FadeIn } from "@/components/FadeIn";
-import { resources, RESOURCE_CATEGORIES, type Resource } from "@/lib/site-data";
+import { ResourceCard } from "@/components/ResourceCard";
+import { resources, RESOURCE_CATEGORIES } from "@/lib/site-data";
 
 export const Route = createFileRoute("/resources/")({
   head: () => ({
@@ -23,15 +24,6 @@ export const Route = createFileRoute("/resources/")({
   }),
   component: ResourcesPage,
 });
-
-const TYPE_ICONS = {
-  Blog: BookOpen,
-  Playbook: ListTree,
-  Guide: Zap,
-  "Case Study": Layout,
-  Benchmark: BarChart3,
-  Glossary: FileText,
-};
 
 const FALLBACK_CATEGORY = "More Resources";
 
@@ -62,35 +54,11 @@ function slugifyCategory(category: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-function ResourceCard({ r, delay }: { r: Resource; delay: number }) {
-  const Icon = TYPE_ICONS[r.type] || FileText;
-  return (
-    <FadeIn delay={delay}>
-      <Link
-        to="/resources/$slug"
-        params={{ slug: r.slug }}
-        className="group surface-card hover-blue p-8 block h-full"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div className="h-10 w-10 rounded-lg border border-border flex items-center justify-center text-[var(--accent-blue)] group-hover:bg-background transition-colors">
-            <Icon size={20} />
-          </div>
-          <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground/60">
-            {r.type}
-          </span>
-        </div>
-        <h3 className="text-xl font-bold group-hover:text-[var(--accent-blue)] transition-colors leading-tight">
-          {r.title}
-        </h3>
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{r.description}</p>
-        <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[var(--accent-blue)]">
-          Read {r.type}{" "}
-          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-        </div>
-      </Link>
-    </FadeIn>
-  );
-}
+const TYPE_PAGES = [
+  { to: "/blog" as const, icon: BookOpen, label: "Blog", desc: "All posts, by publish date." },
+  { to: "/playbooks" as const, icon: ListTree, label: "Playbooks & Guides", desc: "Step-by-step frameworks." },
+  { to: "/case-studies" as const, icon: Layout, label: "Case Studies", desc: "Real engagements & outcomes." },
+];
 
 function ResourcesPage() {
   const categories = [...RESOURCE_CATEGORIES, FALLBACK_CATEGORY];
@@ -109,7 +77,30 @@ function ResourcesPage() {
         subtitle="The blueprints, benchmarks, and best practices for the AI-native GTM era."
       />
 
-      <nav className="container-x sticky top-16 z-10 py-4 bg-background/95 backdrop-blur border-b border-border/50">
+      <section className="container-x pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {TYPE_PAGES.map((t) => (
+            <Link
+              key={t.to}
+              to={t.to}
+              className="group surface-card hover-blue p-6 flex items-center gap-4"
+            >
+              <div className="h-11 w-11 rounded-lg border border-border flex items-center justify-center text-[var(--accent-blue)] shrink-0 group-hover:bg-background transition-colors">
+                <t.icon size={20} />
+              </div>
+              <div className="flex-1">
+                <div className="font-bold text-foreground group-hover:text-[var(--accent-blue)] transition-colors">
+                  {t.label}
+                </div>
+                <div className="text-xs text-muted-foreground mt-0.5">{t.desc}</div>
+              </div>
+              <ArrowRight size={16} className="text-muted-foreground group-hover:translate-x-1 transition-transform shrink-0" />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <nav className="container-x sticky top-16 z-10 py-4 mt-8 bg-background/95 backdrop-blur border-b border-t border-border/50">
         <div className="flex flex-wrap gap-2">
           {grouped.map((g) => (
             <a
