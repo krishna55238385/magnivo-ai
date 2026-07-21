@@ -20,6 +20,7 @@ import {
 import { SiteLayout } from "@/components/SiteLayout";
 import { FadeIn } from "@/components/FadeIn";
 import { resources } from "@/lib/site-data";
+import { renderMarkdownLite } from "@/lib/markdown-lite";
 
 export const Route = createFileRoute("/resources/$slug")({
   loader: ({ params }) => {
@@ -83,8 +84,11 @@ function ResourceDetail() {
   const [copied, setCopied] = useState(false);
   const Icon = TYPE_ICONS[resource.type] || FileText;
   const schemaType = SCHEMA_TYPE_MAP[resource.type] ?? "Article";
-  const datePublished = resource.slug === "hidden-cost-of-manual-lead-research" ? "2026-07-15" : "2025-04-01";
-  const dateModified = resource.slug === "hidden-cost-of-manual-lead-research" ? "2026-07-15" : "2025-05-01";
+  const isHiddenCost = resource.slug === "hidden-cost-of-manual-lead-research";
+  const datePublished = isHiddenCost ? "2026-07-15" : resource.content ? "2026-07-21" : "2025-04-01";
+  const dateModified = isHiddenCost ? "2026-07-15" : resource.content ? "2026-07-21" : "2025-05-01";
+  const wordCount = resource.content ? resource.content.trim().split(/\s+/).length : 0;
+  const readMinutes = wordCount ? Math.max(1, Math.round(wordCount / 220)) : 8;
   const resourceLd = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
@@ -158,10 +162,10 @@ function ResourceDetail() {
 
             <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-muted-foreground border-y border-border/50 py-6">
               <div className="flex items-center gap-2">
-                <Clock size={14} /> {resource.slug === "hidden-cost-of-manual-lead-research" ? "6 min read" : "8 min read"}
+                <Clock size={14} /> {isHiddenCost ? "6 min read" : `${readMinutes} min read`}
               </div>
               <div className="flex items-center gap-2">
-                Published {resource.slug === "hidden-cost-of-manual-lead-research" ? "July 15, 2026" : "April 2025"}
+                Published {isHiddenCost ? "July 15, 2026" : resource.content ? "July 21, 2026" : "April 2025"}
               </div>
               <button
                 onClick={() => {
@@ -180,8 +184,12 @@ function ResourceDetail() {
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-16">
           <div className="lg:col-span-8">
             <FadeIn delay={0.1}>
-              {resource.slug === "hidden-cost-of-manual-lead-research" ? (
+              {isHiddenCost ? (
                 <HiddenCostBlogContent onAudit={() => window.dispatchEvent(new CustomEvent("open-demo-modal"))} />
+              ) : resource.content ? (
+                <div className="prose-mockup space-y-6 text-foreground/90 text-lg leading-relaxed">
+                  {renderMarkdownLite(resource.content)}
+                </div>
               ) : (
                 <div className="prose-mockup space-y-8 text-foreground/90 text-lg leading-relaxed">
                   <p>
