@@ -31,7 +31,7 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         name: "ahrefs-site-verification",
-        content: "3b1ff6092ebeceb5b86da9560f14128b5e4708418d4364d4bbafacbb4168d474",
+        content: "8859a4c428635928636b37c8b40cc4f6142e2710cffcf30402340fa2a080415b",
       },
       { title: "Magnivo.ai — The AI GTM Operating System for B2B Revenue Teams" },
       {
